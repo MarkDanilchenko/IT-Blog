@@ -1,0 +1,68 @@
+.carousel-item {
+  height: 20rem;
+  padding: 10px;
+}
+
+.carousel-item:nth-child(1) {
+  background-image: url("/static/IMG/Python_logo.png");
+  background-repeat: space;
+}
+
+.carousel-item:nth-child(2) {
+  background-image: url("/static/IMG/NuxtJS_logo.png");
+  background-repeat: space;
+}
+
+.carousel-item:nth-child(3) {
+  background-image: url("/static/IMG/Bootstrap_logo.png");
+  background-repeat: space;
+}
+
+.my-carousel {
+  padding: 0;
+}
+
+.my-carousel h5 {
+  font-size: 60px;
+  font-weight: 900;
+}
+
+.my-carousel p {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.carousel-caption {
+  bottom: 100px;
+  text-shadow: 5px 5px 10px rgb(0, 0, 0);
+}
+
+.my-pagination a {
+  color: rgb(7, 151, 98) !important;
+}
+
+.nav-link {
+  color: rgb(110, 110, 110) !important;
+}
+
+.nav-link:hover {
+  color: rgb(7, 151, 98) !important;
+}
+
+.active {
+  color: rgb(7, 151, 98) !important;
+}
+
+.text-small {
+  font-size: 0.8rem;
+}
+
+.breadcrumb-item a {
+  color: rgb(110, 110, 110) !important;
+}
+
+.breadcrumb-item a:hover {
+  color: rgb(7, 151, 98) !important;
+}
+
+/*# sourceMappingURL=index.css.map */

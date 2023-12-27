@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="This project is a simple test Blog using such technologies: NuxtJS, Bootstrap, Django, Django Rest Framework, Webpack" />
+		<meta name="keywords" content="Blog, Django, NuxtJS, Bootstrap" />
+		<link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/static/src/css/index.css" />
+		<link rel="shortcut icon" href="/static/favicon/favicon_lg.png" type="image/x-icon" />
+		<title>Blog</title>
+	</head>
+	<body>
+		<div class="container">
+			<!-- header -->
+			<!-- header -->
+			<!-- header -->
+			<section class="my-navigation">
+				<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+					<div class="container-fluid">
+						<div>
+							<a href="#" class="navbar-brand">
+								<img src="/static/IMG/Python_logo.png" alt="Python" class="navbar-brand" width="30" height="40" />
+							</a>
+							<a href="#" class="navbar-brand">
+								<img src="/static/IMG/NuxtJS_logo.png" alt="NuxtJS" class="navbar-brand" width="30" height="40" />
+							</a>
+						</div>
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<div class="navbar-nav me-auto mb-0 d-flex align-items-center">
+								<a href="#" class="nav-link active" aria-current="page">Main</a>
+								<a href="#" class="nav-link">Contacts</a>
+							</div>
+							<form action="" class="d-flex" role="search">
+								<input type="search" class="form-control me-2" placeholder="Search   &#128269;" style="text-align: left" aria-label="Search" />
+								<button class="btn btn-outline-light me-2" type="submit">Search</button>
+								<button type="button" class="btn btn-outline-light me-2">Sign&nbsp;in</button>
+								<button type="button" class="btn btn-outline-light me-2">Sign&nbsp;up</button>
+								<button type="button" class="btn btn-outline-danger">Logout</button>
+							</form>
+						</div>
+					</div>
+				</nav>
+			</section>
+			<!-- body -->
+			<!-- body -->
+			<!-- body -->
+			<section class="my-post-detail">
+				<div class="row">
+					<div class="col-lg-8">
+						<nav aria-label="breadcrumb" class="my-3">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="#">Main</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Post ...</li>
+							</ol>
+						</nav>
+						<!-- Post body -->
+						<img src="" class="img-fluid rounded" alt="Post image" />
+						<hr />
+						<p class="text-center">
+							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt possimus veritatis, autem asperiores cupiditate quisquam assumenda maiores hic sapiente repudiandae expedita explicabo minima iure veniam nemo, est fugiat
+							voluptate eveniet.
+						</p>
+						<div class="d-flex justify-content-end">
+							<a href="" class="badge text-bg-secondary me-1">#badge</a>
+							<a href="" class="badge text-bg-secondary me-1">#badge</a>
+							<a href="" class="badge text-bg-secondary me-1">#badge</a>
+						</div>
+						<hr />
+						<div class="d-flex justify-content-between">
+							<span><b>Author: ...</b></span>
+							<span>Posted: ...</span>
+						</div>
+						<hr />
+						<!-- Comment block -->
+						<div class="card my-3">
+							<h5 class="card-header">Comments:</h5>
+							<div class="card-body">
+								<form action="">
+									<div class="form-group">
+										<textarea name="" id="" class="form-control mb-3" rows="3" placeholder="Leave Your comment here ..."></textarea>
+									</div>
+									<button type="submit" class="btn btn-success btn-sm">Comment!</button>
+								</form>
+							</div>
+						</div>
+						<!-- Discussion (Users' comments) -->
+						<div class="d-flex flex-column justify-content-center align-items-center my-4">
+							<h5 class="text-muted"><i>Discussion</i></h5>
+							<hr style="width: 50%" />
+						</div>
+						<div class="d-flex col-6 offset-3">
+							<div class="flex-shrink-0">
+								<img src="" class="rounded-circle" alt="" />
+							</div>
+							<div class="flex-grow-1 ms-3">
+								<h5>Author</h5>
+								<p class="text-end text-small">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<!-- Tags card -->
+						<div class="card my-3">
+							<h5 class="card-header">Tags</h5>
+							<div class="card-body">
+								<div class="d-flex flex-wrap">
+									<a href="#" class="m-2 nav-link">#...</a>
+									<a href="#" class="m-2 nav-link">#...</a>
+									<a href="#" class="m-2 nav-link">#...</a>
+									<a href="#" class="m-2 nav-link">#...</a>
+									<a href="#" class="m-2 nav-link">#...</a>
+									<a href="#" class="m-2 nav-link">#...</a>
+								</div>
+							</div>
+						</div>
+						<!-- Last posts' cards -->
+						<div class="card my-3">
+							<h5 class="card-header">Last posts</h5>
+							<div class="card-body">
+								<h5 class="card-title">First post</h5>
+								<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
+									beatae repudiandae quam ab nostrum!
+								</p>
+								<a href="" class="card-link">Link on article</a>
+							</div>
+							<hr />
+							<div class="card-body">
+								<h5 class="card-title">First post</h5>
+								<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
+									beatae repudiandae quam ab nostrum!
+								</p>
+								<a href="" class="card-link">Link on article</a>
+							</div>
+							<hr />
+							<div class="card-body">
+								<h5 class="card-title">First post</h5>
+								<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
+									beatae repudiandae quam ab nostrum!
+								</p>
+								<a href="" class="card-link">Link on article</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- footer -->
+			<!-- footer -->
+			<!-- footer -->
+			<section class="my-footer fixed-bottom">
+				<footer class="col-12 mt-3">
+					<ul class="nav justify-content-center">
+						<li class="nav-item">
+							<a href="/" class="nav-link px-2" title="Home page"><b>Home</b></a>
+						</li>
+					</ul>
+					<hr class="my-1 offset-3" style="width: 50%;" />
+					<p class="text-center text-body-secondary pb-4">2023 MyHomeworks, &#123; &#125;</p>
+				</footer>
+			</section>
+		</div>
+		<script src="/static/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/src/js/index.js"></script>
+	</body>
+</html>

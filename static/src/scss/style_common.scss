@@ -1,0 +1,23 @@
+.nav-link {
+	color: $grey_color !important;
+}
+
+.nav-link:hover {
+	color: $green_color !important;
+}
+
+.active {
+	color: $green_color !important;
+}
+
+.text-small {
+	font-size: 0.8rem;
+}
+
+.breadcrumb-item a {
+	color: $grey_color !important;
+}
+
+.breadcrumb-item a:hover {
+	color: $green_color !important;
+}

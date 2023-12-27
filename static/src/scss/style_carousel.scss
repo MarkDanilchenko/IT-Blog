@@ -1,0 +1,45 @@
+.carousel-item {
+	height: 20rem;
+    padding: 10px;
+}
+
+@for $var from 1 through 3 {
+	@if ($var == 1) {
+		.carousel-item:nth-child(#{$var}) {
+			background-image: url('/static/IMG/Python_logo.png');
+            background-repeat: space;
+            // background-clip: content-box;
+		}
+	} @else if ($var == 2) {
+		.carousel-item:nth-child(#{$var}) {
+			background-image: url('/static/IMG/NuxtJS_logo.png');
+            background-repeat: space;
+            // background-clip: content-box;
+		}
+	} @else if ($var == 3) {
+		.carousel-item:nth-child(#{$var}) {
+			background-image: url('/static/IMG/Bootstrap_logo.png');
+            background-repeat: space;
+            // background-clip: content-box;
+		}
+	}
+}
+
+.my-carousel {
+	padding: 0;
+}
+
+.my-carousel h5 {
+	font-size: 60px;
+    font-weight: 900;
+}
+
+.my-carousel p {
+	font-size: 30px;
+    font-weight: 500;
+}
+
+.carousel-caption {
+	bottom: 100px;
+	text-shadow: 5px 5px 10px $black_color;
+}
