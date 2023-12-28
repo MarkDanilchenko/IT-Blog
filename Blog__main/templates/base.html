@@ -1,0 +1,40 @@
+<!-- This is the CONTRUCTOR PAGE -->
+<!-- This is the CONTRUCTOR PAGE -->
+<!-- This is the CONTRUCTOR PAGE -->
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content="This project is a simple test Blog using such technologies: NuxtJS, Bootstrap, Django, Django Rest Framework, Webpack" />
+		<meta name="keywords" content="Blog, Django, NuxtJS, Bootstrap" />
+		<link rel="stylesheet" href='{% static "node_modules/bootstrap/dist/css/bootstrap.min.css" %}' />
+		<link rel="stylesheet" href='{% static "src/css/index.css" %}' />
+		<link rel="shortcut icon" href="{% static 'favicon/favicon_lg.png' %}" type="image/x-icon" />
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<div class="container">
+			<!-- header -->
+			<!-- header -->
+			<!-- header -->
+			{% include './blocks/header.html' %}
+			<!-- body -->
+			<!-- body -->
+			<!-- body -->
+			{% block carousel %}{% endblock %} {% block content %}{% endblock %} {% block pagination %}{% endblock %}
+			<!-- footer -->
+			<!-- footer -->
+			<!-- footer -->
+			{% include './blocks/footer.html' %}
+		</div>
+		<script src='{% static "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" %}'></script>
+		<script src='{% static "src/js/index.js" %}'></script>
+	</body>
+</html>
+
+<!-- This is the CONTRUCTOR PAGE -->
+<!-- This is the CONTRUCTOR PAGE -->
+<!-- This is the CONTRUCTOR PAGE -->

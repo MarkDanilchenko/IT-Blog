@@ -1,4 +1,5 @@
 draft.*
+/staticfiles
 ### Django template
 *.log
 *.pot

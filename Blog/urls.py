@@ -23,6 +23,7 @@ from Blog__main import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
     # path("accounts/signup/", views.SignUp.as_view(), name="signup"),
     path("", include("Blog__main.urls")),
 ]
