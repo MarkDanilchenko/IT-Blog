@@ -9,13 +9,20 @@ from django.db import models
 def validate_phone(value):
     if re.search(r"\d{1}\(\d{3}\)\d{3}-\d{2}-\d{2}", value) is None:
         raise ValidationError(
-            "Phone number must contain only 11 digits in format _(___)___-__-__"
+            "Phone number should contain only 11 digits in format _(___)___-__-__."
         )
     else:
         return f"+{value}"
 
 
 class User(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        verbose_name="Username",
+        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+    )
+
     phone = models.CharField(
         max_length=15,
         unique=True,
@@ -23,7 +30,7 @@ class User(AbstractUser):
         null=True,
         validators=[validate_phone],
         verbose_name="Phone number",
-        help_text="Phone number must contain only 11 digits in format _(___)___-__-__",
+        help_text="Phone number should contain only 11 digits in format _(___)___-__-__.",
     )
 
     class Meta:
@@ -40,7 +47,9 @@ class Post(models.Model):
     url = models.SlugField(verbose_name="URL")
     description = RichTextUploadingField(verbose_name="Description")
     content = RichTextUploadingField(verbose_name="Content")
-    image = models.ImageField(upload_to="IMG", blank=True, verbose_name="Image", null=True)
+    image = models.ImageField(
+        upload_to="IMG", blank=True, verbose_name="Image", null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
     tag = models.CharField(max_length=100, verbose_name="Tag")
