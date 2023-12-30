@@ -1,31 +1,31 @@
 {% load static %}
 <section class="my-navigation">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-            <div>
-                <a href="#" class="navbar-brand">
-                    <img src="{% static 'IMG/Python_logo.png' %}" alt="Python" class="navbar-brand" width="30" height="40" />
-                </a>
-                <a href="#" class="navbar-brand">
-                    <img src="{% static 'IMG/NuxtJS_logo.png' %}" alt="NuxtJS" class="navbar-brand" width="30" height="40" />
-                </a>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="navbar-nav me-auto mb-0 d-flex align-items-center">
-                    <a href="#" class="nav-link active" aria-current="page">Main</a>
-                    <a href="#" class="nav-link">Contacts</a>
-                </div>
-                <form action="" class="d-flex" role="search">
-                    <input type="search" class="form-control me-2" placeholder="Search   &#128269;" style="text-align: left" aria-label="Search" />
-                    <button class="btn btn-outline-light me-2" type="submit">Search</button>
-                    <button type="button" class="btn btn-outline-light me-2">Sign&nbsp;in</button>
-                    <button type="button" class="btn btn-outline-light me-2">Sign&nbsp;up</button>
-                    <button type="button" class="btn btn-outline-danger">Logout</button>
-                </form>
-            </div>
-        </div>
-    </nav>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+		<div class="container-fluid">
+			<div>
+				<a href="/" class="navbar-brand">
+					<img src="{% static 'IMG/Python_logo.png' %}" alt="Python" class="navbar-brand" width="30" height="40" />
+				</a>
+				<a href="/" class="navbar-brand">
+					<img src="{% static 'IMG/NuxtJS_logo.png' %}" alt="NuxtJS" class="navbar-brand" width="30" height="40" />
+				</a>
+			</div>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<div class="navbar-nav me-auto mb-0 d-flex align-items-center">
+					<a href="/" class="nav-link active" aria-current="page">Main</a>
+					<a href="#" class="nav-link">Contacts</a>
+				</div>
+				<form action="" class="d-flex" role="search">
+					<input type="search" class="form-control me-2" placeholder="Search   &#128269;" style="text-align: left" aria-label="Search" />
+					<button class="btn btn-outline-light me-2" type="submit">Search</button>
+				</form>
+				<a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-outline-light me-2">Sign&nbsp;in</a>
+				<a href="#" class="btn btn-outline-light me-2">Sign&nbsp;up</a>
+				<a href="#" class="btn btn-outline-danger">Logout</a>
+			</div>
+		</div>
+	</nav>
 </section>

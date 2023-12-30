@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %}
+<!-- blokc title -->
+{% block title %}Post details{% endblock %}
+<!-- block content -->
+{% block content %}
+<section class="my-post-detail">
+	<div class="row">
+		<div class="col-lg-8">
+			<nav aria-label="breadcrumb" class="my-3">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="/">Main</a>
+					</li>
+					<li class="breadcrumb-item active" aria-current="page">Post: <b>{{post.h1}}</b></li>
+				</ol>
+			</nav>
+			<!-- Post body -->
+			<img src="{{MEDIA_URL}}{{post.image}}" class="img-fluid rounded" alt="{{post.h1}}" title="{{post.h1}}" />
+			<hr />
+			<p class="text-center">{{ post.content|safe }}</p>
+			<div class="d-flex justify-content-end">
+				<a href="" class="badge text-bg-success me-1">#badge</a>
+				<a href="" class="badge text-bg-success me-1">#badge</a>
+				<a href="" class="badge text-bg-success me-1">#badge</a>
+			</div>
+			<div class="d-flex justify-content-between mt-3">
+				<span>Author: <b>{{post.author.username}}</b></span>
+				<span>Posted: <b>{{post.created_at|date:"Y-m-d"}}</b></span>
+			</div>
+			<hr />
+			<!-- Comment block -->
+			{% include './blocks/comments.html' %}
+		</div>
+		<!-- Sidebar -->
+		{% include './blocks/sidebar.html' %}
+	</div>
+</section>
+{% endblock %}

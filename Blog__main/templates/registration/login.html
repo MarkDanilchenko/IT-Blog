@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Sign in {% endblock %} {% block content %}
+<div class="mt-5 row">
+	{% load crispy_forms_tags %}
+
+	<div class="d-flex flex-column align-items-center">
+		<form action="" method="post" class="" enctype="multipart/form-data" id="form-signIn" name="form-signIn">
+			{% csrf_token %}
+			<fieldset class="form-group">
+				<a href="/" class="d-flex align-items-center justify-content-center mb-3">
+					<img src="{% static 'favicon/favicon_lg.png' %}" width="50" height="50" alt="Home page logo" title="Home page" />
+				</a>
+				<legend class="border-bottom mb-4 text-center"><b>Sign in</b></legend>
+				{{ form|crispy }}
+			</fieldset>
+			<div class="d-flex justify-content-center">
+				<button type="submit" class="btn btn-outline-success">Sign in!</button>
+			</div>
+		</form>
+		<p class="text-center text-secondary mt-3" style="font-size: smaller">
+			<i
+				>After a successful authentication<br />
+				redirected to home page.</i
+			>
+		</p>
+	</div>
+</div>
+{% endblock %}

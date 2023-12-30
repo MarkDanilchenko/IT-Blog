@@ -6,21 +6,18 @@
 @for $var from 1 through 3 {
 	@if ($var == 1) {
 		.carousel-item:nth-child(#{$var}) {
-			background-image: url('/static/IMG/Python_logo.png');
+			background-image: url('../../IMG/Python_logo.png');
             background-repeat: space;
-            // background-clip: content-box;
 		}
 	} @else if ($var == 2) {
 		.carousel-item:nth-child(#{$var}) {
-			background-image: url('/static/IMG/NuxtJS_logo.png');
+			background-image: url('../../IMG/NuxtJS_logo.png');
             background-repeat: space;
-            // background-clip: content-box;
 		}
 	} @else if ($var == 3) {
 		.carousel-item:nth-child(#{$var}) {
-			background-image: url('/static/IMG/Bootstrap_logo.png');
+			background-image: url('../../IMG/Bootstrap_logo.png');
             background-repeat: space;
-            // background-clip: content-box;
 		}
 	}
 }

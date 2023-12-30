@@ -4,5 +4,6 @@ from Blog__main import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="index.html"), name="index"),
+    path('', views.index, name="index"),
+    path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
 ]

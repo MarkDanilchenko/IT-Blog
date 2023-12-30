@@ -4,17 +4,17 @@
 }
 
 .carousel-item:nth-child(1) {
-  background-image: url("/static/IMG/Python_logo.png");
+  background-image: url("../../IMG/Python_logo.png");
   background-repeat: space;
 }
 
 .carousel-item:nth-child(2) {
-  background-image: url("/static/IMG/NuxtJS_logo.png");
+  background-image: url("../../IMG/NuxtJS_logo.png");
   background-repeat: space;
 }
 
 .carousel-item:nth-child(3) {
-  background-image: url("/static/IMG/Bootstrap_logo.png");
+  background-image: url("../../IMG/Bootstrap_logo.png");
   background-repeat: space;
 }
 
@@ -41,6 +41,12 @@
   color: rgb(7, 151, 98) !important;
 }
 
+.active > .page-link {
+  background-color: rgb(7, 151, 98) !important;
+  color: rgb(255, 255, 255) !important;
+  border-color: rgb(7, 151, 98) !important;
+}
+
 .nav-link {
   color: rgb(110, 110, 110) !important;
 }
@@ -63,6 +69,10 @@
 
 .breadcrumb-item a:hover {
   color: rgb(7, 151, 98) !important;
+}
+
+#form-signIn {
+  min-width: 20vw;
 }
 
 /*# sourceMappingURL=index.css.map */

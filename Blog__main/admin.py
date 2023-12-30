@@ -20,6 +20,45 @@ class User_Admin(UserAdmin):
 
     search_fields = ("username",)
     list_filter = ("is_staff", "is_active", "is_superuser", "date_joined", "last_login")
+    ordering = ("-username",)
 
 
 admin.site.register(models.User, User_Admin)
+
+
+class Post_Admin(admin.ModelAdmin):
+    fieldsets = (
+        (
+            "Post headers and info",
+            {
+                "fields": ("h1", "title", "tag", "url"),
+            },
+        ),
+        (
+            "Post content",
+            {
+                "fields": ("description", "content"),
+            },
+        ),
+        (
+            "Post image",
+            {
+                "fields": ("image",),
+            },
+        ),
+        (
+            "Post settings",
+            {
+                "fields": ("author",),
+            },
+        ),
+    )
+    list_display = ("h1", "title", "url", "tag", "created_at", "author")
+    search_fields = ("title", "tag", "author")
+    list_filter = ("created_at", "author")
+    ordering = ("-created_at",)
+    readonly_fields = ("created_at",)
+    prepopulated_fields = {"url": ("title",)}
+
+
+admin.site.register(models.Post, Post_Admin)

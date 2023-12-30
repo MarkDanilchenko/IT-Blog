@@ -37,10 +37,10 @@ class User(AbstractUser):
 class Post(models.Model):
     h1 = models.CharField(max_length=100, verbose_name="H1")
     title = models.CharField(max_length=200, verbose_name="Title")
-    url = models.URLField(verbose_name="URL")
+    url = models.SlugField(verbose_name="URL")
     description = RichTextUploadingField(verbose_name="Description")
     content = RichTextUploadingField(verbose_name="Content")
-    image = models.ImageField(upload_to="images", blank=True, verbose_name="Image", null=True)
+    image = models.ImageField(upload_to="IMG", blank=True, verbose_name="Image", null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
     tag = models.CharField(max_length=100, verbose_name="Tag")
