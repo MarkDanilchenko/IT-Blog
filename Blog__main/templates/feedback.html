@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% load static %}
+<!-- blokc title -->
+{% block title %}Feedback{% endblock %}
+<!-- block content -->
+{% block content %}
+<div class="row">
+	<div class="col-10 offset-1">
+		<nav aria-label="breadcrumb" class="my-3">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Main</a>
+				</li>
+				<li class="breadcrumb-item active" aria-current="page">Feedback</li>
+			</ol>
+		</nav>
+		<p class="text-center lead">Fill Your request in the form below, please, if You have any questions or suggestions.</p>
+		{% if form.errors %} {% for field in form %} {% for error in field.errors %}
+		<div class="alert alert-danger">
+			<strong>{{ error|escape }}</strong>
+		</div>
+		{% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+		<div class="alert alert-danger">
+			<strong>{{ error|escape }}</strong>
+		</div>
+		{% endfor %} {% endif %}
+		<form action="" method="post" name="feedback-form" id="feedback-form" class="col-10 offset-1">
+			{% csrf_token %}
+			<div class="row mb-3">
+				<div class="col-6">
+					<label for="" class="form-label">Name:</label>
+					{{ form.name }}
+				</div>
+				<div class="col-6">
+					<label for="" class="form-label">Email:</label>
+					{{ form.email }}
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-12">
+					<label for="" class="form-label">Theme:</label>
+					{{ form.theme }}
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-12">
+					<label for="" class="form-label">Message:</label>
+					{{ form.message }}
+				</div>
+			</div>
+			<div class="d-flex justify-content-center">
+				<button type="submit" class="btn btn-outline-success">Send!</button>
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %}

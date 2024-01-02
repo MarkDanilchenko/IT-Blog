@@ -24,8 +24,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("Blog__main.urls")),
     path('accounts/logout/', views.logout_view, name="logout"),
-    path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/signup", views.signup, name="signup"),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 

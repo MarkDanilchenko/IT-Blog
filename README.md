@@ -6,7 +6,7 @@ This is a Django test project using MySQL, DRF, NuxtJS, Bootstrap, Webpack and D
 
 1. Clone repository to your local folder;
 2. Copy dev.env to .env file: `cp dev.env .env`;
-3. Open and follow the instructions in the new created .env file;
+3. Open and follow the instructions properly in the new created .env file. Note, that for the all functions You should fill all fields;
 4. For this step you should already have installed Docker and docker-compose on your PC:
 
 - make sure You are in project folder: `cd '.../project_folder'`;

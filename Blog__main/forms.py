@@ -3,7 +3,7 @@ from django import forms
 from . import models
 
 
-class UserRegistrationFrom(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(
         help_text="Required. 150 characters or fewer.<br> Letters, digits and @/./+/-/_ only.",
     )
@@ -29,3 +29,59 @@ class UserRegistrationFrom(UserCreationForm):
             "password2",
             "phone",
         )
+
+
+class FeedbackForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        required=True,
+        label="Name",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your name...",
+                "required": "required",
+                "id": "name",
+            }
+        ),
+    )
+    email = forms.EmailField(
+        max_length=100,
+        required=True,
+        label="Email",
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your email...",
+                "required": "required",
+                "id": "email",
+            }
+        ),
+    )
+    theme = forms.CharField(
+        max_length=250,
+        required=False,
+        label="Theme",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter a theme...",
+                "id": "theme",
+            }
+        ),
+    )
+
+    message = forms.CharField(
+        max_length=1000,
+        required=True,
+        label="Message",
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter a message...",
+                "id": "message",
+                "required": "required",
+                "rows": "5",
+            }
+        ),
+    )

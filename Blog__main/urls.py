@@ -6,4 +6,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.index, name="index"),
     path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
+    path('feedback/', views.feedback, name="feedback"),
+    path('feedback/success/', views.success, name="success"),
+    path('search/', views.search, name="search"),
 ]
