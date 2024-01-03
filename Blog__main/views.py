@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from fuzzywuzzy import fuzz, process
-
+from taggit.models import Tag
 from . import models, forms
 from django.core.paginator import Paginator
 
@@ -107,7 +107,23 @@ def search(request):
                     page_number = request.GET.get("page")
                     page_obj = paginator.get_page(page_number)
                     return render(
-                        request, "search.html", {"page_obj": page_obj, "resultCount": resultCount}
+                        request,
+                        "search.html",
+                        {"page_obj": page_obj, "resultCount": resultCount},
                     )
     except Exception:
-        pass
+        return redirect(request.META["HTTP_REFERER"])
+
+
+def tag_detail(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    common_tags = models.Post.tag.most_common()
+    posts = models.Post.objects.filter(tag=tag)
+    pagiantor = Paginator(posts, per_page=2)
+    page_number = request.GET.get("page")
+    page_obj = pagiantor.get_page(page_number)
+    return render(
+        request,
+        "tag.html",
+        {"title": f"#{tag}", "page_obj": page_obj, "common_tags": common_tags},
+    )

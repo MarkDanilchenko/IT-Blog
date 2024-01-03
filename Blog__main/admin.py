@@ -53,7 +53,7 @@ class Post_Admin(admin.ModelAdmin):
             },
         ),
     )
-    list_display = ("h1", "title", "url", "tag", "created_at", "author")
+    list_display = ("h1", "title", "url", "created_at", "author")
     search_fields = ("title", "tag", "author")
     list_filter = ("created_at", "author")
     ordering = ("-created_at",)

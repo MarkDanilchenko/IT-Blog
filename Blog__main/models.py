@@ -1,9 +1,9 @@
 import re
-
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from taggit.managers import TaggableManager
 
 
 def validate_phone(value):
@@ -52,7 +52,8 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created")
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
-    tag = models.CharField(max_length=100, verbose_name="Tag")
+    # tag = models.CharField(max_length=100, verbose_name="Tag")
+    tag = TaggableManager()
 
     class Meta:
         verbose_name = "Post"

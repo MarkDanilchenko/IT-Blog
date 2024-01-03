@@ -19,9 +19,9 @@
 			<hr />
 			<p class="text-center">{{ post.content|safe }}</p>
 			<div class="d-flex justify-content-end">
-				<a href="" class="badge text-bg-success me-1">#badge</a>
-				<a href="" class="badge text-bg-success me-1">#badge</a>
-				<a href="" class="badge text-bg-success me-1">#badge</a>
+				{% for i in post.tag.all %}
+				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link">#{{i}}</a>
+				{% endfor %}
 			</div>
 			<div class="d-flex justify-content-between mt-3">
 				<span>Author: <b>{{post.author.username}}</b></span>

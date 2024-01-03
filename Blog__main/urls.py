@@ -9,4 +9,5 @@ urlpatterns = [
     path('feedback/', views.feedback, name="feedback"),
     path('feedback/success/', views.success, name="success"),
     path('search/', views.search, name="search"),
+    path('tag/<slug:slug>/', views.tag_detail, name="tag_detail"),
 ]
