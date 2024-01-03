@@ -1,47 +1,32 @@
 {% load static %}
 <div class="col-lg-4">
-    <!-- Tags card -->
-    <div class="card my-3">
-        <h5 class="card-header">Tags</h5>
-        <div class="card-body">
-            <div class="d-flex flex-wrap">
-                <a href="#" class="m-2 nav-link">#...</a>
-                <a href="#" class="m-2 nav-link">#...</a>
-                <a href="#" class="m-2 nav-link">#...</a>
-                <a href="#" class="m-2 nav-link">#...</a>
-                <a href="#" class="m-2 nav-link">#...</a>
-                <a href="#" class="m-2 nav-link">#...</a>
-            </div>
-        </div>
-    </div>
-    <!-- Last posts' cards -->
-    <div class="card my-3">
-        <h5 class="card-header">Last posts</h5>
-        <div class="card-body">
-            <h5 class="card-title">First post</h5>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
-                beatae repudiandae quam ab nostrum!
-            </p>
-            <a href="" class="card-link">Link on article</a>
-        </div>
-        <hr />
-        <div class="card-body">
-            <h5 class="card-title">First post</h5>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
-                beatae repudiandae quam ab nostrum!
-            </p>
-            <a href="" class="card-link">Link on article</a>
-        </div>
-        <hr />
-        <div class="card-body">
-            <h5 class="card-title">First post</h5>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, beatae quisquam! Pariatur dolorem corporis possimus, eius molestias reprehenderit deleniti dolore perferendis expedita quod perspiciatis. Eius
-                beatae repudiandae quam ab nostrum!
-            </p>
-            <a href="" class="card-link">Link on article</a>
-        </div>
-    </div>
+	<!-- Tags -->
+	<div class="card my-3">
+		<h5 class="card-header">Tags</h5>
+		<div class="card-body">
+			<div class="d-flex flex-wrap justify-content-end">
+				{% for i in common_tags %}
+				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link">#{{i}}</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<!-- Last posts -->
+	<div class="card my-3">
+		<h5 class="card-header">View last posts</h5>
+		{% for i in last_posts %}
+		<div class="card-body pb-0">
+            <a href="{% url 'post_detail' i.url %}" class="nav-link text-center"><h5 class="card-title">{{i.h1}}</h5></a>
+			<img src="{{MEDIA_URL}}{{i.image}}" alt="{{i.h1}}" title="{{i.h1}}" class="img-fluid rounded shadow mb-3" />
+			<div class="text-center text-small">{{i.description|safe|truncatechars_html:50 }}</div>
+			<div class="d-flex justify-content-end">
+				<a href="{% url 'post_detail' i.url %}" class="nav-link">Show more</a>
+			</div>
+		</div>
+		{% if forloop.last %}
+		<!-- <hr /> -->
+		{% else %}
+		<hr />
+		{% endif %} {% endfor %}
+	</div>
 </div>

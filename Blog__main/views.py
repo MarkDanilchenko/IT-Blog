@@ -44,7 +44,15 @@ def index(request):
 # display post's detailed info
 def post_detail(request, slug):
     post = get_object_or_404(models.Post, url=slug)
-    return render(request, "post_detail.html", {"post": post})
+    common_tags = models.Post.tag.most_common()
+
+    # for most related posts for sidebar
+    last_posts = models.Post.objects.exclude(url=slug).order_by("-created_at")[:3]
+    return render(
+        request,
+        "post_detail.html",
+        {"post": post, "common_tags": common_tags, "last_posts": last_posts},
+    )
 
 
 # FEEDBACK
@@ -115,6 +123,7 @@ def search(request):
         return redirect(request.META["HTTP_REFERER"])
 
 
+# search post by tag
 def tag_detail(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     common_tags = models.Post.tag.most_common()
