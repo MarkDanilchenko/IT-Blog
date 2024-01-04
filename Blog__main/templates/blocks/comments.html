@@ -23,6 +23,7 @@
 <div class="d-flex flex-column justify-content-center align-items-center my-4">
 	<hr style="width: 50%" />
 </div>
+{% if post.post_comments.all %}
 <div class="card">
 	<h5 class="card-header">Comments:</h5>
 	<div class="card-body">
@@ -42,3 +43,6 @@
 		{% endfor %} {% endif %}
 	</div>
 </div>
+{% else %}
+<h5 class="text-center lead">No comments yet ...</h5>
+{% endif %}

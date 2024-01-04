@@ -6,7 +6,7 @@
 		<div class="card-body">
 			<div class="d-flex flex-wrap justify-content-end">
 				{% for i in common_tags %}
-				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link">#{{i}}</a>
+				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link me-1 mb-1">#{{i}}</a>
 				{% endfor %}
 			</div>
 		</div>

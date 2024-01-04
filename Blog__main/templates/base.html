@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,6 +30,7 @@
 			{% include './blocks/footer.html' %}
 		</div>
 		<script src='{% static "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" %}'></script>
+		<script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
 		<script src='{% static "dist/bundle.js" %}'></script>
 	</body>
 </html>

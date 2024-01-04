@@ -34,6 +34,7 @@
 
 .carousel-caption {
   text-shadow: 5px 5px 10px rgb(0, 0, 0);
+  color: rgb(255, 255, 255) !important;
 }
 
 .my-pagination a {
@@ -46,15 +47,19 @@
   border-color: rgb(7, 151, 98) !important;
 }
 
+#form-signIn {
+  min-width: 20vw;
+}
+
+#form-signUp {
+  max-width: 90vw;
+}
+
 .nav-link {
   color: rgb(110, 110, 110) !important;
 }
 
 .nav-link:hover {
-  color: rgb(7, 151, 98) !important;
-}
-
-.active {
   color: rgb(7, 151, 98) !important;
 }
 
@@ -70,12 +75,64 @@
   color: rgb(7, 151, 98) !important;
 }
 
-#form-signIn {
-  min-width: 20vw;
+#colorMode_switcher + label {
+  width: 60px;
+  height: 30px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 10px;
+  box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: 0.3s;
+}
+#colorMode_switcher + label:after {
+  content: "";
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: linear-gradient(180deg, #ffcc89, #d8860b);
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+#colorMode_switcher + label svg {
+  position: absolute;
+  width: 24px;
+  top: 3px;
+  z-index: 100;
+}
+#colorMode_switcher + label svg.sun {
+  left: 3px;
+  fill: #fff;
+  transition: 0.3s;
+}
+#colorMode_switcher + label svg.moon {
+  left: 33px;
+  fill: #7e7e7e;
+  transition: 0.3s;
 }
 
-#form-signUp {
-  max-width: 90vw;
+#colorMode_switcher {
+  width: 0px;
+  height: 0px;
+  visibility: hidden;
+}
+#colorMode_switcher:checked + label {
+  background: #242424;
+}
+#colorMode_switcher:checked + label:after {
+  left: 58px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+#colorMode_switcher:checked + label svg.sun {
+  fill: #7e7e7e;
+}
+#colorMode_switcher:checked + label svg.moon {
+  fill: #fff;
 }
 
 /*# sourceMappingURL=index.css.map */

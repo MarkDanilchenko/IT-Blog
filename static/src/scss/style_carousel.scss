@@ -1,23 +1,23 @@
 .carousel-item {
 	height: 15rem;
-    padding: 10px;
+	padding: 10px;
 }
 
 @for $var from 1 through 3 {
 	@if ($var == 1) {
 		.carousel-item:nth-child(#{$var}) {
 			background-image: url('../../IMG/Python_logo.png');
-            background-repeat: space;
+			background-repeat: space;
 		}
 	} @else if ($var == 2) {
 		.carousel-item:nth-child(#{$var}) {
 			background-image: url('../../IMG/NuxtJS_logo.png');
-            background-repeat: space;
+			background-repeat: space;
 		}
 	} @else if ($var == 3) {
 		.carousel-item:nth-child(#{$var}) {
 			background-image: url('../../IMG/Bootstrap_logo.png');
-            background-repeat: space;
+			background-repeat: space;
 		}
 	}
 }
@@ -28,14 +28,15 @@
 
 .my-carousel h5 {
 	font-size: 50px;
-    font-weight: 900;
+	font-weight: 900;
 }
 
 .my-carousel p {
 	font-size: 25px;
-    font-weight: 500;
+	font-weight: 500;
 }
 
 .carousel-caption {
 	text-shadow: 5px 5px 10px $black_color;
+	color: $white_color !important;
 }

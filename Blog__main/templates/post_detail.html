@@ -20,7 +20,7 @@
 			<p class="text-center">{{ post.content|safe }}</p>
 			<div class="d-flex justify-content-end">
 				{% for i in post.tag.all %}
-				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link">#{{i}}</a>
+				<a href="{% url 'tag_detail' i %}" class="badge bg-light rounded-pill nav-link me-1">#{{i}}</a>
 				{% endfor %}
 			</div>
 			<div class="d-flex justify-content-between mt-3">
