@@ -61,3 +61,25 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Post_Comment(models.Model):
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, verbose_name="Post", help_text="Comment on post", related_name="post_comments")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="User", help_text="User's comment", related_name="user_comments"
+    )
+    text = models.TextField(verbose_name="Comment", help_text="Comment text (max: 1000 symbols)", max_length=1000)
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Created at",
+        help_text="Date of comment creation",
+    )
+
+    class Meta:
+        verbose_name = "Post_Comment"
+        verbose_name_plural = "Post_Comments"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f'{self.text[:20]}...'

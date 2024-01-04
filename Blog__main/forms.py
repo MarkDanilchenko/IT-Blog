@@ -85,3 +85,24 @@ class FeedbackForm(forms.Form):
             }
         ),
     )
+
+
+class Post_CommentForm(forms.ModelForm):
+    text = forms.CharField(
+        max_length=1000,
+        required=True,
+        label="",
+        help_text="Max: 1000 symbols",
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your comment ...",
+                "rows": 5,
+                "cols": 50,
+            }
+        ),
+    )
+
+    class Meta:
+        model = models.Post_Comment
+        fields = ("text",)

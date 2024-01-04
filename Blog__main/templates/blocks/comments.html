@@ -1,26 +1,44 @@
-{% load static %}
+{% load static %} {% load crispy_forms_tags %}
 <!-- Comment block -->
 <div class="card mb-3 mt-5">
-    <h5 class="card-header">Comments:</h5>
-    <div class="card-body">
-        <form action="">
-            <div class="form-group">
-                <textarea name="" id="" class="form-control mb-3" rows="3" placeholder="Leave Your comment here ..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success btn-sm">Comment!</button>
-        </form>
-    </div>
+	<h5 class="card-header">Enter Your comment:</h5>
+	<div class="card-body">
+		{% if user.is_authenticated %}
+		<!-- post.url - the url(slug) of the each post. 
+            We got it, cause this template is included in post_detail.html, which is rendered by the 'post_detail'-function called from the index.html template directly using the POST_ORM data -->
+		<form action="{% url 'post_comment' post.url %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="form-group">{{ commentForm|crispy }}</div>
+			<button type="submit" class="btn btn-success btn-sm">Comment!</button>
+		</form>
+		{% else %}
+		<h5 class="text-center lead">
+			Please,
+			<a class="nav-link" href="{% url 'login' %}?next={{request.path}}">login</a> or <a class="nav-link" href="{% url 'signup' %}?next={{request.path}}">sign up</a> to leave comments...
+		</h5>
+		{% endif %}
+	</div>
 </div>
 <!-- Discussion (Users' comments) -->
 <div class="d-flex flex-column justify-content-center align-items-center my-4">
-    <hr style="width: 50%" />
+	<hr style="width: 50%" />
 </div>
-<div class="d-flex col-6 offset-3">
-    <div class="flex-shrink-0">
-        <img src="" class="rounded-circle" alt="" />
-    </div>
-    <div class="flex-grow-1 ms-3">
-        <h5>Author</h5>
-        <p class="text-end text-small">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-    </div>
+<div class="card">
+	<h5 class="card-header">Comments:</h5>
+	<div class="card-body">
+		{% if post.post_comments.all %} {% for i in post.post_comments.all %}
+		<div class="d-flex col-8 offset-2 border-bottom border-end border-1 rounded rounded-2 shadow-sm mb-1 p-3">
+			<div class="flex-shrink-0">
+				<img src="" class="rounded-circle" alt="" />
+			</div>
+			<div class="flex-grow-1">
+				<div class="d-flex justify-content-start text-small text-muted">
+					<span class="me-3">"{{ i.user.username }}"</span>
+					<span>{{i.created_at|date:"Y-m-d"}}</span>
+				</div>
+				<p class="text-center mb-0">{{i.text}}</p>
+			</div>
+		</div>
+		{% endfor %} {% endif %}
+	</div>
 </div>

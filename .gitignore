@@ -1,5 +1,6 @@
 draft.*
 /staticfiles
+/.vscode
 ### Django template
 *.log
 *.pot

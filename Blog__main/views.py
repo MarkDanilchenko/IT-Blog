@@ -41,6 +41,17 @@ def index(request):
     return render(request, "index.html", {"page_obj": page_obj})
 
 
+# submit post's comments and return to the state before form's submition
+def post_comment(request, slug):
+    if request.method == "POST":
+        form = forms.Post_CommentForm(request.POST)
+        form.instance.user = request.user
+        form.instance.post = models.Post.objects.get(url=slug)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+
 # display post's detailed info
 def post_detail(request, slug):
     post = get_object_or_404(models.Post, url=slug)
@@ -48,10 +59,18 @@ def post_detail(request, slug):
 
     # for most related posts for sidebar
     last_posts = models.Post.objects.exclude(url=slug).order_by("-created_at")[:3]
+
+    # comment form for post
+    commentForm = forms.Post_CommentForm()
     return render(
         request,
         "post_detail.html",
-        {"post": post, "common_tags": common_tags, "last_posts": last_posts},
+        {
+            "post": post,
+            "common_tags": common_tags,
+            "last_posts": last_posts,
+            "commentForm": commentForm,
+        },
     )
 
 

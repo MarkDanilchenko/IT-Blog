@@ -26,6 +26,13 @@ class User_Admin(UserAdmin):
 admin.site.register(models.User, User_Admin)
 
 
+# The `Post_CommentInline` class is used to define an inline form for the `Post_Comment` model in the
+# Django admin interface.
+class Post_CommentInline(admin.TabularInline):
+    model = models.Post_Comment
+    extra = 1
+
+
 class Post_Admin(admin.ModelAdmin):
     fieldsets = (
         (
@@ -59,6 +66,31 @@ class Post_Admin(admin.ModelAdmin):
     ordering = ("-created_at",)
     readonly_fields = ("created_at",)
     prepopulated_fields = {"url": ("title",)}
+    inlines = [Post_CommentInline]
 
 
 admin.site.register(models.Post, Post_Admin)
+
+
+class Post_Comment_Admin(admin.ModelAdmin):
+    fieldsets = (
+        (
+            "Related Info",
+            {
+                "fields": ("post", "user"),
+            },
+        ),
+        (
+            "Comment",
+            {
+                "fields": ("text",),
+            },
+        ),
+    )
+    list_display = ("post", "user", "created_at")
+    search_fields = ("post", "user")
+    list_filter = ("created_at",)
+    ordering = ("-created_at",)
+
+
+admin.site.register(models.Post_Comment, Post_Comment_Admin)
