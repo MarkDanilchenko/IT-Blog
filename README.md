@@ -17,9 +17,12 @@ This is a Django test project using MySQL, DRF, NuxtJS, Bootstrap, Webpack and D
 
 5. The superuser has been already created;
 
-- You can login under current superuser using standart credentials: `login: admin; pass: 12345admin`;
-- For password change use: `cd '.../project_folder' && python3 manage.py changepassword admin`
-- Or You can manually create superuser for Your own purpose: `cd '.../project_folder' && python3 manage.py createsuperuser` ;
+- You can login under current superuser using standart credentials: `login: admin; pass: admin`;
+- For password change use: `cd '.../project_folder' && python3 manage.py changepassword admin`;
+- Or You can manually create superuser for Your own purpose: `cd '.../project_folder' && python3 manage.py createsuperuser`;
+- Note, that:
+  - Add/edit/delete posts only via admin-panel;
+  - Add comments only for registered Users.
 
 6. Note that DataBase - MySQL;
 7. To stop the server: `Ctrl+C`;
@@ -32,8 +35,35 @@ Available in root folder after successfull app launch.
 
 ### Screenshots
 
-1. ...
+1. *Main page (white & dark themes)*
 
-2. ...
+![Main page(white theme)](screenshots/ScrShot_1.png)
+![Main page(dark theme)](screenshots/ScrShot_2.png)
+  
+2. *Mobile look page*
 
-3. ...
+<div align="center">
+  <img src="screenshots/ScrShot_3.png" width="50%" height="80%">
+</div>
+
+3. *Sign In/Out forms*
+
+![Sign In form](screenshots/ScrShot_4.png)
+
+4. *Post details*
+
+![Post details](screenshots/ScrShot_5.png)
+
+5. *Side bar with related posts*
+
+<div align="center">
+  <img src="screenshots/ScrShot_6.png" width="50%" height="80%">
+</div>
+
+6. *Comments block*
+
+![Comments block](screenshots/ScrShot_7.png)
+
+7. *Tags navigation*
+
+![Tags navigation](screenshots/ScrShot_8.png)

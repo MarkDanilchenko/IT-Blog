@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+    server:
+        build: .
+        container_name: django-server
+        command: sh -c 'python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver ${server_HostPort}'
+        volumes:
+            - ./:/app
+        ports:
+            - 8900:8900
+        environment:
+            # for django-server connection to not to localhost-MySQL (as in settings.py) but to container-MySQL
+            - DATABASE_HOST=db
+        links:
+            - db
+        depends_on:
+            db:
+                condition: service_healthy
+    db:
+        image: mysql:8.0
+        restart: always
+        container_name: db
+        env_file:
+            - .env
+        ports:
+            - 3307:3306
+        volumes:
+            - ./db_data:/var/lib/mysql
+            - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
+        healthcheck:
+            test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1']
+            interval: 10s
+            timeout: 5s
+            retries: 10
+volumes:
+    db_data:

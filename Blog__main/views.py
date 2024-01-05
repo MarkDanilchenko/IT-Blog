@@ -35,7 +35,7 @@ def logout_view(request):
 # display all posts at the main page
 def index(request):
     result = models.Post.objects.all()
-    paginator = Paginator(result, per_page=2)
+    paginator = Paginator(result, per_page=3)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "index.html", {"page_obj": page_obj})
@@ -131,7 +131,7 @@ def search(request):
                     return render(request, "search.html", {"notFound": notFound})
                 else:
                     resultCount = len(result)
-                    paginator = Paginator(result, per_page=2)
+                    paginator = Paginator(result, per_page=3)
                     page_number = request.GET.get("page")
                     page_obj = paginator.get_page(page_number)
                     return render(
@@ -148,7 +148,7 @@ def tag_detail(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     common_tags = models.Post.tag.most_common()
     posts = models.Post.objects.filter(tag=tag)
-    pagiantor = Paginator(posts, per_page=2)
+    pagiantor = Paginator(posts, per_page=3)
     page_number = request.GET.get("page")
     page_obj = pagiantor.get_page(page_number)
     return render(
