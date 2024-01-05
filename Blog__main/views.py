@@ -84,12 +84,13 @@ def feedback(request):
             theme = form.cleaned_data["theme"]
             message = form.cleaned_data["message"]
             try:
-                send_mail(
-                    f"Feedback from {name} | theme: {theme}",
-                    message,
-                    email,
-                    settings.EMAIL_HOST_USER,
-                )
+                print(f'Feedback from {name} | theme: {theme}', message, settings.EMAIL_HOST_USER, email)
+                # send_mail(
+                #     f"Feedback from {name} | theme: {theme}",
+                #     message,
+                #     settings.EMAIL_HOST_USER,
+                #     email,
+                # )
             except Exception:
                 pass
             return HttpResponseRedirect("success")
