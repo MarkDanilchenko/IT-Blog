@@ -55,6 +55,10 @@
   max-width: 90vw;
 }
 
+.container {
+  min-height: 100vh;
+}
+
 .nav-link {
   color: rgb(110, 110, 110) !important;
 }
@@ -133,6 +137,11 @@
 }
 #colorMode_switcher:checked + label svg.moon {
   fill: #fff;
+}
+
+.my-footer {
+  position: sticky;
+  top: 100vh;
 }
 
 /*# sourceMappingURL=index.css.map */

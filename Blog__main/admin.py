@@ -87,7 +87,7 @@ class Post_Comment_Admin(admin.ModelAdmin):
             },
         ),
     )
-    list_display = ("post", "user", "created_at")
+    list_display = ("post", "user", "text", "created_at")
     search_fields = ("post", "user")
     list_filter = ("created_at",)
     ordering = ("-created_at",)

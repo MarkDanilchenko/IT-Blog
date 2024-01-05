@@ -24,8 +24,8 @@
 		{% for i in page_obj %}
 		<div class="col-md-4">
 			<div class="card mb-3 shadow">
-				<div class="d-flex flex-column align-items-center justify-content-between">
-					<img src="{{MEDIA_URL}}{{i.image}}" class="card-img-top shadow" alt="Python logo" />
+				<div class="d-flex flex-column align-items-center justify-content-end">
+					<img src="{{MEDIA_URL}}{{i.image}}" class="img-fluid p-3 rounded" alt="{{i.h1}} post" title="{{i.h1}} image" />
 					<div class="card-body">
 						<h3 class="card-title text-center"><b>{{i.h1}}</b></h3>
 						<p class="card-text">{{i.description|safe|truncatechars_html:50 }}</p>
