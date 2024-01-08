@@ -18,6 +18,9 @@ urlpatterns = [
         "aside/", views.AsidePostsViewSet.as_view({"get": "list"}), name="aside_posts"
     ),
     path("feedback/", views.FeedbackView.as_view(), name="feedback"),
+    # fuzzywuzzy search
+    path("search/", views.SearchView.as_view(), name="search"),
+    # simple drf search is used via posts/?q=...
     # path('', views.index, name="index"),
     # path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
     # path('blog/comment/<slug:slug>/', views.post_comment, name="post_comment"),

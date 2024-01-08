@@ -2,6 +2,7 @@ aboutProject.txt
 draft.*
 /staticfiles
 /.vscode
+Insomnia_*
 ### Django template
 *.log
 *.pot

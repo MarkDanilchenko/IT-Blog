@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from fuzzywuzzy import fuzz, process
-from rest_framework import viewsets, permissions, pagination, status
+from rest_framework import viewsets, permissions, pagination, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from taggit.models import Tag
@@ -185,6 +185,9 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     pagination_class = PostPagination
     lookup_field = "url"
+    # search for posts
+    search_fields = ["title", "h1", "description", "content"]
+    filter_backends = [filters.SearchFilter]
 
 
 # Tag viewSet
@@ -245,3 +248,45 @@ class FeedbackView(APIView):
             #     settings.EMAIL_HOST_USER,
             #     email,
             # )
+
+
+class SearchView(APIView):
+    serializer_class = serializers.PostSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = PostPagination
+
+    def get(self, request, *args, **kwargs):
+        if request.query_params.get("q"):
+            q = request.query_params.get("q")
+            result = models.Post.objects.all()
+            for i in result:
+                if (
+                    (fuzz.partial_ratio(q, str(i.title)) > 70)
+                    or (fuzz.partial_ratio(q, str(i.h1)) > 70)
+                    or (fuzz.partial_ratio(q, str(i.description)) > 70)
+                    or (fuzz.partial_ratio(q, str(i.content)) > 70)
+                ):
+                    continue
+                else:
+                    result = result.exclude(id=i.pk)
+            else:
+                if len(result) == 0:
+                    notFound = (
+                        "Sorry, but there are no results for your search &#129764;"
+                    )
+                    return Response(
+                        {"notFound": notFound}, status=status.HTTP_404_NOT_FOUND
+                    )
+                else:
+                    paginator = self.pagination_class()
+                    paginated_result = paginator.paginate_queryset(result, request)
+                    serialized_result = self.serializer_class(
+                        paginated_result, many=True
+                    ).data
+
+                    return paginator.get_paginated_response(serialized_result)
+        else:
+            return Response(
+                {"error": "Please, enter search query"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
