@@ -4,7 +4,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from fuzzywuzzy import fuzz, process
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, pagination
+from rest_framework.response import Response
 from taggit.models import Tag
 from . import models, forms, serializers
 from django.core.paginator import Paginator
@@ -169,7 +170,36 @@ from django.core.paginator import Paginator
 # --------------------REST API----------------------
 
 
+# pagination class by 3 items for posts
+class PostPagination(pagination.PageNumberPagination):
+    page_size = 3
+    page_size_query_param = "page_size"
+    max_page_size = 3
+
+
+# Posts and posts_detailed viewSet
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = models.Post.objects.all()
+    queryset = models.Post.objects.all().order_by("-created_at")
     serializer_class = serializers.PostSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = PostPagination
     lookup_field = "url"
+
+
+# PostByTag viewSet
+class PostByTagViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.PostSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = PostPagination
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, slug=self.kwargs["slug"])
+        return models.Post.objects.filter(tag=tag).order_by("-created_at")
+
+
+# Tag viewSet
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = serializers.TagSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = "slug"

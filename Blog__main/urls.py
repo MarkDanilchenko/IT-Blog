@@ -8,6 +8,12 @@ router.register("posts", views.PostViewSet, basename="posts")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("tags/", views.TagViewSet.as_view({"get": "list"}), name="tags"),
+    path(
+        "tags/<slug:slug>/",
+        views.PostByTagViewSet.as_view({"get": "list"}),
+        name="posts_by_tag",
+    ),
     # path('', views.index, name="index"),
     # path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
     # path('blog/comment/<slug:slug>/', views.post_comment, name="post_comment"),
