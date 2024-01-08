@@ -18,14 +18,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf import settings
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from Blog__main import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("Blog__main.urls")),
-    path('accounts/logout/', views.logout_view, name="logout"),
-    path("accounts/signup", views.signup, name="signup"),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("api/", include("Blog__main.urls")),
+    path("api/token/", TokenObtainPairView.as_view(), name="token"),
+    path("api/token_refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    # path('accounts/logout/', views.logout_view, name="logout"),
+    # path("accounts/signup", views.signup, name="signup"),
+    # path("accounts/", include("django.contrib.auth.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 
