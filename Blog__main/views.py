@@ -4,8 +4,9 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from fuzzywuzzy import fuzz, process
-from rest_framework import viewsets, permissions, pagination
+from rest_framework import viewsets, permissions, pagination, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from taggit.models import Tag
 from . import models, forms, serializers
 from django.core.paginator import Paginator
@@ -186,6 +187,14 @@ class PostViewSet(viewsets.ModelViewSet):
     lookup_field = "url"
 
 
+# Tag viewSet
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = serializers.TagSerializer
+    permission_classes = [permissions.AllowAny]
+    lookup_field = "slug"
+
+
 # PostByTag viewSet
 class PostByTagViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PostSerializer
@@ -197,9 +206,42 @@ class PostByTagViewSet(viewsets.ModelViewSet):
         return models.Post.objects.filter(tag=tag).order_by("-created_at")
 
 
-# Tag viewSet
-class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all()
-    serializer_class = serializers.TagSerializer
+# Related 3 Posts for the right sidebar
+class AsidePostsViewSet(viewsets.ModelViewSet):
+    queryset = models.Post.objects.all().order_by("-created_at")[:3]
+    serializer_class = serializers.PostSerializer
     permission_classes = [permissions.AllowAny]
-    lookup_field = "slug"
+
+
+# Feedback view (on POST method and for auth users only)
+class FeedbackView(APIView):
+    serializer_class = serializers.FeedbackSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        result = self.serializer_class(data=request.data)
+        if result.is_valid():
+            name = result.data.get("name")
+            email = result.data.get("email")
+            theme = result.data.get("theme")
+            message = result.data.get("message")
+            print(
+                f"Feedback from {name} | theme: {theme}",
+                message,
+                settings.EMAIL_HOST_USER,
+                email,
+            )
+            return Response(
+                {"success": "Feedback successfully sent!"}, status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {"error": "Something went wrong! Please, try again!"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+            # send_mail(
+            #     f"Feedback from {name} | theme: {theme}",
+            #     message,
+            #     settings.EMAIL_HOST_USER,
+            #     email,
+            # )

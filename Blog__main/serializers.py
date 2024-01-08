@@ -21,3 +21,10 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ("slug",)
         lookup_field = "slug"
         extra_kwargs = {"data": {"lookup_field": "slug"}}
+
+
+class FeedbackSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100, required=True)
+    email = serializers.EmailField(max_length=100, required=True)
+    theme = serializers.CharField(max_length=250)
+    message = serializers.CharField(max_length=1000)

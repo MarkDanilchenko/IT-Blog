@@ -14,6 +14,10 @@ urlpatterns = [
         views.PostByTagViewSet.as_view({"get": "list"}),
         name="posts_by_tag",
     ),
+    path(
+        "aside/", views.AsidePostsViewSet.as_view({"get": "list"}), name="aside_posts"
+    ),
+    path("feedback/", views.FeedbackView.as_view(), name="feedback"),
     # path('', views.index, name="index"),
     # path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
     # path('blog/comment/<slug:slug>/', views.post_comment, name="post_comment"),
