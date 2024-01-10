@@ -48,3 +48,12 @@ class FeedbackSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=100, required=True)
     theme = serializers.CharField(max_length=250)
     message = serializers.CharField(max_length=1000)
+
+
+class Post_CommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    post = serializers.StringRelatedField()
+
+    class Meta:
+        model = models.Post_Comment
+        fields = '__all__'

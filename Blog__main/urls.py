@@ -9,9 +9,15 @@ router.register("posts", views.PostViewSet, basename="posts")
 urlpatterns = [
     path("", include(router.urls)),
     path(
-        "accounts/signup/", views.SignUpView.as_view({"post": "create"}), name="signup"
+        "accounts/signup/",
+        views.SignUpViewSet.as_view({"post": "create"}),
+        name="signup",
     ),
-    path("accounts/profile/", views.ProfileView.as_view({"get": "list"}), name="profile"),
+    path(
+        "accounts/profile/",
+        views.ProfileViewSet.as_view({"get": "list"}),
+        name="profile",
+    ),
     path("tags/", views.TagViewSet.as_view({"get": "list"}), name="tags"),
     path(
         "tags/<slug:slug>/",
@@ -22,9 +28,19 @@ urlpatterns = [
         "aside/", views.AsidePostsViewSet.as_view({"get": "list"}), name="aside_posts"
     ),
     path("feedback/", views.FeedbackView.as_view(), name="feedback"),
-    # fuzzywuzzy search
+    # fuzzywuzzy search is used via search/?q=...
+    # simple DRF search is used via posts/?q=...
     path("search/", views.SearchView.as_view(), name="search"),
-    # simple drf search is used via posts/?q=...
+    path(
+        "comments/",
+        views.Post_CommentViewSet.as_view({"post": "create"}),
+        name="create_comment",
+    ),
+    path(
+        "comments/<slug:post_slug>/",
+        views.Post_CommentViewSet.as_view({"get": "list"}),
+        name="get_post_comments",
+    ),
     # path('', views.index, name="index"),
     # path('blog/<slug:slug>/', views.post_detail, name="post_detail"),
     # path('blog/comment/<slug:slug>/', views.post_comment, name="post_comment"),

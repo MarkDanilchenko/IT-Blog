@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404, redirect
 from fuzzywuzzy import fuzz, process
 from rest_framework import viewsets, permissions, pagination, status, filters
@@ -205,7 +205,7 @@ class PostByTagViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     pagination_class = PostPagination
 
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         tag = get_object_or_404(Tag, slug=self.kwargs["slug"])
         return models.Post.objects.filter(tag=tag).order_by("-created_at")
 
@@ -295,9 +295,9 @@ class SearchView(APIView):
 
 
 # SIGN UP
-class SignUpView(viewsets.ModelViewSet):
-    permission_classes = [permissions.AllowAny]
+class SignUpViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
         result = self.serializer_class(data=request.data)
@@ -311,9 +311,9 @@ class SignUpView(viewsets.ModelViewSet):
 
 
 # Browse User's Profile information
-class ProfileView(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
         user = self.serializer_class(request.user).data
@@ -332,4 +332,28 @@ class ProfileView(viewsets.ModelViewSet):
                 }
             },
             status=status.HTTP_200_OK,
+        )
+
+
+# GET and CREATE Comments for Posts
+class Post_CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.Post_CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self, *args, **kwargs):
+        post = get_object_or_404(models.Post, url=self.kwargs["post_slug"].lower())
+        post_comments = models.Post_Comment.objects.filter(post=post).order_by(
+            "-created_at"
+        )
+        return post_comments
+
+    def create(self, request, *args, **kwargs):
+        post = get_object_or_404(models.Post, title=request.data.get("post"))
+        user = self.request.user
+        result = self.serializer_class(data=request.data)
+        result.is_valid(raise_exception=True)
+        result.save(post=post, user=user, text=request.data.get("text"))
+        return Response(
+            {"message": "Comment is successfully created!"},
+            status=status.HTTP_201_CREATED,
         )

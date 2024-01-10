@@ -38,7 +38,7 @@ class User(AbstractUser):
         verbose_name_plural = "Users"
 
     def __str__(self):
-        return f"{self.username}, ID: ({self.pk})"
+        return f"{self.username}"
 
 
 class Post(models.Model):
@@ -60,15 +60,17 @@ class Post(models.Model):
         verbose_name_plural = "Posts"
 
     def __str__(self):
-        return self.title
+        return f"{self.title}"
 
 
 class Post_Comment(models.Model):
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, verbose_name="Post", help_text="Comment on post", related_name="post_comments")
+    # post link to Post.title
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="User", help_text="User's comment", related_name="user_comments"
     )
+    # user link to User.username
     text = models.TextField(verbose_name="Comment", help_text="Comment text (max: 1000 symbols)", max_length=1000)
     created_at = models.DateTimeField(
         auto_now_add=True,
