@@ -4,6 +4,26 @@ from taggit_serializer.serializers import TagListSerializerField, TaggitSerializ
 from . import models, forms
 
 
+class UserSerializer(serializers.ModelSerializer):
+    # SIGN UP method
+    def create(self, validated_data):
+        username = validated_data["username"]
+        password = validated_data["password"]
+        first_name = validated_data["first_name"]
+        last_name = validated_data["last_name"]
+        email = validated_data["email"]
+        user = models.User(
+            username=username, first_name=first_name, last_name=last_name, email=email
+        )
+        user.set_password(password)
+        user.save()
+        return user
+
+    class Meta:
+        model = models.User
+        fields = "__all__"
+
+
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tag = TagListSerializerField()
     author = serializers.StringRelatedField()

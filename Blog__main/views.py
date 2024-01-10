@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from taggit.models import Tag
 from . import models, forms, serializers
 from django.core.paginator import Paginator
+import datetime
 
 
 # # SIGN UP
@@ -250,6 +251,7 @@ class FeedbackView(APIView):
             # )
 
 
+# search post with fuzzywuzzy
 class SearchView(APIView):
     serializer_class = serializers.PostSerializer
     permission_classes = [permissions.AllowAny]
@@ -290,3 +292,44 @@ class SearchView(APIView):
                 {"error": "Please, enter search query"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+# SIGN UP
+class SignUpView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = serializers.UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        result = self.serializer_class(data=request.data)
+        result.is_valid(raise_exception=True)
+        user = result.save()
+        # .save() calls def create() serializer's method
+        return Response(
+            {"message": f'User: "{user.username}" is successfully created!'},
+            status=status.HTTP_201_CREATED,
+        )
+
+
+# Browse User's Profile information
+class ProfileView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.UserSerializer
+
+    def list(self, request, *args, **kwargs):
+        user = self.serializer_class(request.user).data
+        return Response(
+            {
+                "User Information": {
+                    "username": user["username"],
+                    "email": user["email"],
+                    "first_name": user["first_name"],
+                    "last_name": user["last_name"],
+                    "date_joined": datetime.datetime.fromisoformat(
+                        user["date_joined"]
+                    ).strftime("%Y-%m-%d %H:%M"),
+                    "last_login": user["last_login"],
+                    "is_staff": user["is_staff"],
+                }
+            },
+            status=status.HTTP_200_OK,
+        )

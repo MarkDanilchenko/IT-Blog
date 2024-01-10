@@ -8,6 +8,10 @@ router.register("posts", views.PostViewSet, basename="posts")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path(
+        "accounts/signup/", views.SignUpView.as_view({"post": "create"}), name="signup"
+    ),
+    path("accounts/profile/", views.ProfileView.as_view({"get": "list"}), name="profile"),
     path("tags/", views.TagViewSet.as_view({"get": "list"}), name="tags"),
     path(
         "tags/<slug:slug>/",
