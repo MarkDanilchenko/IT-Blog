@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "Blog__main.apps.BlogMainConfig",
     "rest_framework",
+    'corsheaders',
     "crispy_bootstrap5",
     "crispy_forms",
     "taggit",

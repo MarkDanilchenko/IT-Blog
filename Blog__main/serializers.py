@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.settings import api_settings
 from taggit.models import Tag
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
 from . import models, forms
@@ -27,6 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tag = TagListSerializerField()
     author = serializers.StringRelatedField()
+    created_at = serializers.DateTimeField(format='%Y-%m-%d')
 
     class Meta:
         model = models.Post

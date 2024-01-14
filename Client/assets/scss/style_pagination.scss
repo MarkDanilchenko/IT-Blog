@@ -1,0 +1,11 @@
+.my-pagination {
+	a {
+		color: $green_color !important;
+	}
+}
+
+.active > .page-link {
+	background-color: $green_color !important;
+	color: $white_color !important;
+	border-color: $green_color !important;
+}
