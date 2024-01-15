@@ -32,7 +32,7 @@
             <!-- {% endif %} -->
           </div>
           <form class="d-flex my-lg-0 my-3">
-            <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search &#128269;"
+            <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search..."
               style="text-align: left" aria-label="Search" />
             <button class="btn btn-outline-success me-2" type="submit">
               Search

@@ -1,6 +1,6 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
+  // target: "static",
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -59,7 +59,12 @@ export default {
     // "bootstrap-vue/nuxt",
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    ["@nuxtjs/dotenv", { filename: ".env", path: "../" }],
   ],
+
+  loading: {
+    color: "#000000",
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

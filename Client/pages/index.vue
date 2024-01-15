@@ -16,7 +16,7 @@
           <div class="col-md-4" v-for="i in posts" :key="i.url">
             <div class="card mb-3 shadow">
               <div class="d-flex flex-column align-items-center justify-content-end">
-                <img :src="i.image" class="img-fluid p-3 rounded" :alt="`${i.h1}`" :title="`${i.h1}`" />
+                <img :src="i.image" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`" :title="`${i.h1}`" />
                 <div class="card-body">
                   <h3 class="card-title text-center">
                     <b>{{ i.h1 }}</b>
@@ -24,7 +24,7 @@
                   <div class="card-text" v-html="i.description"></div>
                   <!-- {% for j in i.tag.all %} -->
                   <div class="d-flex flex-wrap">
-                    <div v-for="j in i.tag">
+                    <div v-for="j in i.tag" :key="j">
                       <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ j
                       }}</nuxt-link>
                     </div>

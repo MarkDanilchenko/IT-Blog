@@ -21,7 +21,7 @@
                 <div class="text-center" v-html="post.content"></div>
                 <div class="d-flex justify-content-end">
                     <!-- {% for i in post.tag.all %} -->
-                    <div v-for="i in post.tag">
+                    <div v-for="i in post.tag" :key="i">
                         <nuxt-link :to="`/tags/${i}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ i
                         }}</nuxt-link>
                     </div>
@@ -38,7 +38,7 @@
             </div>
             <!-- Sidebar -->
             <!-- {% include './blocks/sidebar.html' %} -->
-            <Sidebar :tags="tags"/>
+            <Sidebar :tags="tags" :asidedata="asidedata" />
         </div>
     </section>
     <!-- {% endblock %} -->
@@ -57,13 +57,13 @@ export default {
     async asyncData({ params }) {
         const post = await axios.get(`http://127.0.0.1:8000/api/posts/${params.url}/`);
         const tags = await axios.get(`http://127.0.0.1:8000/api/tags/`)
-        // currentPostUrl - to exclude from the Sidebar
-        // let currentPostUrl = post.data.url;
-        // const { sidedata } = await axios.get(`http://127.0.0.1:8000/api/aside/${currentPostUrl}`)
+        // currentPostUrl - to exclude this post from the Sidebar
+        let currentPostUrl = post.data.url;
+        const asidedata = await axios.get(`http://127.0.0.1:8000/api/aside/?exclude=${currentPostUrl}/`)
         return {
             post: post.data,
             tags: tags.data,
-            // sidedata: sidedata
+            asidedata: asidedata.data,
         }
     },
 }
