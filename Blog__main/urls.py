@@ -25,7 +25,7 @@ urlpatterns = [
         name="posts_by_tag",
     ),
     path(
-        "aside/", views.AsidePostsViewSet.as_view({"get": "list"}), name="aside_posts"
+        "aside/<slug:slug>/", views.AsidePostsViewSet.as_view({"get": "list"}), name="aside_posts"
     ),
     path("feedback/", views.FeedbackView.as_view(), name="feedback"),
     # fuzzywuzzy search is used via search/?q=...

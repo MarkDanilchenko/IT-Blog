@@ -4,9 +4,10 @@
     <footer class="col-12 mt-3">
       <ul class="nav justify-content-center">
         <li class="nav-item">
-          <nuxt-link to="/" class="nav-link px-2" title="Home page"
-            ><b>Home</b></nuxt-link
-          >
+          <nuxt-link to="/" class="nav-link px-2" title="Home page"><b>Home</b></nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="#" class="nav-link px-2" title="Home page"><b>Up</b></nuxt-link>
         </li>
       </ul>
       <hr class="my-1 offset-3" style="width: 50%" />

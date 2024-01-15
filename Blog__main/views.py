@@ -212,9 +212,12 @@ class PostByTagViewSet(viewsets.ModelViewSet):
 
 # Related 3 Posts for the right sidebar
 class AsidePostsViewSet(viewsets.ModelViewSet):
-    queryset = models.Post.objects.all().order_by("-created_at")[:3]
+    # queryset = models.Post.objects.all().order_by("-created_at")[:3]
     serializer_class = serializers.PostSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self, *args, **kwargs):
+        return models.Post.objects.all().exclude(url=self.kwargs['slug']).order_by('-created_at')[:3]
 
 
 # Feedback view (on POST method and for auth users only)
@@ -263,10 +266,10 @@ class SearchView(APIView):
             result = models.Post.objects.all()
             for i in result:
                 if (
-                    (fuzz.partial_ratio(q, str(i.title)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.h1)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.description)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.content)) > 70)
+                        (fuzz.partial_ratio(q, str(i.title)) > 70)
+                        or (fuzz.partial_ratio(q, str(i.h1)) > 70)
+                        or (fuzz.partial_ratio(q, str(i.description)) > 70)
+                        or (fuzz.partial_ratio(q, str(i.content)) > 70)
                 ):
                     continue
                 else:
