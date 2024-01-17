@@ -89,11 +89,9 @@ export default {
       axios
         .post('http://127.0.0.1:8000/api/feedback/', feedbackFormData)
         .then((response) => {
-          console.log(response);
           this.$router.push('/success/');
         })
         .catch((error) => {
-          console.log(error);
           alert('Feedback form submission error! Please, check the entered data and try again!');
         });
     },

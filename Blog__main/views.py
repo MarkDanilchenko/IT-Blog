@@ -218,7 +218,7 @@ class AsidePostsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self, *args, **kwargs):
         if self.request.GET.get("exclude"):
-            exclude = self.request.GET.get("exclude").split('/')[0]
+            exclude = self.request.GET.get("exclude").split("/")[0]
             get_object_or_404(models.Post, url=exclude.lower())
             return models.Post.objects.exclude(url=exclude).order_by("-created_at")[:3]
         else:
@@ -266,7 +266,7 @@ class SearchView(APIView):
     pagination_class = PostPagination
 
     def get(self, request, *args, **kwargs):
-        if request.query_params.get("q"):
+        if request.query_params.get("q") != "":
             q = request.query_params.get("q")
             result = models.Post.objects.all()
             for i in result:
@@ -281,12 +281,8 @@ class SearchView(APIView):
                     result = result.exclude(id=i.pk)
             else:
                 if len(result) == 0:
-                    notFound = (
-                        "Sorry, but there are no results for your search &#129764;"
-                    )
-                    return Response(
-                        {"notFound": notFound}, status=status.HTTP_404_NOT_FOUND
-                    )
+                    notFound = "Sorry, but there are no results for your search!"
+                    return Response({"notFound": notFound})
                 else:
                     paginator = self.pagination_class()
                     paginated_result = paginator.paginate_queryset(result, request)
@@ -296,10 +292,8 @@ class SearchView(APIView):
 
                     return paginator.get_paginated_response(serialized_result)
         else:
-            return Response(
-                {"error": "Please, enter search query"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+            emptyQuery = "Please, enter Your search query!"
+            return Response({"emptyQuery": emptyQuery})
 
 
 # SIGN UP
