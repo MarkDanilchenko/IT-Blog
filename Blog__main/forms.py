@@ -5,6 +5,7 @@ from . import models
 
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(
+        required=True,
         help_text="Required. 150 characters or fewer.<br> Letters, digits and @/./+/-/_ only.",
     )
     email = forms.EmailField(

@@ -26,14 +26,13 @@
           <div class="col-6">
             <label for="name" class="form-label">Name:</label>
             <!-- {{ form.name }} -->
-            <input type="text" name="name" id="name" class="form-control" placeholder="Your name" v-model="form.name"
-              autocomplete="off">
+            <input type="text" name="name" id="name" class="form-control" placeholder="Your name" v-model="form.name" required="">
           </div>
           <div class="col-6">
             <label for="email" class="form-label">Email:</label>
             <!-- {{ form.email }} -->
-            <input type="email" name="email" id="email" class="form-control" placeholder="Your email" v-model="form.email"
-              autocomplete="off">
+            <input type="email" name="email" id="email" class="form-control" placeholder="Your email"
+              v-model="form.email" required="">
           </div>
         </div>
         <div class="row mb-3">
@@ -41,7 +40,7 @@
             <label for="theme" class="form-label">Theme:</label>
             <!-- {{ form.theme }} -->
             <input type="text" name="theme" id="theme" class="form-control" placeholder="Feedback theme"
-              v-model="form.theme">
+              v-model="form.theme" required="">
           </div>
         </div>
         <div class="row mb-3">
@@ -49,7 +48,7 @@
             <label for="message" class="form-label">Message:</label>
             <!-- {{ form.message }} -->
             <textarea name="message" id="message" cols="30" rows="5" class="form-control"
-              placeholder="Your feedback up to 1000 symbols." v-model="form.message"></textarea>
+              placeholder="Your feedback up to 1000 symbols." v-model="form.message" required=""></textarea>
           </div>
         </div>
         <div class="d-flex justify-content-center">

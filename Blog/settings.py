@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "Blog__main.apps.BlogMainConfig",
     "rest_framework",
-    'corsheaders',
+    'rest_framework_simplejwt',
+    "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
     "crispy_bootstrap5",
     "crispy_forms",
     "taggit",
@@ -162,8 +164,7 @@ LOGOUT_REDIRECT_URL = "/"
 ####################################
 ##  DRF CONFIGURATION ##
 ####################################
-# JWT settings
-LOGIN_URL = "/api/signin/"
+TOKEN_BLACKLIST_SERIALIZER = "rest_framework_simplejwt.serializers.TokenBlacklistSerializer"
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
@@ -171,8 +172,8 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=60),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=120),
 }
 
 REST_FRAMEWORK = {

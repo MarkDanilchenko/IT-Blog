@@ -28,41 +28,48 @@
             <!-- {% else %} -->
             <nuxt-link to="/feedback" class="nav-link">Feedback</nuxt-link>
             <!-- {% endif %} {% if user.is_authenticated %} -->
-            <span class="badge bg-secondary rounded-pill ms-lg-5">Welcome, ...</span>
+            <span class="badge bg-success rounded-pill ms-lg-5 shadow" v-if="userSignedIn">{{
+              (this.$auth.user.username).toUpperCase() }}</span>
             <!-- {% endif %} -->
           </div>
           <form class="d-flex my-lg-0 my-3">
             <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search..."
-              style="text-align: left" aria-label="Search" />
-            <button class="btn btn-outline-success me-2" type="submit" @click.prevent="submitSearch">
+              style="text-align: left" aria-label="Search" required="" />
+            <button class="btn btn-outline-success me-2" type="submit" @click.prevent="submitSearch" :disabled="!q">
               Search
             </button>
           </form>
           <div class="d-flex justify-content-center">
             <!-- {% if user.is_authenticated %} -->
-            <nuxt-link to="/" class="btn btn-outline-danger me-2">Logout</nuxt-link>
-            <!-- {% else %} {% if '/accounts/login/?next' in request.get_full_path
-              %} -->
-            <!-- <a
-                href="{% url 'login' %}?next={{request.path}}"
-                class="btn btn-outline-secondary active me-2"
-                >Sign&nbsp;in</a
-              > -->
-            <!-- {% else %} -->
-            <nuxt-link to="/" class="btn btn-outline-secondary me-2">Sign&nbsp;in</nuxt-link>
-            <!-- {% endif %} {% if '/accounts/signup?next' in request.get_full_path
-              %} -->
-            <!-- <a
-                href="{% url 'signup' %}?next={{request.path}}"
-                class="btn btn-outline-secondary active me-2"
-                >Sign&nbsp;up</a
-              >
-              {% else %} -->
-            <nuxt-link to="/" class="btn btn-outline-secondary me-2">Sign&nbsp;up</nuxt-link>
+            <client-only>
+              <div v-if="userSignedIn">
+                <nuxt-link to="/accounts/signout/" class="btn btn-outline-danger me-lg-2">Sign&nbsp;out</nuxt-link>
+              </div>
+              <!-- {% else %} {% if '/accounts/login/?next' in request.get_full_path
+                %} -->
+              <!-- <a
+                  href="{% url 'login' %}?next={{request.path}}"
+                  class="btn btn-outline-secondary active me-2"
+                  >Sign&nbsp;in</a
+                > -->
+              <!-- {% else %} -->
+              <div v-else>
+                <nuxt-link to="/accounts/signin/" class="btn btn-outline-secondary me-2">Sign&nbsp;in</nuxt-link>
+                <!-- {% endif %} {% if '/accounts/signup?next' in request.get_full_path
+                  %} -->
+                <!-- <a
+                    href="{% url 'signup' %}?next={{request.path}}"
+                    class="btn btn-outline-secondary active me-2"
+                    >Sign&nbsp;up</a
+                  >
+                  {% else %} -->
+                <nuxt-link to="/accounts/signup/" class="btn btn-outline-secondary me-lg-2">Sign&nbsp;up</nuxt-link>
+              </div>
+            </client-only>
             <!-- {% endif %} {% endif %} -->
           </div>
           <!-- colorMode switcher -->
-          <div class="mt-lg-0 mt-1 m-0 d-flex flex-column align-items-center justify-content-center">
+          <div class="mt-lg-0 mt-3 m-0 d-flex flex-column align-items-center justify-content-center">
             <input type="checkbox" id="colorMode_switcher" />
             <label for="colorMode_switcher">
               <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -127,6 +134,11 @@ export default {
   methods: {
     submitSearch() {
       this.$router.push("/search/?q=" + this.q);
+    },
+  },
+  computed: {
+    userSignedIn() {
+      return this.$auth.user;
     },
   },
 };

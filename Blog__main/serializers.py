@@ -13,8 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
         first_name = validated_data["first_name"]
         last_name = validated_data["last_name"]
         email = validated_data["email"]
+        phone = validated_data["phone"]
         user = models.User(
-            username=username, first_name=first_name, last_name=last_name, email=email
+            username=username, first_name=first_name, last_name=last_name, email=email, phone=phone
         )
         user.set_password(password)
         user.save()

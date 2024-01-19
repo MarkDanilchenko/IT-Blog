@@ -7,6 +7,7 @@ from fuzzywuzzy import fuzz, process
 from rest_framework import viewsets, permissions, pagination, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from taggit.models import Tag
 from . import models, forms, serializers
 from django.core.paginator import Paginator
@@ -321,17 +322,15 @@ class ProfileViewSet(viewsets.ModelViewSet):
         user = self.serializer_class(request.user).data
         return Response(
             {
-                "User Information": {
-                    "username": user["username"],
-                    "email": user["email"],
-                    "first_name": user["first_name"],
-                    "last_name": user["last_name"],
-                    "date_joined": datetime.datetime.fromisoformat(
-                        user["date_joined"]
-                    ).strftime("%Y-%m-%d %H:%M"),
-                    "last_login": user["last_login"],
-                    "is_staff": user["is_staff"],
-                }
+                "username": user["username"],
+                "email": user["email"],
+                "first_name": user["first_name"],
+                "last_name": user["last_name"],
+                "date_joined": datetime.datetime.fromisoformat(
+                    user["date_joined"]
+                ).strftime("%Y-%m-%d %H:%M"),
+                "last_login": user["last_login"],
+                "is_staff": user["is_staff"],
             },
             status=status.HTTP_200_OK,
         )

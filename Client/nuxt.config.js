@@ -2,6 +2,8 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   // target: "static",
 
+  // .env: { env_settings are set up in ~/assets/env.js }
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: "IT_Blog",
@@ -58,7 +60,42 @@ export default {
     // "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
     ["@nuxtjs/dotenv", { filename: ".env", path: "../" }],
+    "@nuxtjs/auth-next",
   ],
+
+  auth: {
+    strategies: {
+      local: {
+        scheme: "refresh",
+        token: {
+          property: "access",
+          maxAge: 30 * 60,
+          type: "Bearer",
+        },
+        refreshToken: {
+          property: "refresh",
+          maxAge: 120 * 60,
+          data: "refresh",
+        },
+        user: {
+          property: false,
+          autoFetch: true,
+        },
+        endpoints: {
+          login: { url: "/api/token/", method: "post" },
+          logout: false,
+          refresh: { url: "/api/token_refresh/", method: "post" },
+          user: { url: "/api/accounts/profile/", method: "get" },
+        },
+      },
+    },
+  },
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  // BaseURL: for example, for auth (default it uses nuxtjs's localhost:3000)
+  axios: {
+    baseURL: "http://127.0.0.1:8000",
+  },
 
   loading: {
     color: "#000000",
