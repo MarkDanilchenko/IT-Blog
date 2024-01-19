@@ -64,14 +64,13 @@ export default {
                 await this.$auth.loginWith('local', {
                     data: this.form
                 });
-                this.$router.push('/');
             }
             catch (e) {
-                console.log(e);
+                alert(e.message);
             }
         }
     },
-    mounted(){
+    mounted() {
         document.getElementById('form-signIn').username.focus();
     }
 }

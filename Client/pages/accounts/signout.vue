@@ -179,8 +179,8 @@ export default {
             }).then((response) => {
                 $auth.logout();
                 window.location.href = '/accounts/signout/';
-            }).catch((error) => {
-                alert(error);
+            }).catch((e) => {
+                alert(e.message);
             });
         }
     },

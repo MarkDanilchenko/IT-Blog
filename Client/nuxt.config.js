@@ -89,6 +89,14 @@ export default {
         },
       },
     },
+    redirect: {
+      // if signIn is required
+      login: "/accounts/signin/",
+      // after signOunt
+      logout: false,
+      // after signIn
+      home: '/',
+    },
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

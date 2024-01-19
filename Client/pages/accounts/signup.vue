@@ -22,7 +22,7 @@
                     <div class="mb-3">
                         <label for="username" class="form-label">Username *</label>
                         <input type="text" name="username" id="username" class="form-control" placeholder="Username"
-                            aria-describedby="usernameHelp" v-model="form.username">
+                            aria-describedby="usernameHelp" v-model="form.username" required="">
                         <div id="usernameHelp" class="form-text text-small">150 characters or fewer. Letters,
                             digits and @/./+/-/_ only. <br>Required.</div>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address *</label>
                         <input type="email" name="email" id="email" class="form-control" placeholder="Email address"
-                            aria-describedby="emailHelp" v-model="form.email">
+                            aria-describedby="emailHelp" v-model="form.email" required="">
                         <div id="emailHelp" class="form-text text-small">Enter a valid email address. <br>Required.</div>
                     </div>
                     <div class="mb-3">
@@ -52,15 +52,15 @@
                             format _(___)___-__-__.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="password1" class="form-label">Password *</label>
-                        <input type="password" name="password1" id="password1" class="form-control" placeholder="Password"
-                            aria-describedby="passwordHelp" v-model="form.password1">
+                        <label for="password" class="form-label">Password *</label>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password"
+                            aria-describedby="passwordHelp" v-model="form.password" required="">
                         <div id="passwordHelp" class="form-text text-small">Enter a valid password. <br>Required.</div>
                     </div>
                     <div class="mb-3">
                         <label for="password2" class="form-label">Password confirmation *</label>
                         <input type="password" name="password2" id="password2" class="form-control" placeholder="Password"
-                            aria-describedby="password2Help" v-model="form.password2">
+                            aria-describedby="password2Help" v-model="form.password2" required="">
                         <div id="password2Help" class="form-text text-small">Confirm your password. <br>Required.</div>
                     </div>
                 </fieldset>
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "Signup",
     data() {
@@ -94,10 +95,44 @@ export default {
                 last_name: '',
                 email: '',
                 phone: '',
-                password1: '',
+                password: '',
                 password2: '',
             }
         }
     },
+    methods: {
+        async signUp() {
+            try {
+                let signUpFormData = new FormData();
+                signUpFormData.append('username', this.form.username);
+                signUpFormData.append('first_name', this.form.first_name);
+                signUpFormData.append('last_name', this.form.last_name);
+                signUpFormData.append('email', this.form.email);
+                signUpFormData.append('phone', this.form.phone);
+                if (this.form.password == this.form.password2) {
+                    signUpFormData.append('password', this.form.password);
+                    signUpFormData.append('password2', this.form.password2);
+                } else {
+                    throw new Error('Passwords do not match!');
+                }
+                await axios.post('http://127.0.0.1:8000/api/accounts/signup/', signUpFormData).then((response) => {
+                    console.log(response.data.message);
+                }).then(() => {
+                    this.$auth.loginWith('local', {
+                        data: {
+                            username: this.form.username,
+                            password: this.form.password
+                        }
+                    })
+                })
+            }
+            catch (e) {
+                alert(e.message);
+            }
+        }
+    },
+    mounted() {
+        document.getElementById('form-signUp').username.focus();
+    }
 }
 </script>

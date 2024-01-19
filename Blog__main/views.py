@@ -303,14 +303,24 @@ class SignUpViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
-        result = self.serializer_class(data=request.data)
-        result.is_valid(raise_exception=True)
-        user = result.save()
-        # .save() calls def create() serializer's method
-        return Response(
-            {"message": f'User: "{user.username}" is successfully created!'},
-            status=status.HTTP_201_CREATED,
-        )
+        # The above code is checking if the value of the "password" field in the request data is not
+        # equal to the value of the "password2" field in the request data. If the passwords do not
+        # match, it returns a response with an error message stating "Passwords do not match!" and a
+        # status code of 400 (Bad Request).
+        if request.data.get("password") != request.data.get("password2"):
+            return Response(
+                {"error": "Passwords do not match!"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        else:
+            result = self.serializer_class(data=request.data)
+            result.is_valid(raise_exception=True)
+            user = result.save()
+            # .save() calls def create() serializer's method
+            return Response(
+                {"message": f'User: "{user.username}" is successfully created!'},
+                status=status.HTTP_201_CREATED,
+            )
 
 
 # Browse User's Profile information

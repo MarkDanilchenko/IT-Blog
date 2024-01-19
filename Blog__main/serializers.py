@@ -14,6 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
         last_name = validated_data["last_name"]
         email = validated_data["email"]
         phone = validated_data["phone"]
+        if phone == "":
+            phone = None
         user = models.User(
             username=username, first_name=first_name, last_name=last_name, email=email, phone=phone
         )
