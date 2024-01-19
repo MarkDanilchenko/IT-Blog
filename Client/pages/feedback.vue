@@ -24,16 +24,19 @@
         <!-- {% csrf_token %} -->
         <div class="row mb-3">
           <div class="col-6">
-            <label for="name" class="form-label">Name:</label>
+            <h3 class="lead">From</h3>
+            <p>User: <b>{{ form.name }}</b><br>Email: <b>{{ form.email }}</b></p>
+            <!-- <label for="name" class="form-label">Name:</label> -->
             <!-- {{ form.name }} -->
-            <input type="text" name="name" id="name" class="form-control" placeholder="Your name" v-model="form.name" required="">
+            <!-- <input type="text" name="name" id="name" class="form-control" placeholder="Your name" v-model="form.name"
+              required=""> -->
           </div>
-          <div class="col-6">
-            <label for="email" class="form-label">Email:</label>
-            <!-- {{ form.email }} -->
-            <input type="email" name="email" id="email" class="form-control" placeholder="Your email"
-              v-model="form.email" required="">
-          </div>
+          <!-- <div class="col-6"> -->
+          <!-- <label for="email" class="form-label">Email:</label> -->
+          <!-- {{ form.email }} -->
+          <!-- <input type="email" name="email" id="email" class="form-control" placeholder="Your email" v-model="form.email"
+              required=""> -->
+          <!-- </div> -->
         </div>
         <div class="row mb-3">
           <div class="col-12">
@@ -70,8 +73,8 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        email: '',
+        name: this.$auth.user.username,
+        email: this.$auth.user.email,
         theme: '',
         message: ''
       },
@@ -86,7 +89,11 @@ export default {
       feedbackFormData.append('message', this.form.message);
 
       axios
-        .post('http://127.0.0.1:8000/api/feedback/', feedbackFormData)
+        .post('http://127.0.0.1:8000/api/feedback/',
+          // todo: detail: "Authentication credentials were not provided."
+          // token: this.$auth.strategy.token.get().split(' ')[1],
+          {data: JSON.stringify(Object.fromEntries(feedbackFormData))}
+        )
         .then((response) => {
           this.$router.push('/success/');
         })
@@ -97,7 +104,7 @@ export default {
   },
   computed: {
     formIsFilled() {
-      return this.form.name && this.form.email && this.form.theme && this.form.message;
+      return this.form.theme && this.form.message;
     }
   }
 };

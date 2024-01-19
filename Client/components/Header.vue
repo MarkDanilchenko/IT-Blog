@@ -26,7 +26,9 @@
                 >Feedback</a
               > -->
             <!-- {% else %} -->
-            <nuxt-link to="/feedback" class="nav-link">Feedback</nuxt-link>
+            <div v-if="userSignedIn">
+              <nuxt-link to="/feedback" class="nav-link">Feedback</nuxt-link>
+            </div>
             <!-- {% endif %} {% if user.is_authenticated %} -->
             <span class="badge bg-success rounded-pill ms-lg-5 shadow" v-if="userSignedIn">{{
               (this.$auth.user.username).toUpperCase() }}</span>
@@ -54,7 +56,7 @@
                 > -->
               <!-- {% else %} -->
               <div v-else>
-                <nuxt-link to="/accounts/signin/" class="btn btn-outline-secondary me-2">Sign&nbsp;in</nuxt-link>
+                <nuxt-link to="/accounts/signin/" class="btn btn-outline-secondary me-1">Sign&nbsp;in</nuxt-link>
                 <!-- {% endif %} {% if '/accounts/signup?next' in request.get_full_path
                   %} -->
                 <!-- <a

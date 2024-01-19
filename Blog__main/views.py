@@ -239,11 +239,9 @@ class FeedbackView(APIView):
             theme = result.data.get("theme")
             message = result.data.get("message")
             print(
-                f"Feedback from {name} | theme: {theme}",
-                message,
-                settings.EMAIL_HOST_USER,
-                email,
+                f"Feedback from {name};\ntheme: {theme};\nmessage: {message};\nto: {settings.EMAIL_HOST_USER};\nemail: {email}",
             )
+
             return Response(
                 {"success": "Feedback successfully sent!"}, status=status.HTTP_200_OK
             )
