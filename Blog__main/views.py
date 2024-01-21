@@ -243,7 +243,8 @@ class FeedbackView(APIView):
             )
 
             return Response(
-                {"success": "Feedback successfully sent!"}, status=status.HTTP_200_OK
+                {"success": "Feedback was successfully sent!"},
+                status=status.HTTP_200_OK,
             )
         else:
             return Response(
@@ -363,6 +364,9 @@ class Post_CommentViewSet(viewsets.ModelViewSet):
         result.is_valid(raise_exception=True)
         result.save(post=post, user=user, text=request.data.get("text"))
         return Response(
-            {"message": "Comment is successfully created!"},
+            {
+                "message": "Comment is successfully created!",
+                "comment_created_data": result.data,
+            },
             status=status.HTTP_201_CREATED,
         )

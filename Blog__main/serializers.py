@@ -58,6 +58,10 @@ class FeedbackSerializer(serializers.Serializer):
 class Post_CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     post = serializers.StringRelatedField()
+    # The line `created_at = serializers.DateTimeField(format='%Y-%m-%d', read_only=True)` in the
+    # `Post_CommentSerializer` class is defining a serializer field for the `created_at` attribute of
+    # the `Post_Comment` model. Read-only mode is used to convert the datetime object to a definite string format in the RESPONSE ONLY.
+    created_at = serializers.DateTimeField(format='%Y-%m-%d', read_only=True)
 
     class Meta:
         model = models.Post_Comment

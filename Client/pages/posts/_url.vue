@@ -34,7 +34,10 @@
                 <hr />
                 <!-- Comment block -->
                 <!-- {% include './blocks/comments.html' %} -->
-                <Comments />
+                <!-- Comments are loaded via ClientOnly side -->
+                <ClientOnly placeholder="Loading comments...">
+                    <Comments :postComments="postComments" :post="post" />
+                </ClientOnly>
             </div>
             <!-- Sidebar -->
             <!-- {% include './blocks/sidebar.html' %} -->
@@ -60,10 +63,12 @@ export default {
         // currentPostUrl - to exclude this post from the Sidebar
         let currentPostUrl = post.data.url;
         const asidedata = await axios.get(`http://127.0.0.1:8000/api/aside/?exclude=${currentPostUrl}/`)
+        const postComments = await axios.get(`http://127.0.0.1:8000/api/comments/${params.url}/`)
         return {
             post: post.data,
             tags: tags.data,
             asidedata: asidedata.data,
+            postComments: postComments.data
         }
     },
 }

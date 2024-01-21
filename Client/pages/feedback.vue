@@ -90,15 +90,18 @@ export default {
 
       axios
         .post('http://127.0.0.1:8000/api/feedback/',
-          // todo: detail: "Authentication credentials were not provided."
-          // token: this.$auth.strategy.token.get().split(' ')[1],
-          {data: JSON.stringify(Object.fromEntries(feedbackFormData))}
+          feedbackFormData, {
+          headers: {
+            Authorization: `Bearer ${this.$auth.strategy.token.get().split(' ')[1]}`,
+            'Content-Type': 'multipart/form-data'
+          },
+        }
         )
         .then((response) => {
           this.$router.push('/success/');
         })
-        .catch((error) => {
-          alert('Feedback form submission error! Please, check the entered data and try again!');
+        .catch((e) => {
+          console.log(e)
         });
     },
   },

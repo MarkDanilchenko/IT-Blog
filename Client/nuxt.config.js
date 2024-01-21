@@ -69,12 +69,12 @@ export default {
         scheme: "refresh",
         token: {
           property: "access",
-          maxAge: 30 * 60,
+          maxAge: 60,
           type: "Bearer",
         },
         refreshToken: {
           property: "refresh",
-          maxAge: 120 * 60,
+          maxAge: 60 * 60 * 24,
           data: "refresh",
         },
         user: {
