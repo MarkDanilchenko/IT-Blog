@@ -16,7 +16,8 @@
           <div class="col-md-4" v-for="i in posts" :key="i.url">
             <div class="card mb-3 shadow">
               <div class="d-flex flex-column align-items-center justify-content-end">
-                <img :src="i.image" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`" :title="`${i.h1}`" />
+                <img :src="i.image" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`"
+                  :title="`${i.h1}`" />
                 <div class="card-body">
                   <h3 class="card-title text-center">
                     <b>{{ i.h1 }}</b>
@@ -47,6 +48,7 @@
       </div>
       <!-- {% endif %} -->
     </section>
+    <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event"/>
   </div>
 </template>
 
@@ -54,15 +56,22 @@
 
 <script>
 import Carousel from "~/components/Carousel.vue";
+import Pagination from "~/components/Pagination.vue";
 import axios from "axios";
 export default {
   name: "Index",
   components: {
     Carousel,
+    Pagination,
   },
-  async asyncData({ params }) {
+  async asyncData({ }) {
     const { data } = await axios.get("http://127.0.0.1:8000/api/posts/");
-    return { posts: data.results };
+    const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
+    return {
+      posts: data.results,
+      pageRange: pageRange,
+      APIURL: "http://127.0.0.1:8000/api/posts/",
+    };
   },
 };
 </script>

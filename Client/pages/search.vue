@@ -31,7 +31,8 @@
                             <div class="d-flex justify-content-between text-muted text-small align-items-center">
                                 <span class="text-center">Published: {{ i.created_at }}</span>
                                 <span class="text-center">Author: {{ i.author }}</span>
-                                <nuxt-link :to="`/posts/${i.url}/`" class="btn btn-sm btn-outline-success">Read more</nuxt-link>
+                                <nuxt-link :to="`/posts/${i.url}/`" class="btn btn-sm btn-outline-success">Read
+                                    more</nuxt-link>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -39,6 +40,7 @@
                         </div>
                     </div>
                     <!-- {% endfor %} -->
+                    <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event" />
                 </div>
                 <!-- {% endif %} -->
             </div>
@@ -48,17 +50,24 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Pagination from '~/components/Pagination.vue';
 export default {
     name: "Search",
     watchQuery: ["q"],
-    async asyncData({ query }) {
+    components: {
+        Pagination
+    },
+    async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
         const { data } = await axios.get(`http://127.0.0.1:8000/api/search/?q=${encodeURIComponent(query.q)}`);
+        const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
         return {
             posts: data.results,
             postsCount: data.count,
             notFound: data.notFound,
-            emptyQuery: data.emptyQuery
+            emptyQuery: data.emptyQuery,
+            pageRange: pageRange,
+            APIURL: `http://127.0.0.1:8000/api/search/`,
         }
     },
 }

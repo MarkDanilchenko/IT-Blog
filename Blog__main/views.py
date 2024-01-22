@@ -175,9 +175,9 @@ import datetime
 
 # pagination class by 3 items for posts
 class PostPagination(pagination.PageNumberPagination):
-    page_size = 3
+    page_size = 2
     page_size_query_param = "page_size"
-    max_page_size = 3
+    max_page_size = 2
 
 
 # Posts and posts_detailed viewSet

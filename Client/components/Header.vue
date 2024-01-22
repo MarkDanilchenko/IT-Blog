@@ -136,6 +136,7 @@ export default {
   methods: {
     submitSearch() {
       this.$router.push("/search/?q=" + this.q);
+      this.q = '';
     },
   },
   computed: {

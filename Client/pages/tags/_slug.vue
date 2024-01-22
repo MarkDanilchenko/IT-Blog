@@ -30,7 +30,8 @@
                                 <!-- {% for j in i.tag.all %} -->
                                 <div class="d-flex flex-wrap">
                                     <div v-for="j in i.tag" :key="j">
-                                        <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ j
+                                        <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{
+                                            j
                                         }}</nuxt-link>
                                     </div>
                                 </div>
@@ -47,23 +48,29 @@
                 <!-- {% endfor %} -->
             </div>
         </section>
+        <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event"/>
     </div>
 </template>
 
 <script>
 import axios from "axios";
 import Carousel from "~/components/Carousel.vue";
+import Pagination from "~/components/Pagination.vue";
 export default {
     name: "PostByTag",
     components: {
         Carousel,
+        Pagination
     },
-    async asyncData({ params }) {
+    async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
         const { data } = await axios.get(`http://127.0.0.1:8000/api/tags/${params.slug}/`);
         const tags = await axios.get(`http://127.0.0.1:8000/api/tags/`);
+        const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
         return {
             posts: data.results,
-            tags: tags.data
+            tags: tags.data,
+            pageRange: pageRange,
+            APIURL: `http://127.0.0.1:8000/api/tags/${params.slug}/`,
         }
     }
 }
