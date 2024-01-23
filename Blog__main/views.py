@@ -308,7 +308,12 @@ class SignUpViewSet(viewsets.ModelViewSet):
         # status code of 400 (Bad Request).
         if request.data.get("password") != request.data.get("password2"):
             return Response(
-                {"error": "Passwords do not match!"},
+                {"password": ["Passwords do not match! Please, try again!"]},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        elif request.data.get("email") is None or request.data.get("email") == "":
+            return Response(
+                {"email": ["Email cannot be empty! Please, try again!"]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         else:

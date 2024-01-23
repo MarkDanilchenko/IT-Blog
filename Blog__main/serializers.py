@@ -17,7 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
         if phone == "":
             phone = None
         user = models.User(
-            username=username, first_name=first_name, last_name=last_name, email=email, phone=phone
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            phone=phone,
         )
         user.set_password(password)
         user.save()
@@ -31,7 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tag = TagListSerializerField()
     author = serializers.StringRelatedField()
-    created_at = serializers.DateTimeField(format='%Y-%m-%d')
+    created_at = serializers.DateTimeField(format="%Y-%m-%d")
 
     class Meta:
         model = models.Post
@@ -51,8 +55,8 @@ class TagSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100, required=True)
     email = serializers.EmailField(max_length=100, required=True)
-    theme = serializers.CharField(max_length=250, required=True)
-    message = serializers.CharField(max_length=1000, required=True)
+    theme = serializers.CharField(max_length=150, min_length=1, required=True)
+    message = serializers.CharField(max_length=1000, min_length=1, required=True)
 
 
 class Post_CommentSerializer(serializers.ModelSerializer):
@@ -61,8 +65,8 @@ class Post_CommentSerializer(serializers.ModelSerializer):
     # The line `created_at = serializers.DateTimeField(format='%Y-%m-%d', read_only=True)` in the
     # `Post_CommentSerializer` class is defining a serializer field for the `created_at` attribute of
     # the `Post_Comment` model. Read-only mode is used to convert the datetime object to a definite string format in the RESPONSE ONLY.
-    created_at = serializers.DateTimeField(format='%Y-%m-%d', read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
     class Meta:
         model = models.Post_Comment
-        fields = '__all__'
+        fields = "__all__"

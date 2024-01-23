@@ -13,8 +13,6 @@ export default {
     meta: [
       { charset: "UTF-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      // { hid: 'description', name: 'description', content: '' },
-      // { name: 'format-detection', content: 'telephone=no' },
       {
         name: "description",
         content:
@@ -25,8 +23,6 @@ export default {
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon/favicon_lg.png" },
     ],
-    // Scripts
-    script: [{}],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -46,6 +42,9 @@ export default {
     {
       src: "~/plugins/js/index.js",
       mode: "client",
+    },
+    {
+      src: "~/plugins/vuelidate.js",
     },
   ],
 
@@ -95,7 +94,7 @@ export default {
       // after signOunt
       logout: false,
       // after signIn
-      home: '/',
+      home: "/",
     },
   },
 

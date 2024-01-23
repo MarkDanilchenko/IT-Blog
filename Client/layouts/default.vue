@@ -14,5 +14,15 @@ export default {
     Header,
     Footer,
   },
+  // SEO
+  head() {
+    return {
+      link: [
+        {
+          rel: 'canonical',
+          href: `http://localhost:3000${this.$route.path}`}
+      ]
+    };
+  },
 };
 </script>

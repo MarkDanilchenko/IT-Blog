@@ -174,8 +174,12 @@ export default {
     async asyncData({ $auth }) {
         if ($auth.loggedIn) {
             await axios.post('http://127.0.0.1:8000/api/accounts/signout/', {
-                token: $auth.strategy.token.get().split(' ')[1],
+                // token: $auth.strategy.token.get().split(' ')[1],
                 refresh: String(`${$auth.strategy.refreshToken.get()}`)
+            }, {
+                headers: {
+                    Authorization: `Bearer ${$auth.strategy.token.get().split(' ')[1]}`,
+                }
             }).then((response) => {
                 $auth.logout();
                 window.location.href = '/accounts/signout/';

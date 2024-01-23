@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Sign in</li>
                 </ol>
             </nav>
-            <form class="col-lg-4" enctype="multipart/form-data" id="form-signIn" name="form-signIn"
+            <form class="col-lg-4 col-6" enctype="multipart/form-data" id="form-signIn" name="form-signIn"
                 @submit.prevent="signIn">
                 <!-- {% csrf_token %} -->
                 <fieldset class="form-group">
@@ -38,6 +38,7 @@
                         in!</button>
                 </div>
             </form>
+            <p class="text-danger mt-3" v-if="error">{{ error }}</p>
             <p class="text-center text-secondary mt-3" style="font-size: smaller">
                 <i>After a successful authentication<br />
                     - redirected to home page.</i>
@@ -55,19 +56,17 @@ export default {
             form: {
                 username: '',
                 password: '',
-            }
+            },
+            error: null
         };
     },
     methods: {
         async signIn() {
-            try {
-                await this.$auth.loginWith('local', {
-                    data: this.form
-                });
-            }
-            catch (e) {
-                alert(e.message);
-            }
+            await this.$auth.loginWith('local', {
+                data: this.form
+            }).catch((e) => {
+                this.error = e.response.data.detail
+            });
         }
     },
     mounted() {
