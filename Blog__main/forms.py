@@ -6,15 +6,19 @@ from . import models
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(
         required=True,
-        help_text="Required. 150 characters or fewer.<br> Letters, digits and @/./+/-/_ only.",
+        max_length=150,
+        label="Username",
+        help_text="Required. 150 characters or fewer.",
     )
     email = forms.EmailField(
-        required=True, help_text="Required. Add a valid email address.", label="Email"
+        required=True,
+        label="Email",
+        help_text="Required. Add a valid email address.",
     )
 
     phone = forms.CharField(
-        max_length=15,
         required=False,
+        max_length=15,
         label="Phone number",
         help_text="Phone number must contain only 11 digits<br> in format _(___)___-__-__.",
     )
@@ -34,8 +38,8 @@ class UserRegistrationForm(UserCreationForm):
 
 class FeedbackForm(forms.Form):
     name = forms.CharField(
-        max_length=100,
         required=True,
+        max_length=100,
         label="Name",
         widget=forms.TextInput(
             attrs={
@@ -47,8 +51,8 @@ class FeedbackForm(forms.Form):
         ),
     )
     email = forms.EmailField(
-        max_length=100,
         required=True,
+        max_length=100,
         label="Email",
         widget=forms.EmailInput(
             attrs={
@@ -60,29 +64,31 @@ class FeedbackForm(forms.Form):
         ),
     )
     theme = forms.CharField(
-        max_length=250,
-        required=False,
+        required=True,
+        max_length=150,
         label="Theme",
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
                 "placeholder": "Enter a theme...",
+                "required": "required",
                 "id": "theme",
             }
         ),
     )
 
     message = forms.CharField(
-        max_length=1000,
         required=True,
+        max_length=1000,
         label="Message",
         widget=forms.Textarea(
             attrs={
                 "class": "form-control",
                 "placeholder": "Enter a message...",
-                "id": "message",
                 "required": "required",
+                "id": "message",
                 "rows": "5",
+                "cols": "30",
             }
         ),
     )
@@ -90,14 +96,16 @@ class FeedbackForm(forms.Form):
 
 class Post_CommentForm(forms.ModelForm):
     text = forms.CharField(
-        max_length=1000,
         required=True,
+        max_length=1000,
         label="",
-        help_text="Max: 1000 symbols",
+        help_text="Up to 1000 symbols",
         widget=forms.Textarea(
             attrs={
                 "class": "form-control",
                 "placeholder": "Enter your comment ...",
+                "required": "required",
+                "id": "comment",
                 "rows": 5,
                 "cols": 50,
             }

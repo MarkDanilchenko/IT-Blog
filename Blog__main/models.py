@@ -65,13 +65,29 @@ class Post(models.Model):
 
 class Post_Comment(models.Model):
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, verbose_name="Post", help_text="Comment on post", related_name="post_comments")
-    # post link to Post.title
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="User", help_text="User's comment", related_name="user_comments"
+        Post,
+        on_delete=models.CASCADE,
+        verbose_name="Post",
+        help_text="Comment on post",
+        related_name="post_comments",
     )
-    # user link to User.username
-    text = models.TextField(verbose_name="Comment", help_text="Comment text (max: 1000 symbols)", max_length=1000)
+    # this post field is linked to Post.title
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="User",
+        help_text="User's comment",
+        related_name="user_comments",
+    )
+    # this user field is linked to User.username
+
+    text = models.TextField(
+        max_length=1000,
+        verbose_name="Comment",
+        help_text="Comment text (max: 1000 symbols)",
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Created at",
@@ -84,4 +100,4 @@ class Post_Comment(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f'{self.text[:20]}...'
+        return f"{self.text[:20]}..."

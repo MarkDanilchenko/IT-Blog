@@ -1,7 +1,5 @@
 <template>
-    <!-- {% extends 'base.html' %} {% load static %} {% block title %} Sign in {% endblock %} {% block content %} -->
     <div class="mt-3 row">
-        <!-- {% load crispy_forms_tags %} -->
         <div class="d-flex flex-column align-items-center">
             <nav aria-label="breadcrumb" class="my-3">
                 <ol class="breadcrumb">
@@ -13,13 +11,11 @@
             </nav>
             <form class="col-lg-4 col-6" enctype="multipart/form-data" id="form-signIn" name="form-signIn"
                 @submit.prevent="signIn">
-                <!-- {% csrf_token %} -->
                 <fieldset class="form-group">
                     <nuxt-link to="/" class="d-flex align-items-center justify-content-center mb-3">
                         <img src="/favicon/favicon_lg.png" width="50" height="50" alt="Home page logo" title="Home page" />
                     </nuxt-link>
                     <legend class="border-bottom mb-4 text-center"><b>Sign in</b></legend>
-                    <!-- {{ form | crispy }} -->
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" name="username" id="username" class="form-control" placeholder="Username"
@@ -34,18 +30,15 @@
                     </div>
                 </fieldset>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-outline-success">Sign
-                        in!</button>
+                    <button type="submit" class="btn btn-outline-success">Sign in!</button>
                 </div>
             </form>
             <p class="text-danger mt-3" v-if="error">{{ error }}</p>
             <p class="text-center text-secondary mt-3" style="font-size: smaller">
-                <i>After a successful authentication<br />
-                    - redirected to home page.</i>
+                <i>After a successful authentication<br /> - redirected to home page.</i>
             </p>
         </div>
     </div>
-    <!-- {% endblock %} -->
 </template>
 
 <script>

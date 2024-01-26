@@ -60,7 +60,7 @@ class Post_Admin(admin.ModelAdmin):
         ),
     )
     list_display = ("h1", "title", "url", "created_at", "author")
-    search_fields = ("title", "tag", "author")
+    search_fields = ("h1", "title", "tag", "author")
     list_filter = ("created_at", "author")
     ordering = ("-created_at",)
     readonly_fields = ("created_at",)
@@ -89,6 +89,7 @@ class Post_Comment_Admin(admin.ModelAdmin):
     list_display = ("post", "user", "text", "created_at")
     search_fields = ("post", "user")
     list_filter = ("created_at",)
+    readonly_fields = ("created_at",)
     ordering = ("-created_at",)
 
 

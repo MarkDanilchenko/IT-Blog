@@ -1,12 +1,11 @@
 from rest_framework import serializers
-from rest_framework.settings import api_settings
 from taggit.models import Tag
 from taggit_serializer.serializers import TagListSerializerField, TaggitSerializer
-from . import models, forms
+from . import models
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # SIGN UP method
+    # SIGN UP
     def create(self, validated_data):
         username = validated_data["username"]
         password = validated_data["password"]
@@ -40,6 +39,9 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = models.Post
         fields = "__all__"
+        # In the `PostSerializer` class, `lookup_field = "url"` and `extra_kwargs = {"data":
+        # {"lookup_field": "url"}}` are used to specify the field to be used as the lookup field when
+        # retrieving or updating instances of the `Post` model.
         lookup_field = "url"
         extra_kwargs = {"data": {"lookup_field": "url"}}
 
@@ -48,6 +50,9 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ("slug",)
+        # In the `PostSerializer` and `TagSerializer` classes, `lookup_field = "slug"` and
+        # `extra_kwargs = {"data": {"lookup_field": "slug"}}` are used to specify the field to be used
+        # as the lookup field when retrieving or updating instances of the `Post` and `Tag` models.
         lookup_field = "slug"
         extra_kwargs = {"data": {"lookup_field": "slug"}}
 
@@ -64,7 +69,7 @@ class Post_CommentSerializer(serializers.ModelSerializer):
     post = serializers.StringRelatedField()
     # The line `created_at = serializers.DateTimeField(format='%Y-%m-%d', read_only=True)` in the
     # `Post_CommentSerializer` class is defining a serializer field for the `created_at` attribute of
-    # the `Post_Comment` model. Read-only mode is used to convert the datetime object to a definite string format in the RESPONSE ONLY.
+    # the `Post_Comment` model. Read_only attribute is used to convert the datetime to a definite format="%Y-%m-%d" in the RESPONSE ONLY.
     created_at = serializers.DateTimeField(format="%Y-%m-%d", read_only=True)
 
     class Meta:

@@ -5,21 +5,19 @@
             <div class="mb-3 mt-5 text-center">
                 <p class="lead"><b>Other #tags:</b></p>
                 <div class="d-flex justify-content-center flex-wrap">
-                    <!-- {% for i in common_tags %} -->
                     <div v-for="i in tags" :key="i.slug">
-                        <nuxt-link :to="`/tags/${i.slug}/`" class="nav-link me-3">#{{ i.slug }}</nuxt-link>
+                        <nuxt-link v-if="i.slug != $route.params.slug" :to="`/tags/${i.slug}/`" class="nav-link me-3">#{{ i.slug }}</nuxt-link>
+                        <nuxt-link v-if="i.slug == $route.params.slug" :to="`/tags/${i.slug}/`" class="nav-link me-3" style="color: rgb(7, 151, 98) !important;">#{{ i.slug }}</nuxt-link>
                     </div>
-                    <!-- {% endfor %} -->
                 </div>
             </div>
             <div class="d-flex justify-content-center">
                 <hr class="mb-4 mt-0" style="width: 50%" />
             </div>
-            <!-- cards -->
-            <!-- cards -->
-            <!-- cards -->
+            <!-- Posts cards -->
+            <!-- Posts cards -->
+            <!-- Posts cards -->
             <div class="row d-flex justify-content-center">
-                <!-- {% for i in page_obj %} -->
                 <div class="col-md-4" v-for="i in posts" :key="i.url">
                     <div class="card mb-3 shadow">
                         <div class="d-flex flex-column align-items-center justify-content-end">
@@ -27,7 +25,6 @@
                             <div class="card-body">
                                 <h3 class="card-title text-center"><b>{{ i.h1 }}</b></h3>
                                 <div class="card-text" v-html="i.description"></div>
-                                <!-- {% for j in i.tag.all %} -->
                                 <div class="d-flex flex-wrap">
                                     <div v-for="j in i.tag" :key="j">
                                         <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{
@@ -35,7 +32,6 @@
                                         }}</nuxt-link>
                                     </div>
                                 </div>
-                                <!-- {% endfor %} -->
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <nuxt-link :to="`/posts/${i.url}/`"
                                         class="btn btn-sm btn-outline-secondary">More</nuxt-link>
@@ -45,10 +41,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- {% endfor %} -->
             </div>
         </section>
-        <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event"/>
+        <Pagination :pageRange="pageRange" :CLIENT_API_URL="CLIENT_API_URL" @changePage="posts = $event" class="mt-3"/>
     </div>
 </template>
 
@@ -63,14 +58,14 @@ export default {
         Pagination
     },
     async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/tags/${params.slug}/`);
-        const tags = await axios.get(`http://127.0.0.1:8000/api/tags/`);
-        const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
+        const { data } = await axios.get(`${process.env.API_URL}/api/tags/${params.slug}/`);
+        const tags = await axios.get(`${process.env.API_URL}/api/tags/`);
+        const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
         return {
             posts: data.results,
             tags: tags.data,
             pageRange: pageRange,
-            APIURL: `http://127.0.0.1:8000/api/tags/${params.slug}/`,
+            CLIENT_API_URL: `${process.env.API_URL}/api/tags/${params.slug}/`,
         }
     }
 }

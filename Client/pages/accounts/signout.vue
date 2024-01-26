@@ -10,6 +10,8 @@
                 </ol>
             </nav>
             <!-- sign out logo -->
+            <!-- sign out logo -->
+            <!-- sign out logo -->
             <div class="text-center lead">
                 <div class="mod">
                     <div class="cube">
@@ -173,8 +175,7 @@ export default {
     name: "Signout",
     async asyncData({ $auth }) {
         if ($auth.loggedIn) {
-            await axios.post('http://127.0.0.1:8000/api/accounts/signout/', {
-                // token: $auth.strategy.token.get().split(' ')[1],
+            await axios.post(`${process.env.API_URL}/api/accounts/signout/`, {
                 refresh: String(`${$auth.strategy.refreshToken.get()}`)
             }, {
                 headers: {

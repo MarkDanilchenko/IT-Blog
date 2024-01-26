@@ -7,177 +7,21 @@ from fuzzywuzzy import fuzz, process
 from rest_framework import viewsets, permissions, pagination, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
 from taggit.models import Tag
 from . import models, forms, serializers
 from django.core.paginator import Paginator
 import datetime
 
-
-# # SIGN UP
-# def signup(request):
-#     if request.method == "POST":
-#         form = forms.UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get("username")
-#             password = form.cleaned_data.get("password1")
-#             signIn = authenticate(username=username, password=password)
-#             login(request, signIn)
-#             return redirect("/")
-#     else:
-#         form = forms.UserRegistrationForm()
-#     return render(request, "registration/signup.html", {"form": form})
-
-
-# # LOG OUT
-# def logout_view(request):
-#     logout(request)
-#     next = request.GET.get("next")
-#     return redirect(f"{next}")
-
-
-# # display all posts at the main page
-# def index(request):
-#     result = models.Post.objects.all()
-#     paginator = Paginator(result, per_page=3)
-#     page_number = request.GET.get("page")
-#     page_obj = paginator.get_page(page_number)
-#     return render(request, "index.html", {"page_obj": page_obj})
-
-
-# # submit post's comments and return to the state before form's submition
-# def post_comment(request, slug):
-#     if request.method == "POST":
-#         form = forms.Post_CommentForm(request.POST)
-#         form.instance.user = request.user
-#         form.instance.post = models.Post.objects.get(url=slug)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
-
-
-# # display post's detailed info
-# def post_detail(request, slug):
-#     post = get_object_or_404(models.Post, url=slug)
-#     common_tags = models.Post.tag.most_common()
-
-#     # for most related posts for sidebar
-#     last_posts = models.Post.objects.exclude(url=slug).order_by("-created_at")[:3]
-
-#     # comment form for post
-#     commentForm = forms.Post_CommentForm()
-#     return render(
-#         request,
-#         "post_detail.html",
-#         {
-#             "post": post,
-#             "common_tags": common_tags,
-#             "last_posts": last_posts,
-#             "commentForm": commentForm,
-#         },
-#     )
-
-
-# # FEEDBACK
-# def feedback(request):
-#     if request.method == "POST":
-#         form = forms.FeedbackForm(request.POST)
-#         if form.is_valid():
-#             name = form.cleaned_data["name"]
-#             email = form.cleaned_data["email"]
-#             theme = form.cleaned_data["theme"]
-#             message = form.cleaned_data["message"]
-#             try:
-#                 print(
-#                     f"Feedback from {name} | theme: {theme}",
-#                     message,
-#                     settings.EMAIL_HOST_USER,
-#                     email,
-#                 )
-#                 # send_mail(
-#                 #     f"Feedback from {name} | theme: {theme}",
-#                 #     message,
-#                 #     settings.EMAIL_HOST_USER,
-#                 #     email,
-#                 # )
-#             except Exception:
-#                 pass
-#             return HttpResponseRedirect("success")
-#         return render(request, "feedback.html", {"form": form})
-#     else:
-#         form = forms.FeedbackForm()
-#     return render(request, "feedback.html", {"form": form})
-
-
-# # FEEDBACK successfully sent
-# def success(request):
-#     return render(request, "success.html")
-
-
-# # search for posts
-# def search(request):
-#     try:
-#         userSearch = request.GET["search"]
-#         if userSearch == "":
-#             raise Exception
-#         else:
-#             result = models.Post.objects.all()
-#             for i in result:
-#                 if (
-#                     (fuzz.partial_ratio(userSearch, str(i.title)) > 70)
-#                     or (fuzz.partial_ratio(userSearch, str(i.h1)) > 70)
-#                     or (fuzz.partial_ratio(userSearch, str(i.description)) > 70)
-#                     or (fuzz.partial_ratio(userSearch, str(i.content)) > 70)
-#                 ):
-#                     continue
-#                 else:
-#                     result = result.exclude(id=i.pk)
-#             else:
-#                 if len(result) == 0:
-#                     notFound = (
-#                         "Sorry, but there are no results for your search &#129764;"
-#                     )
-#                     return render(request, "search.html", {"notFound": notFound})
-#                 else:
-#                     resultCount = len(result)
-#                     paginator = Paginator(result, per_page=3)
-#                     page_number = request.GET.get("page")
-#                     page_obj = paginator.get_page(page_number)
-#                     return render(
-#                         request,
-#                         "search.html",
-#                         {"page_obj": page_obj, "resultCount": resultCount},
-#                     )
-#     except Exception:
-#         return redirect(request.META["HTTP_REFERER"])
-
-
-# # search post by tag
-# def tag_detail(request, slug):
-#     tag = get_object_or_404(Tag, slug=slug)
-#     common_tags = models.Post.tag.most_common()
-#     posts = models.Post.objects.filter(tag=tag)
-#     pagiantor = Paginator(posts, per_page=3)
-#     page_number = request.GET.get("page")
-#     page_obj = pagiantor.get_page(page_number)
-#     return render(
-#         request,
-#         "tag.html",
-#         {"title": f"#{tag}", "page_obj": page_obj, "common_tags": common_tags},
-#     )
-
-
 # --------------------REST API----------------------
 # --------------------REST API----------------------
 # --------------------REST API----------------------
 
 
-# pagination class by 3 items for posts
+# pagination class by 3 items per page
 class PostPagination(pagination.PageNumberPagination):
-    page_size = 2
+    page_size = 3
     page_size_query_param = "page_size"
-    max_page_size = 2
+    max_page_size = 3
 
 
 # Posts and posts_detailed viewSet
@@ -187,9 +31,9 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     pagination_class = PostPagination
     lookup_field = "url"
-    # search for posts
-    search_fields = ["title", "h1", "description", "content"]
-    filter_backends = [filters.SearchFilter]
+    # DRF SEARCH posts'
+    # search_fields = ["title", "h1", "description", "content"]
+    # filter_backends = [filters.SearchFilter]
 
 
 # Tag viewSet
@@ -266,15 +110,15 @@ class SearchView(APIView):
     pagination_class = PostPagination
 
     def get(self, request, *args, **kwargs):
-        if request.query_params.get("q") != "":
-            q = request.query_params.get("q")
-            result = models.Post.objects.all()
+        if self.request.GET.get("q"):
+            q = self.request.GET.get("q").lower()
+            result = models.Post.objects.all().order_by("-created_at")
             for i in result:
                 if (
-                    (fuzz.partial_ratio(q, str(i.title)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.h1)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.description)) > 70)
-                    or (fuzz.partial_ratio(q, str(i.content)) > 70)
+                    (fuzz.partial_ratio(q, str(i.title)) > 60)
+                    or (fuzz.partial_ratio(q, str(i.h1)) > 60)
+                    or (fuzz.partial_ratio(q, str(i.description)) > 60)
+                    or (fuzz.partial_ratio(q, str(i.content)) > 60)
                 ):
                     continue
                 else:
@@ -282,7 +126,7 @@ class SearchView(APIView):
             else:
                 if len(result) == 0:
                     notFound = "Sorry, but there are no results for your search!"
-                    return Response({"notFound": notFound})
+                    return Response({"error": notFound})
                 else:
                     paginator = self.pagination_class()
                     paginated_result = paginator.paginate_queryset(result, request)
@@ -293,7 +137,7 @@ class SearchView(APIView):
                     return paginator.get_paginated_response(serialized_result)
         else:
             emptyQuery = "Please, enter Your search query!"
-            return Response({"emptyQuery": emptyQuery})
+            return Response({"error": emptyQuery})
 
 
 # SIGN UP
@@ -308,12 +152,12 @@ class SignUpViewSet(viewsets.ModelViewSet):
         # status code of 400 (Bad Request).
         if request.data.get("password") != request.data.get("password2"):
             return Response(
-                {"password": ["Passwords do not match! Please, try again!"]},
+                {"error": ["Passwords do not match! Please, try again!"]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         elif request.data.get("email") is None or request.data.get("email") == "":
             return Response(
-                {"email": ["Email cannot be empty! Please, try again!"]},
+                {"error": ["Email cannot be empty! Please, try again!"]},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         else:
@@ -330,7 +174,7 @@ class SignUpViewSet(viewsets.ModelViewSet):
 # Browse User's Profile information
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         user = self.serializer_class(request.user).data

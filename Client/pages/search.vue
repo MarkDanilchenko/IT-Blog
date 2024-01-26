@@ -1,9 +1,4 @@
 <template>
-    <!-- {% extends 'base.html' %} {% load static %} -->
-    <!-- blokc title -->
-    <!-- {% block title %}Search{% endblock %} -->
-    <!-- block content -->
-    <!-- {% block content %} -->
     <div class="my-post-detail">
         <div class="row">
             <div class="col-10 offset-1">
@@ -15,15 +10,16 @@
                         <li class="breadcrumb-item active" aria-current="page">Search &#128270;</li>
                     </ol>
                 </nav>
-                <!-- {% if notFound %} -->
-                <div v-if="notFound" class="text-center lead mt-5">Posts found: 0<br><br>{{ notFound }}</div>
-                <!-- <p class="text-center lead">Posts found: 0<br />{{ notFound | safe }}</p> -->
-                <div v-else-if="emptyQuery" class="text-center lead mt-5">Posts found: 0<br><br>{{ emptyQuery }}</div>
-                <!-- {% else %} -->
+                <!-- empty search result -->
+                <!-- empty search result -->
+                <!-- empty search result -->
+                <div v-if="error" class="text-center lead mt-5">Posts found: 0<br><br>{{ error }}</div>
+                <!-- search result -->
+                <!-- search result -->
+                <!-- search result -->
                 <div v-else>
                     <p class="text-center lead mt-5">Posts found: {{ postsCount }}</p>
                     <div class="p-3">
-                        <!-- {% for i in page_obj %} -->
                         <div v-for="i in posts" :key="i.url" class="mb-3 shadow-sm rounded-2 p-3">
                             <nuxt-link :to="`/posts/${i.url}/`" class="nav-link"><b>{{ i.h1 }}</b></nuxt-link>
                             <span class="text-muted text-small">Short description:</span>
@@ -39,14 +35,11 @@
                             <hr style="width: 50%" />
                         </div>
                     </div>
-                    <!-- {% endfor %} -->
-                    <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event" />
+                    <Pagination :pageRange="pageRange" :CLIENT_API_URL="CLIENT_API_URL" @changePage="posts = $event"  class="mt-3"/>
                 </div>
-                <!-- {% endif %} -->
             </div>
         </div>
     </div>
-    <!-- {% endblock %} -->
 </template>
 
 <script>
@@ -59,15 +52,14 @@ export default {
         Pagination
     },
     async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-        const { data } = await axios.get(`http://127.0.0.1:8000/api/search/?q=${encodeURIComponent(query.q)}`);
-        const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
+        const { data } = await axios.get(`${process.env.API_URL}/api/search/?q=${encodeURIComponent(query.q)}`);
+        const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
         return {
             posts: data.results,
             postsCount: data.count,
-            notFound: data.notFound,
-            emptyQuery: data.emptyQuery,
+            error: data.error,
             pageRange: pageRange,
-            APIURL: `http://127.0.0.1:8000/api/search/`,
+            CLIENT_API_URL: `${process.env.API_URL}/api/search/`,
         }
     },
 }

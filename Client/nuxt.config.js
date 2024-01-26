@@ -1,8 +1,8 @@
+require("dotenv").config({ path: "../.env", override: true });
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   // target: "static",
-
-  // .env: { env_settings are set up in ~/assets/env.js }
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -16,9 +16,13 @@ export default {
       {
         name: "description",
         content:
-          "This project is a simple test Blog using such technologies: NuxtJS, Bootstrap, Django, Django Rest Framework, Webpack",
+          "This project is a simple test Blog using such technologies as: Nuxt2 (NuxtJS), Bootstrap, Django, Django Rest Framework, Webpack, MySQL",
       },
-      { name: "keywords", content: "Blog, Django, NuxtJS, Bootstrap" },
+      {
+        name: "keywords",
+        content:
+          "Blog, Django, Django Rest Framework, Nuxt2 (NuxtJS), Bootstrap, MySQL",
+      },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon/favicon_lg.png" },
@@ -52,15 +56,10 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [],
+  buildModules: [["@nuxtjs/dotenv", { filename: ".env", path: "../" }]],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // "bootstrap-vue/nuxt",
-    "@nuxtjs/axios",
-    ["@nuxtjs/dotenv", { filename: ".env", path: "../" }],
-    "@nuxtjs/auth-next",
-  ],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
   auth: {
     strategies: {
@@ -68,12 +67,12 @@ export default {
         scheme: "refresh",
         token: {
           property: "access",
-          maxAge: 60,
+          maxAge: 60 * 60,
           type: "Bearer",
         },
         refreshToken: {
           property: "refresh",
-          maxAge: 60 * 60 * 24,
+          maxAge: 60 * 60 * 24 * 2,
           data: "refresh",
         },
         user: {
@@ -98,10 +97,20 @@ export default {
     },
   },
 
+  env: {
+    API_URL:
+      process.env.server_HostPort !== ""
+        ? `http://${process.env.server_HostPort}`
+        : "http://127.0.0.1:8000",
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   // BaseURL: for example, for auth (default it uses nuxtjs's localhost:3000)
   axios: {
-    baseURL: "http://127.0.0.1:8000",
+    baseURL:
+      process.env.server_HostPort !== ""
+        ? `http://${process.env.server_HostPort}`
+        : "http://127.0.0.1:8000",
   },
 
   loading: {

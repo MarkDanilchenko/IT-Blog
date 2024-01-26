@@ -1,8 +1,10 @@
 <template>
-  <!-- {% load static %} -->
   <section class="my-navigation">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
+        <!-- Main page logo and links -->
+        <!-- Main page logo and links -->
+        <!-- Main page logo and links -->
         <div>
           <nuxt-link to="/" class="navbar-brand">
             <img src="~/assets/IMG/Python_logo.png" alt="Python" class="navbar-brand" width="30" height="40" />
@@ -12,64 +14,53 @@
           </nuxt-link>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          @click="changeTogglerArrow">
+          <span>&#9660;</span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="navbar-nav me-auto mb-0 d-flex align-items-center">
-            <!-- {% if request.get_full_path == "/" %} -->
-            <!-- <a href="/" class="nav-link active">Main</a> -->
-            <!-- {% else %} -->
-            <nuxt-link to="/" class="nav-link">Main</nuxt-link>
-            <!-- {% endif %} {% if request.get_full_path == "/feedback/" %} -->
-            <!-- <a href="{% url 'feedback' %}" class="nav-link active"
-                >Feedback</a
-              > -->
-            <!-- {% else %} -->
+            <nuxt-link v-if="this.$route.path == '/'" to="/" class="nav-link activeText">Main</nuxt-link>
+            <nuxt-link v-if="this.$route.path != '/'" to="/" class="nav-link">Main</nuxt-link>
             <div v-if="userSignedIn">
-              <nuxt-link to="/feedback" class="nav-link">Feedback</nuxt-link>
+              <nuxt-link v-if="this.$route.path == '/feedback'" to="/feedback" class="nav-link activeText">Feedback</nuxt-link>
+              <nuxt-link v-if="this.$route.path != '/feedback'" to="/feedback" class="nav-link">Feedback</nuxt-link>
             </div>
-            <!-- {% endif %} {% if user.is_authenticated %} -->
             <span class="badge bg-success rounded-pill ms-lg-5 shadow" v-if="userSignedIn">{{
               (this.$auth.user.username).toUpperCase() }}</span>
-            <!-- {% endif %} -->
           </div>
+          <!-- Search form -->
+          <!-- Search form -->
+          <!-- Search form -->
           <form class="d-flex my-lg-0 my-3">
-            <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search..."
-              style="text-align: left" aria-label="Search" required="" />
+            <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search..." aria-label="Search"
+              required="" />
             <button class="btn btn-outline-success me-2" type="submit" @click.prevent="submitSearch" :disabled="!q">
               Search
             </button>
           </form>
+          <!-- Sign in and sign up buttons -->
+          <!-- Sign in and sign up buttons -->
+          <!-- Sign in and sign up buttons -->
           <div class="d-flex justify-content-center">
-            <!-- {% if user.is_authenticated %} -->
             <client-only>
               <div v-if="userSignedIn">
                 <nuxt-link to="/accounts/signout/" class="btn btn-outline-danger me-lg-2">Sign&nbsp;out</nuxt-link>
               </div>
-              <!-- {% else %} {% if '/accounts/login/?next' in request.get_full_path
-                %} -->
-              <!-- <a
-                  href="{% url 'login' %}?next={{request.path}}"
-                  class="btn btn-outline-secondary active me-2"
-                  >Sign&nbsp;in</a
-                > -->
-              <!-- {% else %} -->
               <div v-else>
-                <nuxt-link to="/accounts/signin/" class="btn btn-outline-secondary me-1">Sign&nbsp;in</nuxt-link>
-                <!-- {% endif %} {% if '/accounts/signup?next' in request.get_full_path
-                  %} -->
-                <!-- <a
-                    href="{% url 'signup' %}?next={{request.path}}"
-                    class="btn btn-outline-secondary active me-2"
-                    >Sign&nbsp;up</a
-                  >
-                  {% else %} -->
-                <nuxt-link to="/accounts/signup/" class="btn btn-outline-secondary me-lg-2">Sign&nbsp;up</nuxt-link>
+                <nuxt-link v-if="this.$route.path == '/accounts/signin/'" to="/accounts/signin/"
+                  class="btn btn-outline-secondary active me-1">Sign&nbsp;in</nuxt-link>
+                <nuxt-link v-if="this.$route.path != '/accounts/signin/'" to="/accounts/signin/"
+                  class="btn btn-outline-secondary me-1">Sign&nbsp;in</nuxt-link>
+                <nuxt-link v-if="this.$route.path == '/accounts/signup/'" to="/accounts/signup/"
+                  class="btn btn-outline-secondary active me-lg-2">Sign&nbsp;up</nuxt-link>
+                <nuxt-link v-if="this.$route.path != '/accounts/signup/'" to="/accounts/signup/"
+                  class="btn btn-outline-secondary me-lg-2">Sign&nbsp;up</nuxt-link>
               </div>
             </client-only>
-            <!-- {% endif %} {% endif %} -->
           </div>
+          <!-- colorMode switcher -->
+          <!-- colorMode switcher -->
           <!-- colorMode switcher -->
           <div class="mt-lg-0 mt-3 m-0 d-flex flex-column align-items-center justify-content-center">
             <input type="checkbox" id="colorMode_switcher" />
@@ -131,6 +122,7 @@ export default {
   data() {
     return {
       q: '',
+      TogglerArrowSwitcher: true,
     };
   },
   methods: {
@@ -138,6 +130,15 @@ export default {
       this.$router.push("/search/?q=" + this.q);
       this.q = '';
     },
+    changeTogglerArrow() {
+      if (this.TogglerArrowSwitcher) {
+        document.querySelector('.navbar-toggler > span').innerHTML = '&#9650;';
+        this.TogglerArrowSwitcher = false;
+      } else {
+        document.querySelector('.navbar-toggler > span').innerHTML = '&#9660;';
+        this.TogglerArrowSwitcher = true;
+      }
+    }
   },
   computed: {
     userSignedIn() {

@@ -1,9 +1,4 @@
 <template>
-    <!-- {% extends 'base.html' %} {% load static %} -->
-    <!-- blokc title -->
-    <!-- {% block title %}Post details{% endblock %} -->
-    <!-- block content -->
-    <!-- {% block content %} -->
     <section class="my-post-detail">
         <div class="row">
             <div class="col-lg-8">
@@ -12,39 +7,36 @@
                         <li class="breadcrumb-item">
                             <nuxt-link to="/">Main</nuxt-link>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Post: <b>{{ post.h1 }}</b></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post: {{ post.h1 }}</li>
                     </ol>
                 </nav>
+                <!-- Post body -->
+                <!-- Post body -->
                 <!-- Post body -->
                 <img :src="post.image" class="img-fluid rounded" :alt="`post.h1`" :title="`post.h1`" />
                 <hr />
                 <div class="text-center" v-html="post.content"></div>
                 <div class="d-flex justify-content-end">
-                    <!-- {% for i in post.tag.all %} -->
                     <div v-for="i in post.tag" :key="i">
                         <nuxt-link :to="`/tags/${i}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ i
                         }}</nuxt-link>
                     </div>
-                    <!-- {% endfor %} -->
                 </div>
                 <div class="d-flex justify-content-between mt-3">
                     <span>Author: <b>{{ post.author }}</b></span>
                     <span>Posted: <b>{{ post.created_at }}</b></span>
                 </div>
                 <hr />
-                <!-- Comment block -->
-                <!-- {% include './blocks/comments.html' %} -->
-                <!-- Comments are loaded via ClientOnly side -->
+                <!-- Comments' block -->
+                <!-- Comments' block -->
+                <!-- Comments' block -->
                 <ClientOnly placeholder="Loading comments...">
                     <Comments :postComments="postComments" :post="post" />
                 </ClientOnly>
             </div>
-            <!-- Sidebar -->
-            <!-- {% include './blocks/sidebar.html' %} -->
             <Sidebar :tags="tags" :asidedata="asidedata" />
         </div>
     </section>
-    <!-- {% endblock %} -->
 </template>
 
 <script>
@@ -58,12 +50,12 @@ export default {
         Comments
     },
     async asyncData({ params }) {
-        const post = await axios.get(`http://127.0.0.1:8000/api/posts/${params.url}/`);
-        const tags = await axios.get(`http://127.0.0.1:8000/api/tags/`)
+        const post = await axios.get(`${process.env.API_URL}/api/posts/${params.url}/`);
+        const tags = await axios.get(`${process.env.API_URL}/api/tags/`)
         // currentPostUrl - to exclude this post from the Sidebar
         let currentPostUrl = post.data.url;
-        const asidedata = await axios.get(`http://127.0.0.1:8000/api/aside/?exclude=${currentPostUrl}/`)
-        const postComments = await axios.get(`http://127.0.0.1:8000/api/comments/${params.url}/`)
+        const asidedata = await axios.get(`${process.env.API_URL}/api/aside/?exclude=${currentPostUrl}/`)
+        const postComments = await axios.get(`${process.env.API_URL}/api/comments/${params.url}/`)
         return {
             post: post.data,
             tags: tags.data,

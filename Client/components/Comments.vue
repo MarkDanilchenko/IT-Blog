@@ -1,23 +1,28 @@
 <template>
     <div>
-        <!-- {% load static %} {% load crispy_forms_tags %} -->
-        <!-- Comment block -->
+        <!-- Put a Comment block -->
+        <!-- Put a Comment block -->
+        <!-- Put a Comment block -->
         <div class="card mb-3 mt-5">
             <h5 class="card-header">Enter Your comment:</h5>
             <div class="card-body">
-                <!-- {% if user.is_authenticated %} -->
                 <div v-if="$auth.user">
                     <form>
-                        <!-- {% csrf_token %} -->
                         <div class="form-group">
                             <textarea class="form-control" name="comment" id="comment" rows="5" cols="30"
-                                placeholder="Your comment up to 1000 symbols." v-model="comment" required=""></textarea>
+                                placeholder="Your comment up to 1000 symbols." v-model="comment"
+                                @input="$v.comment.$touch()"></textarea>
+                            <div v-if="!$v.comment.required">
+                                <span class="text-small text-secondary">Leave your comment up to 1000 symbols.</span>
+                            </div>
+                            <div v-if="!$v.comment.maxLength">
+                                <span class="text-small text-danger">Comment should not exceed 1000 symbols.</span>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-outline-success btn-sm mt-3" @click.prevent="submitCommentForm"
-                            :disabled="!comment"> Comment!</button>
+                            :disabled="commentFilled"> Comment!</button>
                     </form>
                 </div>
-                <!-- {% else %} -->
                 <div v-else>
                     <h5 class="text-center lead">
                         Please,
@@ -25,18 +30,14 @@
                         <nuxt-link class="nav-link" to="/accounts/signup/">sign up</nuxt-link> to leave comments...
                     </h5>
                 </div>
-                <!-- {% endif %} -->
             </div>
         </div>
-        <!-- Discussion (Users' comments) -->
-        <!-- <div class="d-flex flex-column justify-content-center align-items-center my-4">
-            <hr style="width: 50%" />
-        </div> -->
-        <!-- {% if post.post_comments.all %} -->
+        <!-- Browse Comments block -->
+        <!-- Browse Comments block -->
+        <!-- Browse Comments block -->
         <div class="card" v-if="postComments.length">
             <h5 class="card-header">Comments:</h5>
             <div class="card-body">
-                <!-- {% if post.post_comments.all %} {% for i in post.post_comments.all %} -->
                 <div class="d-flex col-10 offset-1 border-bottom border-end border-1 rounded rounded-2 shadow-sm mb-1 p-3"
                     v-for="(i, counter) in postComments" :key="i.id">
                     <div class="flex-shrink-0">
@@ -55,18 +56,17 @@
                         </div>
                     </div>
                 </div>
-                <!-- {% endfor %} {% endif %} -->
             </div>
         </div>
-        <!-- {% else %} -->
         <div v-else class="mt-5">
             <h5 class="text-center lead"><b>No comments yet ...</b></h5>
         </div>
         <div class="d-flex flex-column justify-content-center align-items-center mt-4 mb-2">
             <hr style="width: 50%" />
         </div>
-        <!-- {% endif %} -->
 
+        <!-- Toast -->
+        <!-- Toast -->
         <!-- Toast -->
         <div v-if="this.$auth.user" class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { required, maxLength } from 'vuelidate/lib/validators'
 import axios from "axios";
 export default {
     name: "Comments",
@@ -94,7 +95,7 @@ export default {
     methods: {
         async submitCommentForm() {
             try {
-                let response = await axios.post('http://127.0.0.1:8000/api/comments/', {
+                let response = await axios.post(`${process.env.API_URL}/api/comments/`, {
                     post: this.post.title,
                     text: this.comment,
                 }, {
@@ -102,13 +103,12 @@ export default {
                         Authorization: `Bearer ${this.$auth.strategy.token.get().split(' ')[1]}`
                     }
                 });
-                console.log(response.data.message);
                 this.comment = '';
                 // `this.postComments.unshift(response.data.comment_created_data)` is adding the newly
                 // created comment to the beginning of the props `postComments` array.
                 this.postComments.unshift(response.data.comment_created_data);
 
-                // Toast appearance
+                // Toast appearance.
                 const { Toast } = await import('bootstrap');
                 const toastLiveExample = document.getElementById('liveToast');
                 let commentForToast = response.data.comment_created_data.text;
@@ -116,11 +116,20 @@ export default {
                 const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
                 toastBootstrap.show();
             } catch (e) {
-                console.log(e.message);
+                alert(e.message);
             }
         }
     },
+    computed: {
+        commentFilled() {
+            return this.$v.comment.$invalid || this.comment == '' ? true : false
+        }
+    },
+    validations: {
+        comment: {
+            required,
+            maxLength: maxLength(1000)
+        }
+    }
 }
 </script>
-
-

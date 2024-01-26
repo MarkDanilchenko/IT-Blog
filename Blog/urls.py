@@ -23,7 +23,6 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenBlacklistView,
 )
-from Blog__main import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -31,9 +30,6 @@ urlpatterns = [
     path("api/token/", TokenObtainPairView.as_view(), name="token"),
     path("api/token_refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/accounts/signout/", TokenBlacklistView.as_view(), name="token_blacklist"),
-    # path('accounts/logout/', views.logout_view, name="logout"),
-    # path("accounts/signup", views.signup, name="signup"),
-    # path("accounts/", include("django.contrib.auth.urls")),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 

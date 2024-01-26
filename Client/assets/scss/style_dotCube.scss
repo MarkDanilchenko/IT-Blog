@@ -2,16 +2,6 @@ $size-cube: 210px;
 $faces-interval: calc(($size-cube / 2) / 5);
 $size-dot: 4px;
 $delay-anim: 0.3s;
-// body {
-//   margin: 0;
-//   padding: 0;
-//   background: #0033ff;
-//   font-family: "Roboto", sans-serif;
-//   -webkit-text-size-adjust: none;
-//   -webkit-font-smoothing: antialiased !important;
-//   text-rendering: optimizeLegibility !important;
-//   -moz-osx-font-smoothing: grayscale;
-// }
 
 .mod {
   position: relative;
@@ -56,7 +46,7 @@ $delay-anim: 0.3s;
         position: absolute;
         // !!!
         // background of the dots changes every time by switching theme-btn: color-modes_switcher.js;
-        // background style also mounted in signout.vue using jQuery;
+        // background style also mounted in signout.vue, success.vue using jQuery;
         // !!!
         width: $size-dot;
         height: $size-dot;

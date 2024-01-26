@@ -5,14 +5,12 @@
       <div class="d-flex justify-content-center">
         <hr class="my-4" style="width: 50%" />
       </div>
-      <!-- {% if page_obj %} -->
       <div v-if="posts.length > 0">
-        <h5 class="mb-3 mt-0 text-center text-muted"><i>Related posts</i></h5>
-        <!-- cards -->
-        <!-- cards -->
-        <!-- cards -->
+        <h5 class="mb-3 mt-0 text-center lead"><b>Related posts</b></h5>
         <div class="row d-flex justify-content-center">
-          <!-- {% for i in page_obj %} -->
+          <!-- Posts cards -->
+          <!-- Posts cards -->
+          <!-- Posts cards -->
           <div class="col-md-4" v-for="i in posts" :key="i.url">
             <div class="card mb-3 shadow">
               <div class="d-flex flex-column align-items-center justify-content-end">
@@ -23,14 +21,12 @@
                     <b>{{ i.h1 }}</b>
                   </h3>
                   <div class="card-text" v-html="i.description"></div>
-                  <!-- {% for j in i.tag.all %} -->
                   <div class="d-flex flex-wrap">
                     <div v-for="j in i.tag" :key="j">
                       <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ j
                       }}</nuxt-link>
                     </div>
                   </div>
-                  <!-- {% endfor %} -->
                   <div class="d-flex justify-content-between align-items-center mt-3">
                     <nuxt-link :to="`/posts/${i.url}/`" class="btn btn-sm btn-outline-secondary me-3">More</nuxt-link>
                     <span class="badge bg-secondary rounded-pill">{{ i.created_at }}</span>
@@ -39,20 +35,15 @@
               </div>
             </div>
           </div>
-          <!-- {% endfor %} -->
         </div>
       </div>
-      <!-- {% else %} -->
       <div v-else>
         <h3 class="text-center lead my-5">No posts yet ...</h3>
       </div>
-      <!-- {% endif %} -->
     </section>
-    <Pagination :pageRange="pageRange" :APIURL="APIURL" @changePage="posts = $event"/>
+    <Pagination :pageRange="pageRange" :CLIENT_API_URL="CLIENT_API_URL" @changePage="posts = $event" class="mt-3" />
   </div>
 </template>
-
-<style></style>
 
 <script>
 import Carousel from "~/components/Carousel.vue";
@@ -65,12 +56,12 @@ export default {
     Pagination,
   },
   async asyncData({ }) {
-    const { data } = await axios.get("http://127.0.0.1:8000/api/posts/");
-    const pageRange = data.results.length > 0 ? Math.ceil(data.count / data.results.length) : 1;
+    const { data } = await axios.get(`${process.env.API_URL}/api/posts/`);
+    const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
     return {
       posts: data.results,
       pageRange: pageRange,
-      APIURL: "http://127.0.0.1:8000/api/posts/",
+      CLIENT_API_URL: `${process.env.API_URL}/api/posts/`,
     };
   },
 };

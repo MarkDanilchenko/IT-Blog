@@ -12,23 +12,23 @@
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="10000">
           <div class="carousel-caption d-none d-md-block">
-            <h5>Python 3.10.11</h5>
+            <h5>Python v3.10</h5>
             <p>
-              Backend is written in Python 3.10 with <br />Django and Django
-              Rest Framework
+              Backend is written on Python v3.10 with <br />Django5 and Django
+              Rest Framework.
             </p>
           </div>
         </div>
         <div class="carousel-item" data-bs-interval="10000">
           <div class="carousel-caption d-none d-md-block">
             <h5>NuxtJS</h5>
-            <p>Frontend is written in JavaScript with <br />NuxtJS</p>
+            <p>Frontend is written on Nuxt v2.15 (NuxtJS).</p>
           </div>
         </div>
         <div class="carousel-item" data-bs-interval="10000">
           <div class="carousel-caption d-none d-md-block">
-            <h5>Bootstrap 5.3.2</h5>
-            <p>HTML layout and CSS styles are based on Bootstrap.</p>
+            <h5>Bootstrap v5.3</h5>
+            <p>HTML layout and CSS styles are based on Bootstrap v5.3.</p>
           </div>
         </div>
       </div>
