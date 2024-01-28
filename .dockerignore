@@ -13,7 +13,7 @@
 **/.venv
 **/.classpath
 **/.dockerignore
-<!-- **/.env -->
+# <!-- **/.env -->
 **/.git
 **/.gitignore
 **/.project
@@ -34,8 +34,12 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-<!-- LICENSE -->
-<!-- README.md -->
+# <!-- LICENSE -->
+# <!-- README.md -->
 *.pdf
 dev.env
-*Insomnia_
+Insomnia_testAPI.json
+error.log
+aboutProject.txt
+.idea
+.nuxt

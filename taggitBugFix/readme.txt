@@ -1,0 +1,1 @@
+This file is needed to bug fix in the taggit_serializer lib.

@@ -3,6 +3,10 @@ require("dotenv").config({ path: "../.env", override: true });
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   // target: "static",
+  server: {
+    host: "127.0.0.1",
+    port: 3000,
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

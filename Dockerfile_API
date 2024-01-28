@@ -1,19 +1,8 @@
 # Python version
 ARG PYTHON_VERSION=3.10.11
 
-
-# ------------------------------------------------------FRONTEND
-FROM node:16 as frontend
-
-RUN mkdir /static
-
-WORKDIR /static
-
-COPY static/package.json .
-
-RUN npm install
-
 # ------------------------------------------------------BACKEND
+
 FROM python:${PYTHON_VERSION} as backend
 
 LABEL maintainer="2023 MyHomeworks, { }"
@@ -32,12 +21,19 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-WORKDIR /app/static
+RUN rm -rf Client
 
-RUN rm -rf node_modules && mkdir node_modules
+RUN rm -rf static && mkdir static
 
-WORKDIR /app/static/node_modules
+WORKDIR /app/static/IMG
 
-COPY --from=frontend /static/node_modules .
+COPY static/IMG .
+
+# bug fix (with help of ./serializers.py) in taggit_serializer library
+# ----->
+WORKDIR /usr/local/lib/python3.10/site-packages/taggit_serializer/
+
+COPY ./taggitBugFix/serializers.py .
+# <-----
 
 WORKDIR /app

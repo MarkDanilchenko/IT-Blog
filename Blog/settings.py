@@ -17,7 +17,7 @@ pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-dotenv.load_dotenv(BASE_DIR / ".env", override=True)
+dotenv.load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "Blog__main.apps.BlogMainConfig",
+    "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-    "corsheaders",
     "crispy_bootstrap5",
     "crispy_forms",
     "taggit",
@@ -173,6 +173,8 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3000",
     "http://0.0.0.0:3000",
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
