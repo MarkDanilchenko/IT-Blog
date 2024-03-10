@@ -6,6 +6,9 @@ from django.db import models
 from taggit.managers import TaggableManager
 
 
+# VALIDATORS
+# VALIDATORS
+# VALIDATORS
 def validate_phone(value):
     if re.search(r"\d{1}\(\d{3}\)\d{3}-\d{2}-\d{2}", value) is None:
         raise ValidationError(
@@ -15,12 +18,47 @@ def validate_phone(value):
         return f"+{value}"
 
 
+def name_validator(value):
+    """
+    The function `name_validator` validates a given input value to ensure it contains only letters and
+    is at least 2 characters long.
+    """
+    if re.search(r"^[a-zA-Z]{2,}$", value):
+        return value
+    else:
+        raise ValueError(
+            "First name or last name contains invalid characters. Only letters are allowed."
+        )
+
+
 class User(AbstractUser):
     username = models.CharField(
-        max_length=150,
+        max_length=100,
         unique=True,
+        help_text="Username",
         verbose_name="Username",
-        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+    )
+
+    first_name = models.CharField(
+        validators=[name_validator],
+        blank=True,
+        max_length=100,
+        help_text="First name",
+        verbose_name="First name",
+    )
+
+    last_name = models.CharField(
+        validators=[name_validator],
+        blank=True,
+        max_length=100,
+        help_text="Last name",
+        verbose_name="Last name",
+    )
+
+    email = models.EmailField(
+        unique=True,
+        help_text="Email",
+        verbose_name="Email",
     )
 
     phone = models.CharField(
@@ -29,69 +67,69 @@ class User(AbstractUser):
         blank=True,
         null=True,
         validators=[validate_phone],
-        verbose_name="Phone number",
         help_text="Phone number should contain only 11 digits in format _(___)___-__-__.",
+        verbose_name="Phone number",
     )
 
     class Meta:
         verbose_name = "User"
         verbose_name_plural = "Users"
+        ordering = ["-username"]
 
     def __str__(self):
-        return f"{self.username}"
+        return self.username
 
 
 class Post(models.Model):
-    h1 = models.CharField(max_length=100, verbose_name="H1")
-    title = models.CharField(max_length=200, verbose_name="Title")
-    url = models.SlugField(verbose_name="URL")
-    description = RichTextUploadingField(verbose_name="Description")
-    content = RichTextUploadingField(verbose_name="Content")
-    image = models.ImageField(
-        upload_to="IMG", blank=True, verbose_name="Image", null=True
+    h1 = models.CharField(max_length=100, help_text="H1", verbose_name="H1")
+    title = models.CharField(max_length=200, help_text="Title", verbose_name="Title")
+    url = models.SlugField(help_text="URL", verbose_name="URL")
+    description = RichTextUploadingField(
+        help_text="Description", verbose_name="Description"
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
-    # tag = models.CharField(max_length=100, verbose_name="Tag")
+    content = RichTextUploadingField(help_text="Content", verbose_name="Content")
+    image = models.ImageField(
+        upload_to="IMG", blank=True, help_text="Image", verbose_name="Image", null=True
+    )
+    created_at = models.DateField(
+        auto_now_add=True, help_text="Created at", verbose_name="Created at"
+    )
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, help_text="Author", verbose_name="Author"
+    )
     tag = TaggableManager()
 
     class Meta:
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.title}"
+        return self.title
 
 
-class Post_Comment(models.Model):
+class Post_Comments(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        verbose_name="Post",
-        help_text="Comment on post",
-        related_name="post_comments",
+        help_text="Commented post",
+        verbose_name="Commented post",
     )
-    # this post field is linked to Post.title
 
     user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="User",
-        help_text="User's comment",
-        related_name="user_comments",
+        User, on_delete=models.CASCADE, help_text="User", verbose_name="User"
     )
-    # this user field is linked to User.username
 
     text = models.TextField(
         max_length=1000,
-        verbose_name="Comment",
-        help_text="Comment text (max: 1000 symbols)",
+        help_text="Text (max: 1000 symbols)",
+        verbose_name="Text",
     )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
+        help_text="Created at",
         verbose_name="Created at",
-        help_text="Date of comment creation",
     )
 
     class Meta:
@@ -100,4 +138,4 @@ class Post_Comment(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.text[:20]}..."
+        return f"{self.text[:25]}..."

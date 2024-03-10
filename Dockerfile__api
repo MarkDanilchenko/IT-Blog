@@ -15,19 +15,17 @@ WORKDIR /app
 
 RUN python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip
 
-COPY requirements.txt .
+COPY ./requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY . .
-
-RUN rm -rf Client
-
-RUN rm -rf static && mkdir static
-
-WORKDIR /app/static/IMG
-
-COPY static/IMG .
+# copy all necessary files
+COPY ./Blog .
+COPY ./Blog__main .
+COPY ./django_logs .
+COPY ./mediafiles .
+COPY ./.env .
+COPY ./manage.py .
 
 # bug fix (with help of ./serializers.py) in taggit_serializer library
 # ----->

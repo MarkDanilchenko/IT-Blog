@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
@@ -28,8 +29,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("Blog__main.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token"),
-    path("api/token_refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/accounts/signout/", TokenBlacklistView.as_view(), name="token_blacklist"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/blacklist/", TokenBlacklistView.as_view(), name="token_blacklist"),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 

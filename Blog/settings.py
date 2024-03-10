@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-from datetime import timedelta
+
+import datetime
 from pathlib import Path
 import os, dotenv, pymysql
 
@@ -144,55 +145,50 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "./static"),
-]
-STATIC_ROOT = os.path.join(BASE_DIR, "./staticfiles")
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "./media")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
-
 ####################################
 ##  DRF CONFIGURATION ##
 ####################################
-TOKEN_BLACKLIST_SERIALIZER = (
-    "rest_framework_simplejwt.serializers.TokenBlacklistSerializer"
-)
-
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://0.0.0.0:3000",
-]
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(minutes=60 * 24 * 2),
-}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.DjangoModelPermissions",
-    ),
     "SEARCH_PARAM": "q",
+    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    # "PAGE_SIZE": 10,
 }
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+}
+
+TOKEN_BLACKLIST_SERIALIZER = (
+    "rest_framework_simplejwt.serializers.TokenBlacklistSerializer"
+)
+
+CORS_ORIGIN_WHITELIST = [
+    f"http://{os.getenv('client_HostPort_1')}",
+    f"http://{os.getenv('client_HostPort_2')}",
+    f"http://{os.getenv('client_HostPort_3')}",
+]
 
 ####################################
 ##  LOGGER CONFIGURATION ##
@@ -201,15 +197,15 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "error_file": {
+        "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
-            "filename": "error.log",
+            "filename": "./django_logs/error.log",
         }
     },
     "loggers": {
         "django": {
-            "handlers": ["error_file"],
+            "handlers": ["file"],
             "level": "ERROR",
             "propagate": True,
         }

@@ -1,20 +1,31 @@
-version: '3.1'
+version: '3.8'
 
 services:
-    server:
+    # ------------------------------------------------------webserver(nginx)
+    # ------------------------------------------------------api(django rest framework)
+    api:
         restart: always
         build:
             context: .
-            dockerfile: Dockerfile_API
-        container_name: API
-        command: sh -c 'python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver ${server_HostPort}'
+            dockerfile: Dockerfile__api
+        container_name: api
+        command: >
+            sh -c "python3 manage.py makemigrations
+            && python3 manage.py migrate
+            && python3 manage.py collectstatic --noinput 
+            && gunicorn --log-file gunicorn_logs/error.log --access-logfile gunicorn_logs/access.log Blog.wsgi:application -b ${server_HostPort_1}"
         volumes:
-            - ./:/app
+            - ./staticfiles:/app/staticfiles
+            - ./mediafiles:/app/mediafiles
+            - ./gunicorn_logs:/app/gunicorn_logs
+            - ./django_logs:/app/django_logs
         ports:
-            - 8900:8900
+            - 8000:8000
+        expose:
+            - 8000
         networks:
-            - frontend
             - backend
+            - frontend
         environment:
             # for django-server connection to not to localhost-MySQL (as in settings.py) but to container-MySQL
             - DATABASE_HOST=db
@@ -24,28 +35,11 @@ services:
             db:
                 condition: service_healthy
         healthcheck:
-            test: ['CMD', 'curl', '-f', 'http://${server_HostPort}/api/posts/']
+            test: ['CMD', 'curl', '-f', 'http://${server_HostPort_1}/api/test/']
+            timeout: 15s
             interval: 5s
-            timeout: 3s
             retries: 3
-
-    client:
-        restart: always
-        build:
-            context: .
-            dockerfile: Dockerfile_CLIENT
-        container_name: Client
-        command: sh -c 'npm run start'
-        ports:
-            - 3000:3000
-        networks:
-            - frontend
-        links:
-            - server
-        depends_on:
-            server:
-                condition: service_healthy
-
+    # ------------------------------------------------------db(mysql)
     db:
         restart: always
         image: mysql:8.0
@@ -57,15 +51,20 @@ services:
         networks:
             - backend
         volumes:
-            - ./db_data:/var/lib/mysql
             - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
+            - ./db_data:/var/lib/mysql
         healthcheck:
             test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1']
+            timeout: 15s
             interval: 5s
-            timeout: 3s
             retries: 3
+    # ------------------------------------------------------other(volumes && networks)
 volumes:
     db_data:
+    staticfiles:
+    mediafiles:
+    gunicorn_logs:
+    django_logs:
 
 networks:
     backend:

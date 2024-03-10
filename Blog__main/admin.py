@@ -17,27 +17,27 @@ class User_Admin(UserAdmin):
         "last_login",
     )
 
-    search_fields = ("username",)
     list_filter = ("is_staff", "is_active", "is_superuser", "date_joined", "last_login")
+    search_fields = ("username", "first_name", "last_name", "email")
     ordering = ("-username",)
 
 
 admin.site.register(models.User, User_Admin)
 
 
-# The `Post_CommentInline` class is used to define an inline form for the `Post_Comment` model in the
+# The `Post_CommentInline` class is used to define an inline form for the `Post_Comments` model in the
 # Django admin interface.
-class Post_CommentInline(admin.TabularInline):
-    model = models.Post_Comment
+class Post_CommentsInline(admin.TabularInline):
+    model = models.Post_Comments
     extra = 1
 
 
 class Post_Admin(admin.ModelAdmin):
     fieldsets = (
         (
-            "Post headers and info",
+            "Post headers and other info",
             {
-                "fields": ("h1", "title", "tag", "url"),
+                "fields": ("h1", "title", "tag", "url", "author"),
             },
         ),
         (
@@ -52,12 +52,6 @@ class Post_Admin(admin.ModelAdmin):
                 "fields": ("image",),
             },
         ),
-        (
-            "Post settings",
-            {
-                "fields": ("author",),
-            },
-        ),
     )
     list_display = ("h1", "title", "url", "created_at", "author")
     search_fields = ("h1", "title", "tag", "author")
@@ -65,13 +59,13 @@ class Post_Admin(admin.ModelAdmin):
     ordering = ("-created_at",)
     readonly_fields = ("created_at",)
     prepopulated_fields = {"url": ("title",)}
-    inlines = [Post_CommentInline]
+    inlines = [Post_CommentsInline]
 
 
 admin.site.register(models.Post, Post_Admin)
 
 
-class Post_Comment_Admin(admin.ModelAdmin):
+class Post_Comments_Admin(admin.ModelAdmin):
     fieldsets = (
         (
             "Related Info",
@@ -89,8 +83,8 @@ class Post_Comment_Admin(admin.ModelAdmin):
     list_display = ("post", "user", "text", "created_at")
     search_fields = ("post", "user")
     list_filter = ("created_at",)
-    readonly_fields = ("created_at",)
     ordering = ("-created_at",)
+    readonly_fields = ("created_at",)
 
 
-admin.site.register(models.Post_Comment, Post_Comment_Admin)
+admin.site.register(models.Post_Comments, Post_Comments_Admin)
