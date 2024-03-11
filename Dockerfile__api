@@ -15,17 +15,14 @@ WORKDIR /app
 
 RUN python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip
 
-COPY ./requirements.txt .
+COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-# copy all necessary files
-COPY ./Blog .
-COPY ./Blog__main .
-COPY ./django_logs .
-COPY ./mediafiles .
-COPY ./.env .
-COPY ./manage.py .
+COPY . .
+
+# remove all unnecessary files and folders
+RUN rm -rf Client/ && rm -rf db_data/ && rm -r django_logs/ && rm -r gunicorn_logs/ && rm -rf nginx/ && rm -rf screenshots/ && rm -rf staticfiles/ && rm -rf taggitBugFix/
 
 # bug fix (with help of ./serializers.py) in taggit_serializer library
 # ----->

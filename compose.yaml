@@ -51,7 +51,7 @@ services:
         networks:
             - backend
         volumes:
-            - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
+            # - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
             - ./db_data:/var/lib/mysql
         healthcheck:
             test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1']

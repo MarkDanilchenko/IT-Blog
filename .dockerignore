@@ -41,9 +41,9 @@ package-lock.json
 /dist
 .nuxt
 aboutProject.txt
+README.md
+LICENSE
 
 <!-- allowed -->
 !**/.env
-!LICENSE
-!README.md
 <!--  -->
