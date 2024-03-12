@@ -63,9 +63,9 @@ class PostViewSet(viewsets.ModelViewSet):
             get_object_or_404(Tag, slug=request.query_params.get("tag"))
             result = models.Post.objects.filter(
                 tag__slug=request.query_params.get("tag")
-            ).order_by("-created_at")
+            ).order_by("title")
         else:
-            result = models.Post.objects.all().order_by("-created_at")
+            result = models.Post.objects.all().order_by('title')
         paginator = self.pagination_class()
         paginated_result = paginator.paginate_queryset(result, request)
         serialized_result = self.serializer_class(paginated_result, many=True).data
@@ -98,7 +98,7 @@ class AsidePostViewSet(viewsets.ModelViewSet):
             exclude = self.request.GET.get("exclude")
             get_object_or_404(models.Post, url=exclude.lower())
             result = self.serializer_class(
-                models.Post.objects.exclude(url=exclude).order_by("-created_at")[:3],
+                models.Post.objects.exclude(url=exclude).order_by("title")[:3],
                 many=True,
             ).data
             return Response(result, status=status.HTTP_200_OK)
@@ -148,7 +148,7 @@ class SearchViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if self.request.GET.get("search"):
             search = self.request.GET.get("search").lower()
-            result = models.Post.objects.all().order_by("-created_at")
+            result = models.Post.objects.all().order_by("title")
             for i in result:
                 if (
                     # `(fuzz.partial_ratio(search, str(i.title)) > 60)` is using the `fuzz` module

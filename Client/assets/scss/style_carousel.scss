@@ -1,42 +1,44 @@
 .carousel-item {
-	height: 15rem;
-	padding: 10px;
+  height: 15rem;
+  width: 80%;
+  margin-left: 10%;
+  padding: 10px;
+  background-repeat: space;
+  background-size: 50px;
 }
 
 @for $var from 1 through 3 {
-	@if ($var == 1) {
-		.carousel-item:nth-child(#{$var}) {
-			background-image: url('../IMG/Python_logo.png');
-			background-repeat: space;
-		}
-	} @else if ($var == 2) {
-		.carousel-item:nth-child(#{$var}) {
-			background-image: url('../IMG/NuxtJS_logo.png');
-			background-repeat: space;
-		}
-	} @else if ($var == 3) {
-		.carousel-item:nth-child(#{$var}) {
-			background-image: url('../IMG/Bootstrap_logo.png');
-			background-repeat: space;
-		}
-	}
+  @if ($var == 1) {
+    .carousel-item:nth-child(#{$var}) {
+      background-image: url("@/assets/IMG/Python_logo.png");
+    }
+  } @else if ($var == 2) {
+    .carousel-item:nth-child(#{$var}) {
+      background-image: url("@/assets/IMG/NuxtJS_logo.png");
+    }
+  } @else if ($var == 3) {
+    .carousel-item:nth-child(#{$var}) {
+      background-image: url("@/assets/IMG/Bootstrap_logo.png");
+    }
+  }
 }
 
 .my-carousel {
-	padding: 0;
+  padding: 0;
 }
 
 .my-carousel h5 {
-	font-size: 50px;
-	font-weight: 900;
+  font-size: 50px;
+  font-weight: 700;
+  color: initial !important;
+  text-shadow: 2px 2px black, 4px 4px white, 6px 6px black, 8px 8px white,
+    10px 10px black, 12px 12px white, 14px 14px black, 16px 16px white,
+    18px 18px black, 20px 20px white, 22px 22px black;
 }
 
 .my-carousel p {
-	font-size: 25px;
-	font-weight: 500;
-}
-
-.carousel-caption {
-	text-shadow: 5px 5px 10px $black_color;
-	color: $white_color !important;
+  font-size: 25px;
+  font-weight: 500;
+  color: initial !important;
+  text-shadow: 5px 5px 10px $grey_color;
 }

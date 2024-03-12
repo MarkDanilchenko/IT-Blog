@@ -1,2 +1,2 @@
-import "./color-modes";
-import "./color-modes_switcher";
+import "./color-modes.js";
+import "./color-modes_switcher.js";

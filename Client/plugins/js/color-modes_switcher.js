@@ -1,9 +1,4 @@
-/* `$("#colorMode_switcher").attr("checked", true);` is setting the `checked` attribute of the
-element with the id `colorMode_switcher` to `true`. This is typically used for checkboxes or
-radio buttons to indicate that the element is selected or checked. In this case, it is used to
-set the switcher button to the "dark" color mode if the `colorMode` variable is equal to
-"dark". */
-
+// This code block is responsible for handling the initial setup of the color mode in the application.
 try {
   const colorMode = localStorage.getItem("colorMode");
   if (colorMode === null) {
@@ -30,12 +25,12 @@ if (document.getElementById("colorMode_switcher")) {
       const colorMode = $("html").attr("data-bs-theme");
       if (colorMode == "dark") {
         $("html").attr("data-bs-theme", "light");
-        // signout dots
+        // signout dots color
         $(".dot").css("background", "#000000");
         localStorage.setItem("colorMode", "light");
       } else if (colorMode == "light") {
         $("html").attr("data-bs-theme", "dark");
-        // signout dots
+        // signout dots color
         $(".dot").css("background", "#ffffff");
         localStorage.setItem("colorMode", "dark");
       }
