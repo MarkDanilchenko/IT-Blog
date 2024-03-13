@@ -13,14 +13,14 @@
       </div>
       <div v-if="posts.length > 0">
         <h5 class="mb-3 mt-0 text-center lead"><b>Related posts</b></h5>
+        <!-- Posts cards -->
+        <!-- Posts cards -->
+        <!-- Posts cards -->
         <div class="row d-flex justify-content-center">
-          <!-- Posts cards -->
-          <!-- Posts cards -->
-          <!-- Posts cards -->
           <div class="col-md-4 col-12" v-for="i in posts" :key="i.url">
             <div class="card mb-3 shadow">
               <div class="d-flex flex-column align-items-center justify-content-end">
-                <img :src="i.image" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`"
+                <img :src="`${i.image}`" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`"
                   :title="`${i.h1}`" />
                 <div class="card-body">
                   <h3 class="card-title text-center">

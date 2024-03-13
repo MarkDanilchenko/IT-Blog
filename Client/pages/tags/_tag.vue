@@ -8,10 +8,10 @@
         <!-- Posts by tag -->
         <!-- Posts by tag -->
         <div class="all-posts">
+            <!-- Other #tags row -->
+            <!-- Other #tags row -->
+            <!-- Other #tags row -->
             <div class="mb-3 mt-5 text-center">
-                <!-- Other #tags row -->
-                <!-- Other #tags row -->
-                <!-- Other #tags row -->
                 <p class="lead"><b>Other #tags:</b></p>
                 <div class="d-flex justify-content-center flex-wrap">
                     <div v-for="i in tags" :key="i.slug">

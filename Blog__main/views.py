@@ -25,7 +25,6 @@ class PostPagination(pagination.PageNumberPagination):
 class SignUpViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.AllowAny]
-    pagination_class = None
 
     def create(self, request, *args, **kwargs):
         result = self.serializer_class(data=request.data)
@@ -43,7 +42,6 @@ class SignUpViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.IsAuthenticated]
-    pagination_class = None
 
     def retrieve(self, request, *args, **kwargs):
         currentUser = dict(self.serializer_class(request.user, many=False).data)
@@ -152,18 +150,18 @@ class SearchViewSet(viewsets.ModelViewSet):
             result = models.Post.objects.all().order_by("title")
             for i in result:
                 if (
-                    # `(fuzz.partial_ratio(search, str(i.title)) > 60)` is using the `fuzz` module
+                    # `(fuzz.partial_ratio(search, str(i.title)) > 70)` is using the `fuzz` module
                     # from the `fuzzywuzzy` library to calculate the partial ratio between the
                     # `search` string and the `title` attribute of a post (`i.title`).
-                    (fuzz.partial_ratio(search, str(i.title)) > 60)
-                    or (fuzz.partial_ratio(search, str(i.h1)) > 60)
-                    or (fuzz.partial_ratio(search, str(i.description)) > 60)
-                    or (fuzz.partial_ratio(search, str(i.content)) > 60)
+                    (fuzz.partial_ratio(search, str(i.title)) > 70)
+                    or (fuzz.partial_ratio(search, str(i.h1)) > 70)
+                    or (fuzz.partial_ratio(search, str(i.description)) > 70)
+                    or (fuzz.partial_ratio(search, str(i.content)) > 70)
                     # search coincidences in tags of the post
                     or any(
                         True
                         for j in i.tag.all()
-                        if fuzz.partial_ratio(search, str(j.slug)) > 60
+                        if fuzz.partial_ratio(search, str(j.slug)) > 70
                     )
                 ):
                     continue
@@ -187,7 +185,6 @@ class SearchViewSet(viewsets.ModelViewSet):
 class Post_CommentsViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.Post_CommentsSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    pagination_class = None
 
     def list(self, request, *args, **kwargs):
         post = get_object_or_404(models.Post, url=self.kwargs["post_url"].lower())

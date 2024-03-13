@@ -20,12 +20,12 @@ export default {
       {
         name: "description",
         content:
-          "This project is a simple test IT_Blog using such technologies as: Nuxt2 (NuxtJS), Bootstrap5, Django5, DRF, Webpack, MySQL, Docker, Compose and NGINX.",
+          "This project is a simple IT_Blog using such technologies as: Nuxt2 (NuxtJS), Bootstrap5, Django5, DRF, Webpack, MySQL, Docker, Compose and NGINX.",
       },
       {
         name: "keywords",
         content:
-          "IT_Blog, Django, Django Rest Framework, Nuxt2 (NuxtJS), Bootstrap5, MySQL, Django5, DRF, Webpack, Docker, Compose, NGINX",
+          "IT_Blog, DRF, Nuxt2 (NuxtJS), Bootstrap5, MySQL, Django5, Webpack, Docker, Compose, NGINX",
       },
     ],
     link: [
@@ -66,6 +66,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
+  /* The `auth` section in the Nuxt.js configuration is used to define authentication strategies and
+  settings for handling user authentication in the application. */
   auth: {
     strategies: {
       local: {
