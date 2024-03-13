@@ -1,7 +1,13 @@
 <template>
-  <div>
+  <section class="my-index">
+    <!-- Carousel -->
+    <!-- Carousel -->
+    <!-- Carousel -->
     <Carousel />
-    <section class="all-posts">
+    <!-- Posts -->
+    <!-- Posts -->
+    <!-- Posts -->
+    <div class="all-posts">
       <div class="d-flex justify-content-center">
         <hr class="my-4" style="width: 50%" />
       </div>
@@ -11,10 +17,10 @@
           <!-- Posts cards -->
           <!-- Posts cards -->
           <!-- Posts cards -->
-          <div class="col-md-4" v-for="i in posts" :key="i.url">
+          <div class="col-md-4 col-12" v-for="i in posts" :key="i.url">
             <div class="card mb-3 shadow">
               <div class="d-flex flex-column align-items-center justify-content-end">
-                <img :src="i.image" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`"
+                <img :src="`${i.image}`" class="img-fluid p-3 rounded CardsMainPage__img" :alt="`${i.h1}`"
                   :title="`${i.h1}`" />
                 <div class="card-body">
                   <h3 class="card-title text-center">
@@ -24,7 +30,7 @@
                   <div class="d-flex flex-wrap">
                     <div v-for="j in i.tag" :key="j">
                       <nuxt-link :to="`/tags/${j}/`" class="badge bg-light rounded-pill nav-link me-1">#{{ j
-                      }}</nuxt-link>
+                        }}</nuxt-link>
                     </div>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mt-3">
@@ -37,17 +43,23 @@
           </div>
         </div>
       </div>
+      <!-- No posts -->
+      <!-- No posts -->
+      <!-- No posts -->
       <div v-else>
         <h3 class="text-center lead my-5">No posts yet ...</h3>
       </div>
-    </section>
+    </div>
+    <!-- Pagination -->
+    <!-- Pagination -->
+    <!-- Pagination -->
     <Pagination :pageRange="pageRange" :CLIENT_API_URL="CLIENT_API_URL" @changePage="posts = $event" class="mt-3" />
-  </div>
+  </section>
 </template>
 
 <script>
-import Carousel from "~/components/Carousel.vue";
-import Pagination from "~/components/Pagination.vue";
+import Carousel from "@/components/Carousel.vue";
+import Pagination from "@/components/Pagination.vue";
 import axios from "axios";
 export default {
   name: "Index",
@@ -55,8 +67,13 @@ export default {
     Carousel,
     Pagination,
   },
-  async asyncData({ }) {
-    const { data } = await axios.get(`${process.env.API_URL}/api/posts/`);
+  async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
+    const { data } = await axios.get(`${process.env.API_URL}/api/posts/`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
     const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
     return {
       posts: data.results,

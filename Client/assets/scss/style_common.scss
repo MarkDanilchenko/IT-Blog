@@ -1,27 +1,27 @@
 .container {
-	min-height: 100vh;
+  min-height: 100vh;
 }
 
 .nav-link {
-	color: $grey_color !important;
+  color: $grey_color !important;
 }
 
 .nav-link:hover {
-	color: $green_color !important;
+  color: $green_color !important;
 }
 
 .activeText {
-	font-weight: 700;
+  font-weight: 700;
 }
 
 .text-small {
-	font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .breadcrumb-item a {
-	color: $grey_color !important;
+  color: $grey_color !important;
 }
 
 .breadcrumb-item a:hover {
-	color: $green_color !important;
+  color: $green_color !important;
 }

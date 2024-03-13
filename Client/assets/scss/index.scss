@@ -1,5 +1,9 @@
-@import "~bootstrap";
 @import "colors.scss";
+/* ------- customize Bootstrap carousel styles via variables -------- */
+$carousel-control-color: $grey_color;
+$carousel-dark-control-icon-filter: invert(1);
+
+@import "@/node_modules/bootstrap/scss/bootstrap.scss";
 @import "style_carousel.scss";
 @import "style_pagination.scss";
 @import "style_common.scss";

@@ -20,6 +20,12 @@ urlpatterns = [
     ),
     # posts, posts by tag (through query params - ?tag=)
     path("posts/", views.PostViewSet.as_view({"get": "list"}), name="posts"),
+    # single post (details)
+    path(
+        "posts/<slug:post_url>/",
+        views.PostViewSet.as_view({"get": "retrieve"}),
+        name="post",
+    ),
     # aside bar posts
     path(
         "posts_aside/",

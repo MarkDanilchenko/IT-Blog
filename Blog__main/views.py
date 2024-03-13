@@ -16,9 +16,9 @@ from taggit.models import Tag
 
 # pagination class by 3 items per page
 class PostPagination(pagination.PageNumberPagination):
-    page_size = 3
+    page_size = 2
     page_size_query_param = "page_size"
-    max_page_size = 3
+    max_page_size = 2
 
 
 # Sign up viewSet
@@ -63,17 +63,18 @@ class PostViewSet(viewsets.ModelViewSet):
             get_object_or_404(Tag, slug=request.query_params.get("tag"))
             result = models.Post.objects.filter(
                 tag__slug=request.query_params.get("tag")
-            ).order_by("-created_at")
+            ).order_by("title")
         else:
-            result = models.Post.objects.all().order_by("-created_at")
+            result = models.Post.objects.all().order_by("title")
         paginator = self.pagination_class()
         paginated_result = paginator.paginate_queryset(result, request)
         serialized_result = self.serializer_class(paginated_result, many=True).data
         return paginator.get_paginated_response(serialized_result)
 
-    # DRF SEARCH posts'
-    # search_fields = ["title", "h1", "description", "content"]
-    # filter_backends = [filters.SearchFilter]
+    def retrieve(self, request, *args, **kwargs):
+        post = get_object_or_404(models.Post, url__icontains=kwargs["post_url"].lower())
+        result = self.serializer_class(post, many=False).data
+        return Response(result, status=status.HTTP_200_OK)
 
 
 # Tag viewSet
@@ -98,7 +99,7 @@ class AsidePostViewSet(viewsets.ModelViewSet):
             exclude = self.request.GET.get("exclude")
             get_object_or_404(models.Post, url=exclude.lower())
             result = self.serializer_class(
-                models.Post.objects.exclude(url=exclude).order_by("-created_at")[:3],
+                models.Post.objects.exclude(url=exclude).order_by("title")[:3],
                 many=True,
             ).data
             return Response(result, status=status.HTTP_200_OK)
@@ -148,7 +149,7 @@ class SearchViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if self.request.GET.get("search"):
             search = self.request.GET.get("search").lower()
-            result = models.Post.objects.all().order_by("-created_at")
+            result = models.Post.objects.all().order_by("title")
             for i in result:
                 if (
                     # `(fuzz.partial_ratio(search, str(i.title)) > 60)` is using the `fuzz` module
