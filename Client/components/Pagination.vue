@@ -2,6 +2,9 @@
     <section class="my-pagination">
         <nav aria-label="Page navigation">
             <ul class="pagination d-flex justify-content-center">
+                <!-- Previous button -->
+                <!-- Previous button -->
+                <!-- Previous button -->
                 <li class="page-item" v-if="currentPage > 1">
                     <button class="page-link" aria-label="Previous" tabindex="-1" @click.prevent="changePage(prevPage)">
                         <span aria-hidden="true">&laquo;</span>
@@ -12,6 +15,9 @@
                         <span aria-hidden="true">&laquo;</span>
                     </nuxt-link>
                 </li>
+                <!-- Pages -->
+                <!-- Pages -->
+                <!-- Pages -->
                 <div v-for="i in pageRange" :key="i">
                     <li v-if="currentPage == i" class="page-item active">
                         <button class="page-link" @click.prevent="changePage(i)">{{ i }}</button>
@@ -20,6 +26,9 @@
                         <button class="page-link" @click.prevent="changePage(i)">{{ i }}</button>
                     </li>
                 </div>
+                <!-- Next button -->
+                <!-- Next button -->
+                <!-- Next button -->
                 <li class="page-item" v-if="currentPage < pageRange">
                     <button class="page-link" aria-label="Next" tabindex="-1" @click.prevent="changePage(nextPage)">
                         <span aria-hidden="true">&raquo;</span>
@@ -39,18 +48,36 @@
 import axios from 'axios'
 export default {
     name: "Pagination",
-    props: ['pageRange', 'CLIENT_API_URL'],
+    props: {
+        pageRange: {
+            type: Number,
+        },
+        CLIENT_API_URL: {
+            type: String,
+        }
+    },
     methods: {
         async changePage(page) {
-            // check, if query is from search.vue page with ?q=
-            if (this.$route.query.q) {
-                const { data } = await axios.get(`${this.CLIENT_API_URL}?q=${this.$route.query.q}&page=${page}`);
+            // if the url contains a ?query=...
+            if (this.CLIENT_API_URL.includes('?')) {
+                const { data } = await axios.get(`${this.CLIENT_API_URL}&page=${page}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
                 this.$emit('changePage', data.results);
-                this.$router.push(`?q=${this.$route.query.q}&page=${page}`);
+                this.$router.push(`${this.$route.path}?page=${page}`);
+                // if the url does not contain a ?query=...
             } else {
-                const { data } = await axios.get(`${this.CLIENT_API_URL}?page=${page}`);
+                const { data } = await axios.get(`${this.CLIENT_API_URL}?page=${page}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
                 this.$emit('changePage', data.results);
-                this.$router.push(`?page=${page}`);
+                this.$router.push(`${this.$route.path}?page=${page}`);
             }
         },
     },

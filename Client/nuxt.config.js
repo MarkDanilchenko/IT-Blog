@@ -94,9 +94,9 @@ export default {
     },
     redirect: {
       // if signIn is required
-      login: "/accounts/signin/",
+      login: "/api/accounts/signin/",
       // after signOut
-      logout: "/accounts/signin/",
+      logout: "/api/accounts/signin/",
       // after signIn
       home: "/",
     },
@@ -105,10 +105,7 @@ export default {
   /* The `env` property in the Nuxt.js configuration is used to define environment variables that can
   be accessed within your application. */
   env: {
-    API_URL:
-      process.env.server_HostPort_1 !== ""
-        ? `http://${process.env.server_HostPort_1}`
-        : "http://127.0.0.1:8000",
+    API_URL: `http://${process.env.server_HostPort_1}`,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

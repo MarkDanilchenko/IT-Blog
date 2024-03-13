@@ -33,20 +33,22 @@
                         }}</nuxt-link>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-between align-items-center mt-3">
-                    <nuxt-link :to="`/posts/${i.url}/`" class="btn btn-sm btn-outline-secondary me-3">More</nuxt-link>
-                    <span class="badge bg-secondary rounded-pill">{{ i.created_at }}</span>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- No posts -->
+        <!-- No posts -->
+        <!-- No posts -->
       </div>
       <div v-else>
         <h3 class="text-center lead my-5">No posts yet ...</h3>
       </div>
     </div>
+    <!-- Pagination -->
+    <!-- Pagination -->
+    <!-- Pagination -->
     <Pagination :pageRange="pageRange" :CLIENT_API_URL="CLIENT_API_URL" @changePage="posts = $event" class="mt-3" />
   </section>
 </template>
@@ -61,8 +63,13 @@ export default {
     Carousel,
     Pagination,
   },
-  async asyncData({ }) {
-    const { data } = await axios.get(`${process.env.API_URL}/api/posts/`);
+  async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
+    const { data } = await axios.get(`${process.env.API_URL}/api/posts/`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
     const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
     return {
       posts: data.results,
