@@ -100,6 +100,7 @@ class AsidePostViewSet(viewsets.ModelViewSet):
             get_object_or_404(models.Post, url=exclude.lower())
             result = self.serializer_class(
                 models.Post.objects.exclude(url=exclude).order_by("title")[:3],
+                models.Post.objects.exclude(url=exclude).order_by("title")[:3],
                 many=True,
             ).data
             return Response(result, status=status.HTTP_200_OK)
@@ -149,6 +150,7 @@ class SearchViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if self.request.GET.get("search"):
             search = self.request.GET.get("search").lower()
+            result = models.Post.objects.all().order_by("title")
             result = models.Post.objects.all().order_by("title")
             for i in result:
                 if (

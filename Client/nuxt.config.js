@@ -36,22 +36,28 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   // Bootstrap import is declared in index.scss
   css: ["@/assets/scss/index.scss"],
+  css: ["@/assets/scss/index.scss"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {
       src: "@/plugins/bootstrap.js",
+      src: "@/plugins/bootstrap.js",
       mode: "client",
     },
     {
+      src: "@/plugins/jquery.js",
       src: "@/plugins/jquery.js",
       mode: "client",
     },
     {
       src: "@/plugins/vuelidate.js",
+      src: "@/plugins/vuelidate.js",
       mode: "client",
     },
     {
+      src: "@/plugins/js/index.js",
+      mode: "client",
       src: "@/plugins/js/index.js",
       mode: "client",
     },
@@ -73,10 +79,12 @@ export default {
         token: {
           property: "access",
           maxAge: 5 * 60,
+          maxAge: 5 * 60,
           type: "Bearer",
         },
         refreshToken: {
           property: "refresh",
+          maxAge: 60 * 60 * 24 * 1,
           maxAge: 60 * 60 * 24 * 1,
           data: "refresh",
         },
@@ -87,6 +95,7 @@ export default {
         endpoints: {
           login: { url: "/api/token/", method: "post" },
           logout: false,
+          refresh: { url: "/api/token/refresh/", method: "post" },
           refresh: { url: "/api/token/refresh/", method: "post" },
           user: { url: "/api/accounts/profile/", method: "get" },
         },
@@ -104,6 +113,8 @@ export default {
 
   /* The `env` property in the Nuxt.js configuration is used to define environment variables that can
   be accessed within your application. */
+  /* The `env` property in the Nuxt.js configuration is used to define environment variables that can
+  be accessed within your application. */
   env: {
     API_URL: `http://${process.env.server_HostPort_1}`,
   },
@@ -111,10 +122,16 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   /* This part of the configuration is setting the base URL for Axios requests in your Nuxt.js
   application. */
+  /* This part of the configuration is setting the base URL for Axios requests in your Nuxt.js
+  application. */
   axios: {
+    baseURL: process.env.API_URL,
     baseURL: process.env.API_URL,
   },
 
+  /* The `loading` property in the Nuxt.js configuration is used to customize the loading indicator
+ color that appears when navigating between pages or when data is being fetched. In this case,
+ `loading: { color: "#000000" }` sets the color of the loading indicator to black (#000000). */
   /* The `loading` property in the Nuxt.js configuration is used to customize the loading indicator
  color that appears when navigating between pages or when data is being fetched. In this case,
  `loading: { color: "#000000" }` sets the color of the loading indicator to black (#000000). */
