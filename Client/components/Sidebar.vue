@@ -41,10 +41,12 @@ export default {
     name: "Sidebar",
     props: {
         tags: {
-            type: Array
+            type: Array,
+            default: () => []
         },
         asidedata: {
-            type: Array
+            type: Array,
+            default: () => []
         }
     }
 }

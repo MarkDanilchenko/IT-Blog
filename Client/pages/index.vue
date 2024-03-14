@@ -33,6 +33,10 @@
                         }}</nuxt-link>
                     </div>
                   </div>
+                  <div class="d-flex justify-content-between align-items-center mt-3">
+                    <nuxt-link :to="`/posts/${i.url}/`" class="btn btn-sm btn-outline-secondary me-3">More</nuxt-link>
+                    <span class="badge bg-secondary rounded-pill">{{ i.created_at }}</span>
+                  </div>
                 </div>
               </div>
             </div>

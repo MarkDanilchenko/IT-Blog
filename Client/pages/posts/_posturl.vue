@@ -56,27 +56,25 @@ export default {
         Comments
     },
     async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-        const tags = await axios.get(`${process.env.API_URL}/api/tags/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
         const { data } = await axios.get(`${process.env.API_URL}/api/posts/${params.posturl}/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         });
-        // currentPostUrl - is needed to exclude this post from the Sidebar with related posts
-        let currentPost__url = data.url;
+        const tags = await axios.get(`${process.env.API_URL}/api/tags/`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
         const asidedata = await axios.get(`${process.env.API_URL}/api/posts_aside/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             params: {
-                exclude: currentPost__url
+                exclude: data.url
             }
         })
         return {

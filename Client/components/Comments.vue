@@ -12,10 +12,10 @@
                             <textarea class="form-control" name="comment" id="comment" rows="5" cols="30"
                                 placeholder="Your comment up to 1000 symbols." v-model="comment"
                                 @input="$v.comment.$touch()"></textarea>
-                            <div v-if="!$v.comment.required">
+                            <div v-if="$v.comment.required.$invalid">
                                 <span class="text-small text-secondary">Leave your comment up to 1000 symbols.</span>
                             </div>
-                            <div v-if="!$v.comment.maxLength">
+                            <div v-if="$v.comment.maxLength.$invalid">
                                 <span class="text-small text-danger">Comment should not exceed 1000 symbols.</span>
                             </div>
                         </div>
@@ -25,9 +25,11 @@
                 </div>
                 <div v-else>
                     <h5 class="text-center lead">
-                        Please,
-                        <nuxt-link class="nav-link" to="/accounts/signin/">SignIn</nuxt-link> to leave comments.
-                        <nuxt-link class="nav-link" to="/accounts/signup/">SignUp</nuxt-link> to create an account.
+                        <nuxt-link class="nav-link" to="/accounts/signin/"><b>SignIn</b></nuxt-link> <span
+                            class="text-small">to leave comments.</span>
+                        <br><br>
+                        <nuxt-link class="nav-link" to="/accounts/signup/"><b>SignUp</b></nuxt-link> <span
+                            class="text-small">to create an account.</span>
                     </h5>
                 </div>
             </div>
@@ -35,36 +37,27 @@
         <!-- Browse Comments block -->
         <!-- Browse Comments block -->
         <!-- Browse Comments block -->
-        <div class="card" v-if="postComments.length">
+        <div v-if="postComments.length > 0" class="card">
             <h5 class="card-header">Comments:</h5>
             <div class="card-body">
-                <div class="d-flex col-10 offset-1 border-bottom border-end border-1 rounded rounded-2 shadow-sm mb-1 p-3"
-                    v-for="(i, counter) in postComments" :key="i.id">
-                    <div class="flex-shrink-0">
-                        <img :src="``" class="rounded-circle" :alt="``" :title="``" />
+                <div class="d-flex flex-column col-10 offset-1 border-bottom border-end border-1 rounded rounded-2 shadow-sm mb-3 p-3"
+                    v-for="i in postComments" :key="i.id">
+                    <div class="d-flex justify-content-between text-small text-muted">
+                        <span class="me-3">&#128100; &nbsp;&nbsp;{{ i.user }}</span>
+                        <span>&#128197; &nbsp;&nbsp;{{ i.created_at }}</span>
                     </div>
-                    <div class="flex-grow-1">
-                        <div class="d-flex justify-content-between text-small text-muted">
-                            <span class="me-3">&#128100; &nbsp;&nbsp;{{ i.user }}</span>
-                            <span>&#128197; &nbsp;&nbsp;{{ i.created_at }}</span>
-                        </div>
-                        <div v-if="counter % 2 === 0">
-                            <p class="text-end my-1 pe-5">{{ i.text }}</p>
-                        </div>
-                        <div v-else>
-                            <p class="text-start my-1 ps-5">{{ i.text }}</p>
-                        </div>
+                    <div>
+                        <p class="text-start my-1 pe-5">{{ i.text }}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div v-else class="mt-5">
-            <h5 class="text-center lead"><b>No comments yet ...</b></h5>
+            <h5 class="text-center lead"><b>No comments for this post yet...</b></h5>
         </div>
         <div class="d-flex flex-column justify-content-center align-items-center mt-4 mb-2">
             <hr style="width: 50%" />
         </div>
-
         <!-- Toast -->
         <!-- Toast -->
         <!-- Toast -->
@@ -83,47 +76,26 @@
 </template>
 
 <script>
-import { maxLength, minLength, required, helpers } from 'vuelidate/lib/validators'
+import { maxLength, minLength, required, helpers } from 'vuelidate/lib/validators';
 import axios from "axios";
 export default {
     name: "Comments",
-    props: ['postComments', 'post'],
-    setup() {
-        return {
-            v$: useVuelidate()
+    props: {
+        post: {
+            type: String,
+            default: () => ''
         }
     },
     data() {
         return {
             comment: '',
+            postComments: [],
         }
     },
-    methods: {
-        async submitCommentForm() {
-            try {
-                let response = await axios.post(`${process.env.API_URL}/api/comments/`, {
-                    post: this.post.title,
-                    text: this.comment,
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${this.$auth.strategy.token.get().split(' ')[1]}`
-                    }
-                });
-                this.comment = '';
-                // `this.postComments.unshift(response.data.comment_created_data)` is adding the newly
-                // created comment to the beginning of the props `postComments` array.
-                this.postComments.unshift(response.data.comment_created_data);
-
-                // Toast appearance.
-                const { Toast } = await import('bootstrap');
-                const toastLiveExample = document.getElementById('liveToast');
-                let commentForToast = response.data.comment_created_data.text;
-                toastLiveExample.querySelector('.toast-body').innerHTML = commentForToast;
-                const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
-                toastBootstrap.show();
-            } catch (e) {
-                alert(e.message);
-            }
+    validations: {
+        comment: {
+            required,
+            maxLength: maxLength(10)
         }
     },
     computed: {
@@ -131,11 +103,52 @@ export default {
             return this.$v.comment.$invalid || this.comment == '' ? true : false
         }
     },
-    validations: {
-        comment: {
-            required,
-            maxLength: maxLength(1000)
+    mounted() {
+        axios.get(`${process.env.API_URL}/api/comments/`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            params: {
+                post: this.post
+            }
+        }).then((response) => {
+            this.postComments = [...response.data]
+        }).catch((error) => {
+            this.postComments = [];
+            console.log(error.message);
+        })
+    },
+    methods: {
+        async submitCommentForm() {
+            await axios.post(`${process.env.API_URL}/api/comments/`,
+                {
+                    post: this.post,
+                    text: this.comment
+                },
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.$auth.strategy.token.get().split(' ')[1]}`
+                    },
+
+                }).then((response) => {
+                    console.log(response);
+                    // this.postComments.unshift(response);
+                    // Toast appearance:
+                    const { Toast } = import('bootstrap');
+                    const toastLiveExample = document.getElementById('liveToast');
+                    let commentForToast = '';
+                    toastLiveExample.getElementsByClassName('toast-body').innerHTML = commentForToast;
+                    const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
+                    toastBootstrap.show();
+                }).catch((error) => {
+                    console.log(error.message)
+                }).finally(() => {
+                    this.comment = '';
+                });
         }
-    }
+    },
 }
 </script>
