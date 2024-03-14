@@ -2,15 +2,15 @@
   <section class="my-navigation">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <!-- Main page logo and links -->
-        <!-- Main page logo and links -->
-        <!-- Main page logo and links -->
+        <!-- Main page logos -->
+        <!-- Main page logos -->
+        <!-- Main page logos -->
         <div>
           <nuxt-link to="/" class="navbar-brand">
-            <img src="~/assets/IMG/Python_logo.png" alt="Python" class="navbar-brand" width="30" height="40" />
+            <img src="@/assets/IMG/Python_logo.png" alt="Python" class="navbar-brand" width="30" height="40" />
           </nuxt-link>
           <nuxt-link to="/" class="navbar-brand">
-            <img src="~/assets/IMG/NuxtJS_logo.png" alt="NuxtJS" class="navbar-brand" width="30" height="40" />
+            <img src="@/assets/IMG/NuxtJS_logo.png" alt="NuxtJS" class="navbar-brand" width="30" height="40" />
           </nuxt-link>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -18,24 +18,30 @@
           @click="changeTogglerArrow">
           <span>&#9660;</span>
         </button>
+        <!-- Collapse navbar -->
+        <!-- Collapse navbar -->
+        <!-- Collapse navbar -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Main page links -->
+          <!-- Main page links -->
+          <!-- Main page links -->
           <div class="navbar-nav me-auto mb-0 d-flex align-items-center">
-            <nuxt-link v-if="this.$route.path == '/'" to="/" class="nav-link activeText">Main</nuxt-link>
-            <nuxt-link v-if="this.$route.path != '/'" to="/" class="nav-link">Main</nuxt-link>
+            <nuxt-link to="/" :class="this.$route.path == '/' ? 'nav-link activeText' : 'nav-link'">Main</nuxt-link>
             <div v-if="userSignedIn">
-              <nuxt-link v-if="this.$route.path == '/feedback'" to="/feedback" class="nav-link activeText">Feedback</nuxt-link>
-              <nuxt-link v-if="this.$route.path != '/feedback'" to="/feedback" class="nav-link">Feedback</nuxt-link>
+              <nuxt-link to="/feedback"
+                :class="this.$route.path == '/feedback' ? 'nav-link activeText' : 'nav-link'">Feedback</nuxt-link>
             </div>
             <span class="badge bg-success rounded-pill ms-lg-5 shadow" v-if="userSignedIn">{{
-              (this.$auth.user.username).toUpperCase() }}</span>
+            (this.$auth.user.username).toUpperCase() }}</span>
           </div>
           <!-- Search form -->
           <!-- Search form -->
           <!-- Search form -->
           <form class="d-flex my-lg-0 my-3">
-            <input v-model="q" type="text" name="q" class="form-control me-2" placeholder="Search..." aria-label="Search"
-              required="" />
-            <button class="btn btn-outline-success me-2" type="submit" @click.prevent="submitSearch" :disabled="!q">
+            <input v-model="search" type="text" name="search" class="form-control me-2" placeholder="Search..."
+              aria-label="Search" required="" />
+            <button class="btn btn-outline-success me-2" type="submit" @click.prevent="submitSearch"
+              :disabled="!search">
               Search
             </button>
           </form>
@@ -43,21 +49,14 @@
           <!-- Sign in and sign up buttons -->
           <!-- Sign in and sign up buttons -->
           <div class="d-flex justify-content-center">
-            <client-only>
-              <div v-if="userSignedIn">
-                <nuxt-link to="/accounts/signout/" class="btn btn-outline-danger me-lg-2">Sign&nbsp;out</nuxt-link>
-              </div>
-              <div v-else>
-                <nuxt-link v-if="this.$route.path == '/accounts/signin/'" to="/accounts/signin/"
-                  class="btn btn-outline-secondary active me-1">Sign&nbsp;in</nuxt-link>
-                <nuxt-link v-if="this.$route.path != '/accounts/signin/'" to="/accounts/signin/"
-                  class="btn btn-outline-secondary me-1">Sign&nbsp;in</nuxt-link>
-                <nuxt-link v-if="this.$route.path == '/accounts/signup/'" to="/accounts/signup/"
-                  class="btn btn-outline-secondary active me-lg-2">Sign&nbsp;up</nuxt-link>
-                <nuxt-link v-if="this.$route.path != '/accounts/signup/'" to="/accounts/signup/"
-                  class="btn btn-outline-secondary me-lg-2">Sign&nbsp;up</nuxt-link>
-              </div>
-            </client-only>
+            <nuxt-link v-if="userSignedIn" to="/accounts/signout/"
+              class="btn btn-outline-danger me-lg-2">SignOut</nuxt-link>
+            <div v-if="!userSignedIn">
+              <nuxt-link to="/accounts/signin/"
+                :class="this.$route.path == '/accounts/signin/' ? 'btn btn-outline-secondary active me-1' : 'btn btn-outline-secondary me-lg-2'">SignIn</nuxt-link>
+              <nuxt-link to="/accounts/signup/"
+                :class="this.$route.path == '/accounts/signup/' ? 'btn btn-outline-secondary active me-1' : 'btn btn-outline-secondary me-lg-2'">SignUp</nuxt-link>
+            </div>
           </div>
           <!-- colorMode switcher -->
           <!-- colorMode switcher -->
@@ -65,12 +64,13 @@
           <div class="mt-lg-0 mt-3 m-0 d-flex flex-column align-items-center justify-content-center">
             <input type="checkbox" id="colorMode_switcher" />
             <label for="colorMode_switcher">
-              <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" viewBox="0 0 496 496" style="enable-background: new 0 0 496 496" xml:space="preserve">
+              <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 496 496"
+                style="enable-background: new 0 0 496 496" xml:space="preserve">
                 <rect x="152.994" y="58.921" transform="matrix(0.3827 0.9239 -0.9239 0.3827 168.6176 -118.5145)"
                   width="40.001" height="16" />
-                <rect x="46.9" y="164.979" transform="matrix(0.9239 0.3827 -0.3827 0.9239 71.29 -12.4346)" width="40.001"
-                  height="16" />
+                <rect x="46.9" y="164.979" transform="matrix(0.9239 0.3827 -0.3827 0.9239 71.29 -12.4346)"
+                  width="40.001" height="16" />
                 <rect x="46.947" y="315.048" transform="matrix(0.9239 -0.3827 0.3827 0.9239 -118.531 50.2116)"
                   width="40.001" height="16" />
                 <rect x="164.966" y="409.112" transform="matrix(-0.9238 -0.3828 0.3828 -0.9238 168.4872 891.7491)"
@@ -81,8 +81,8 @@
                   width="40.001" height="16" />
                 <rect x="409.054" y="165.011" transform="matrix(-0.9239 0.3827 -0.3827 -0.9239 891.6585 168.6574)"
                   width="40.001" height="16" />
-                <rect x="315.001" y="46.895" transform="matrix(0.9238 0.3828 -0.3828 0.9238 50.212 -118.5529)" width="16"
-                  height="39.999" />
+                <rect x="315.001" y="46.895" transform="matrix(0.9238 0.3828 -0.3828 0.9238 50.212 -118.5529)"
+                  width="16" height="39.999" />
                 <path d="M248,88c-88.224,0-160,71.776-160,160s71.776,160,160,160s160-71.776,160-160S336.224,88,248,88z M248,392
 					c-79.4,0-144-64.6-144-144s64.6-144,144-144s144,64.6,144,144S327.4,392,248,392z" />
                 <rect x="240" width="16" height="72" />
@@ -121,15 +121,18 @@ export default {
   name: "Header",
   data() {
     return {
-      q: '',
+      search: '',
       TogglerArrowSwitcher: true,
+      userSignedIn: this.$auth.user
     };
   },
   methods: {
     submitSearch() {
-      this.$router.push("/search/?q=" + this.q);
-      this.q = '';
+      this.$router.push(`/search/?search=${this.search}`);
+      this.search = '';
     },
+    // The `changeTogglerArrow()` method is a function that toggles the arrow icon displayed in the
+    // navbar toggler button.
     changeTogglerArrow() {
       if (this.TogglerArrowSwitcher) {
         document.querySelector('.navbar-toggler > span').innerHTML = '&#9650;';
@@ -139,11 +142,6 @@ export default {
         this.TogglerArrowSwitcher = true;
       }
     }
-  },
-  computed: {
-    userSignedIn() {
-      return this.$auth.user;
-    },
   },
 };
 </script>

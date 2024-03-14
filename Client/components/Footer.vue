@@ -1,7 +1,7 @@
 <template>
   <section class="my-footer">
     <footer class="col-12 mt-3">
-      <ul class="nav justify-content-center">
+      <ul class="nav d-flex justify-content-center">
         <li class="nav-item">
           <nuxt-link to="/" class="nav-link px-2" title="Home page"><b>Home</b></nuxt-link>
         </li>
