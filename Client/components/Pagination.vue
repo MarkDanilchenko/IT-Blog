@@ -67,7 +67,12 @@ export default {
                     }
                 });
                 this.$emit('changePage', data.results);
-                this.$router.push(`${this.$route.path}?page=${page}`);
+                // if the url contains a ?search=...
+                if (this.CLIENT_API_URL.includes('search')) {
+                    this.$router.push(`${this.$route.path}?search=${this.$route.query.search}&page=${page}`);
+                } else {
+                    this.$router.push(`${this.$route.path}?page=${page}`);
+                }
                 // if the url does not contain a ?query=...
             } else {
                 const { data } = await axios.get(`${this.CLIENT_API_URL}?page=${page}`, {

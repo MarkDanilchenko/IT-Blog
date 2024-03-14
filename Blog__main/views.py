@@ -157,7 +157,7 @@ class SearchViewSet(viewsets.ModelViewSet):
                     or (fuzz.partial_ratio(search, str(i.h1)) > 70)
                     or (fuzz.partial_ratio(search, str(i.description)) > 70)
                     or (fuzz.partial_ratio(search, str(i.content)) > 70)
-                    # search coincidences in tags of the post
+                    # any search coincidences in tags of the post
                     or any(
                         True
                         for j in i.tag.all()
@@ -169,7 +169,7 @@ class SearchViewSet(viewsets.ModelViewSet):
                     result = result.exclude(pk=i.pk)
             else:
                 if len(result) == 0:
-                    return Response(status=status.HTTP_404_NOT_FOUND)
+                    return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
                     paginator = self.pagination_class()
                     paginated_result = paginator.paginate_queryset(result, request)
