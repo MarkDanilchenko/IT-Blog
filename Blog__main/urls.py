@@ -38,16 +38,10 @@ urlpatterns = [
     path("feedback/", views.FeedbackView.as_view(), name="feedback"),
     # search (fuzzywuzzy)
     path("search/", views.SearchViewSet.as_view({"get": "list"}), name="search"),
-    # comments (GET)
-    path(
-        "comments/<slug:post_url>/",
-        views.Post_CommentsViewSet.as_view({"get": "list"}),
-        name="comments_get",
-    ),
-    # comments (POST)
+    # comments (GET, POST)
     path(
         "comments/",
-        views.Post_CommentsViewSet.as_view({"post": "create"}),
-        name="comments_post",
+        views.Post_CommentsViewSet.as_view({"get": "list", "post": "create"}),
+        name="comments",
     ),
 ]

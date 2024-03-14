@@ -33,14 +33,14 @@
                 <!-- Comments' block -->
                 <!-- Comments' block -->
                 <!-- Comments' block -->
-                <!-- <ClientOnly placeholder="Loading comments...">
-                    <Comments :postComments="postComments" :post="post" />
-                </ClientOnly> -->
+                <ClientOnly placeholder="Loading comments...">
+                    <Comments :post="post.url" />
+                </ClientOnly>
             </div>
             <!-- Sidebar with related posts -->
             <!-- Sidebar with related posts -->
             <!-- Sidebar with related posts -->
-            <Sidebar :tags="tags" :asidedata="asidedata" />
+            <Sidebar :tags="tags" :asidedata="asidedata" class="col-lg-4" />
         </div>
     </section>
 </template>
@@ -79,12 +79,10 @@ export default {
                 exclude: currentPost__url
             }
         })
-        // const postComments = await axios.get(`${process.env.API_URL}/api/comments/${params.url}/`)
         return {
             post: data,
             tags: tags.data,
             asidedata: asidedata.data,
-            // postComments: postComments.data
         }
     },
 }

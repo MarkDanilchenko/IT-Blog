@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <!-- Put a Comment block -->
-        <!-- Put a Comment block -->
-        <!-- Put a Comment block -->
+    <section class="my-comments">
+        <!-- Create Comment block -->
+        <!-- Create Comment block -->
+        <!-- Create Comment block -->
         <div class="card mb-3 mt-5">
             <h5 class="card-header">Enter Your comment:</h5>
             <div class="card-body">
                 <div v-if="$auth.user">
-                    <form>
+                    <form id="commentForm" name="commentForm">
                         <div class="form-group">
                             <textarea class="form-control" name="comment" id="comment" rows="5" cols="30"
                                 placeholder="Your comment up to 1000 symbols." v-model="comment"
@@ -19,15 +19,15 @@
                                 <span class="text-small text-danger">Comment should not exceed 1000 symbols.</span>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-success btn-sm mt-3" @click.prevent="submitCommentForm"
-                            :disabled="commentFilled"> Comment!</button>
+                        <button type="submit" class="btn btn-outline-success btn-sm mt-3"
+                            @click.prevent="submitCommentForm" :disabled="commentFilled"> Comment!</button>
                     </form>
                 </div>
                 <div v-else>
                     <h5 class="text-center lead">
                         Please,
-                        <nuxt-link class="nav-link" to="/accounts/signin/">sign in</nuxt-link> or
-                        <nuxt-link class="nav-link" to="/accounts/signup/">sign up</nuxt-link> to leave comments...
+                        <nuxt-link class="nav-link" to="/accounts/signin/">SignIn</nuxt-link> to leave comments.
+                        <nuxt-link class="nav-link" to="/accounts/signup/">SignUp</nuxt-link> to create an account.
                     </h5>
                 </div>
             </div>
@@ -69,7 +69,8 @@
         <!-- Toast -->
         <!-- Toast -->
         <div v-if="this.$auth.user" class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-delay="5000">
                 <div class="toast-header">
                     <strong class="me-auto">{{ this.$auth.user.username }}</strong>
                     <small class="text-body-secondary">&#60; 1 min ago</small>
@@ -78,15 +79,20 @@
                 <div class="toast-body"></div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
-import { required, maxLength } from 'vuelidate/lib/validators'
+import { maxLength, minLength, required, helpers } from 'vuelidate/lib/validators'
 import axios from "axios";
 export default {
     name: "Comments",
     props: ['postComments', 'post'],
+    setup() {
+        return {
+            v$: useVuelidate()
+        }
+    },
     data() {
         return {
             comment: '',
