@@ -187,7 +187,9 @@ class Post_CommentsViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
-        post = get_object_or_404(models.Post, url=self.kwargs["post_url"].lower())
+        post = get_object_or_404(
+            models.Post, url__icontains=self.request.GET.get("post")
+        )
         post_comments = models.Post_Comments.objects.filter(post=post).order_by(
             "-created_at"
         )

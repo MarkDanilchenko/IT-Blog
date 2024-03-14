@@ -1,5 +1,5 @@
 <template>
-    <div class="col-lg-4">
+    <section class="my-sidebar">
         <!-- Tags -->
         <!-- Tags -->
         <!-- Tags -->
@@ -9,16 +9,16 @@
                 <div class="d-flex flex-wrap justify-content-end">
                     <div v-for="i in tags" :key="i.slug">
                         <nuxt-link :to="`/tags/${i.slug}/`" class="badge bg-light rounded-pill nav-link me-1 mb-1">#{{
-                            i.slug }}</nuxt-link>
+                        i.slug }}</nuxt-link>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Last side posts -->
-        <!-- Last side posts -->
-        <!-- Last side posts -->
+        <!-- Sidebar posts -->
+        <!-- Sidebar posts -->
+        <!-- Sidebar posts -->
         <div class="card my-3">
-            <h5 class="card-header">View last posts</h5>
+            <h5 class="card-header">Other posts</h5>
             <div class="card-body pb-0 mb-3" v-for="(i, counter) in asidedata" :key="i.url">
                 <nuxt-link :to="`/posts/${i.url}/`" class="nav-link text-center">
                     <h5 class="card-title">{{ i.h1 }}</h5>
@@ -33,12 +33,21 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
 export default {
     name: "Sidebar",
-    props: ['tags', 'asidedata',]
+    props: {
+        tags: {
+            type: Array,
+            default: () => []
+        },
+        asidedata: {
+            type: Array,
+            default: () => []
+        }
+    }
 }
 </script>

@@ -33,14 +33,14 @@
                 <!-- Comments' block -->
                 <!-- Comments' block -->
                 <!-- Comments' block -->
-                <!-- <ClientOnly placeholder="Loading comments...">
-                    <Comments :postComments="postComments" :post="post" />
-                </ClientOnly> -->
+                <ClientOnly placeholder="Loading comments...">
+                    <Comments :post="post.url" />
+                </ClientOnly>
             </div>
             <!-- Sidebar with related posts -->
             <!-- Sidebar with related posts -->
             <!-- Sidebar with related posts -->
-            <Sidebar :tags="tags" :asidedata="asidedata" />
+            <Sidebar :tags="tags" :asidedata="asidedata" class="col-lg-4" />
         </div>
     </section>
 </template>
@@ -56,35 +56,31 @@ export default {
         Comments
     },
     async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-        const tags = await axios.get(`${process.env.API_URL}/api/tags/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        });
         const { data } = await axios.get(`${process.env.API_URL}/api/posts/${params.posturl}/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         });
-        // currentPostUrl - is needed to exclude this post from the Sidebar with related posts
-        let currentPost__url = data.url;
+        const tags = await axios.get(`${process.env.API_URL}/api/tags/`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
         const asidedata = await axios.get(`${process.env.API_URL}/api/posts_aside/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             params: {
-                exclude: currentPost__url
+                exclude: data.url
             }
         })
-        // const postComments = await axios.get(`${process.env.API_URL}/api/comments/${params.url}/`)
         return {
             post: data,
             tags: tags.data,
             asidedata: asidedata.data,
-            // postComments: postComments.data
         }
     },
 }
