@@ -198,7 +198,7 @@ class Post_CommentsViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         user = self.request.user
-        post = get_object_or_404(models.Post, title=request.data.get("post"))
+        post = get_object_or_404(models.Post, url__icontains=request.data.get("post"))
         result = self.serializer_class(data=request.data)
         result.is_valid(raise_exception=True)
         result.save(post=post, user=user, text=request.data.get("text"))

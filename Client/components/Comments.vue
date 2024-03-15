@@ -12,10 +12,10 @@
                             <textarea class="form-control" name="comment" id="comment" rows="5" cols="30"
                                 placeholder="Your comment up to 1000 symbols." v-model="comment"
                                 @input="$v.comment.$touch()"></textarea>
-                            <div v-if="$v.comment.required.$invalid">
+                            <div v-if="!$v.comment.required">
                                 <span class="text-small text-secondary">Leave your comment up to 1000 symbols.</span>
                             </div>
-                            <div v-if="$v.comment.maxLength.$invalid">
+                            <div v-if="!$v.comment.maxLength">
                                 <span class="text-small text-danger">Comment should not exceed 1000 symbols.</span>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ export default {
     validations: {
         comment: {
             required,
-            maxLength: maxLength(10)
+            maxLength: maxLength(1000)
         }
     },
     computed: {
@@ -134,12 +134,10 @@ export default {
                     },
 
                 }).then((response) => {
-                    console.log(response);
-                    // this.postComments.unshift(response);
-                    // Toast appearance:
-                    const { Toast } = import('bootstrap');
+                    this.postComments.unshift(response.data.comment_details);
+                    // const Toast = bootstrap.Toast;
                     const toastLiveExample = document.getElementById('liveToast');
-                    let commentForToast = '';
+                    let commentForToast = response.data.comment_details.text;
                     toastLiveExample.getElementsByClassName('toast-body').innerHTML = commentForToast;
                     const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
                     toastBootstrap.show();
@@ -151,4 +149,12 @@ export default {
         }
     },
 }
+
+
+// import Toast from bootstrap:
+// const toastLiveExample = document.getElementById('liveToast');
+// let commentForToast = response.data.comment_details.text;
+// toastLiveExample.getElementsByClassName('toast-body').innerHTML = commentForToast;
+// const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
+// toastBootstrap.show();
 </script>

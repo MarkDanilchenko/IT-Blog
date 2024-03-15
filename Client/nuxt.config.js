@@ -74,13 +74,12 @@ export default {
         scheme: "refresh",
         token: {
           property: "access",
-          maxAge: 5 * 60,
-          type: "Bearer",
+          maxAge: 10,
         },
         refreshToken: {
           property: "refresh",
+          data: "access",
           maxAge: 60 * 60 * 24 * 1,
-          data: "refresh",
         },
         user: {
           property: false,
@@ -88,8 +87,9 @@ export default {
         },
         endpoints: {
           login: { url: "/api/token/", method: "post" },
-          logout: false,
           refresh: { url: "/api/token/refresh/", method: "post" },
+          // do not used default logout function, because of necessity to blacklist refresh token manually
+          logout: false,
           user: { url: "/api/accounts/profile/", method: "get" },
         },
       },
@@ -97,8 +97,8 @@ export default {
     redirect: {
       // if signIn is required
       login: "/api/accounts/signin/",
-      // after signOut
-      logout: "/api/accounts/signin/",
+      // after signOut do not redirect to other pages
+      logout: false,
       // after signIn
       home: "/",
     },
@@ -114,7 +114,7 @@ export default {
   /* This part of the configuration is setting the base URL for Axios requests in your Nuxt.js
   application. */
   axios: {
-    baseURL: process.env.API_URL,
+    baseURL: `http://${process.env.server_HostPort_1}`,
   },
 
   /* The `loading` property in the Nuxt.js configuration is used to customize the loading indicator

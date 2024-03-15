@@ -1,196 +1,162 @@
 <template>
-    <div class="mt-3 row">
-        <div class="d-flex flex-column align-items-center">
-            <nav aria-label="breadcrumb" class="my-3">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <nuxt-link to="/">Main</nuxt-link>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Sign out</li>
-                </ol>
-            </nav>
-            <!-- sign out logo -->
-            <!-- sign out logo -->
-            <!-- sign out logo -->
-            <div class="text-center lead">
-                <div class="mod">
-                    <div class="cube">
-
-                        <div class="faces f1">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
+    <section class="my-signOut">
+        <div class="mt-3 row">
+            <div class="d-flex flex-column align-items-center">
+                <nav aria-label="breadcrumb" class="my-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <nuxt-link to="/">Main</nuxt-link>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">SignOut</li>
+                    </ol>
+                </nav>
+                <!-- signOut logo -->
+                <!-- signOut logo -->
+                <!-- signOut logo -->
+                <div class="text-center lead">
+                    <div class="mod">
+                        <div class="cube">
+                            <div class="faces f1">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
+                            <div class="faces f2">
+                                <div class="dot p10"></div>
+                                <div class="dot p11"></div>
+                                <div class="dot p12"></div>
+                                <div class="dot p13"></div>
+                            </div>
+                            <div class="faces f3">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
+                            <div class="faces f4">
+                                <div class="dot p10"></div>
+                                <div class="dot p11"></div>
+                                <div class="dot p12"></div>
+                                <div class="dot p13"></div>
+                            </div>
+                            <div class="faces f5">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
+                            <div class="faces f6">
+                                <div class="dot p10"></div>
+                                <div class="dot p11"></div>
+                                <div class="dot p12"></div>
+                                <div class="dot p13"></div>
+                            </div>
+                            <div class="faces f7">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
+                            <div class="faces f8">
+                                <div class="dot p10"></div>
+                                <div class="dot p11"></div>
+                                <div class="dot p12"></div>
+                                <div class="dot p13"></div>
+                            </div>
+                            <div class="faces f9">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
+                            <div class="faces f10">
+                                <div class="dot p10"></div>
+                                <div class="dot p11"></div>
+                                <div class="dot p12"></div>
+                                <div class="dot p13"></div>
+                            </div>
+                            <div class="faces f11">
+                                <div class="dot p1"></div>
+                                <div class="dot p2"></div>
+                                <div class="dot p3"></div>
+                                <div class="dot p4"></div>
+                                <div class="dot p5"></div>
+                                <div class="dot p6"></div>
+                                <div class="dot p7"></div>
+                                <div class="dot p8"></div>
+                                <div class="dot p9"></div>
+                            </div>
                         </div>
-
-                        <div class="faces f2">
-
-                            <div class="dot p10"></div>
-                            <div class="dot p11"></div>
-                            <div class="dot p12"></div>
-                            <div class="dot p13"></div>
-
+                        <div class="project-name">
+                            <div class="l1">SIGNED OUT</div>
+                            <br>
+                            <div class="l2">THANK YOU!</div>
                         </div>
-
-                        <div class="faces f3">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
-                        </div>
-
-                        <div class="faces f4">
-
-                            <div class="dot p10"></div>
-                            <div class="dot p11"></div>
-                            <div class="dot p12"></div>
-                            <div class="dot p13"></div>
-
-                        </div>
-
-                        <div class="faces f5">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
-                        </div>
-
-                        <div class="faces f6">
-
-                            <div class="dot p10"></div>
-                            <div class="dot p11"></div>
-                            <div class="dot p12"></div>
-                            <div class="dot p13"></div>
-
-                        </div>
-
-                        <div class="faces f7">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
-                        </div>
-
-                        <div class="faces f8">
-
-                            <div class="dot p10"></div>
-                            <div class="dot p11"></div>
-                            <div class="dot p12"></div>
-                            <div class="dot p13"></div>
-
-                        </div>
-
-                        <div class="faces f9">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
-                        </div>
-
-                        <div class="faces f10">
-
-                            <div class="dot p10"></div>
-                            <div class="dot p11"></div>
-                            <div class="dot p12"></div>
-                            <div class="dot p13"></div>
-
-                        </div>
-
-                        <div class="faces f11">
-
-                            <div class="dot p1"></div>
-                            <div class="dot p2"></div>
-                            <div class="dot p3"></div>
-
-                            <div class="dot p4"></div>
-                            <div class="dot p5"></div>
-                            <div class="dot p6"></div>
-
-                            <div class="dot p7"></div>
-                            <div class="dot p8"></div>
-                            <div class="dot p9"></div>
-
-                        </div>
-
-                    </div>
-                    <div class="project-name">
-                        <div class="l1">SIGNED OUT</div>
-                        <div class="l2">THANK YOU!</div>
                     </div>
                 </div>
-                <!-- <p class="mb-5">You have been successfully signed out. <br><br>Thanks and see you again!</p> -->
+                <!-- SignIn -->
+                <!-- SignIn -->
+                <!-- SignIn -->
+                <div class="col-lg-3 col-md-4 col-6 p-3 shadow-sm rounded-2">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <p class="text-center text-muted text-small"> Hope to see you again &#128521;&#128513;&#128515;
+                        </p>
+                        <nuxt-link to="/accounts/signin/" class="nav-link mt-1">SignIn</nuxt-link>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
     name: "Signout",
-    async asyncData({ $auth }) {
-        if ($auth.loggedIn) {
-            await axios.post(`${process.env.API_URL}/api/accounts/signout/`, {
-                refresh: String(`${$auth.strategy.refreshToken.get()}`)
-            }, {
-                headers: {
-                    Authorization: `Bearer ${$auth.strategy.token.get().split(' ')[1]}`,
-                }
-            }).then((response) => {
-                $auth.logout();
-                window.location.href = '/accounts/signout/';
-            }).catch((e) => {
-                alert(e.message);
-            });
-        }
-    },
     mounted() {
-        // sign out .dot{} color mode
+        // signOut
+        axios.post(`${process.env.API_URL}/api/token/blacklist/`,
+            {
+                refresh: String(`${this.$auth.strategy.refreshToken.get()}`)
+            },
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((response) => {
+                this.$auth.logout();
+            }).catch((error) => {
+                console.log(error.message);
+            });
+        // .dot color initialization
         try {
             const colorMode = localStorage.getItem("colorMode");
             if (colorMode === null) {

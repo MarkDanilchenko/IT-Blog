@@ -11,7 +11,7 @@
       </div> -->
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="10000">
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption d-none d-sm-block">
             <h5 class="mb-3">Python 3</h5>
             <p>
               API is builded on Python v3.10 with DRF.
@@ -19,13 +19,13 @@
           </div>
         </div>
         <div class="carousel-item" data-bs-interval="10000">
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption d-none d-sm-block">
             <h5 class="mb-3">NuxtJS 2</h5>
             <p>Frontend is builded on NuxtJS v2.15.</p>
           </div>
         </div>
         <div class="carousel-item" data-bs-interval="10000">
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption d-none d-sm-block">
             <h5 class="mb-3">Bootstrap 5</h5>
             <p>HTML/CSS is buildeded on Bootstrap v5.3.</p>
           </div>

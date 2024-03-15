@@ -31,8 +31,10 @@
               <nuxt-link to="/feedback"
                 :class="this.$route.path == '/feedback' ? 'nav-link activeText' : 'nav-link'">Feedback</nuxt-link>
             </div>
-            <span class="badge bg-success rounded-pill ms-lg-5 shadow" v-if="userSignedIn">{{
-            (this.$auth.user.username).toUpperCase() }}</span>
+          </div>
+          <div class="d-flex justify-content-end me-3">
+            <span class="badge bg-success rounded-pill shadow" v-if="userSignedIn">{{
+            this.$auth.user.profile.username }}</span>
           </div>
           <!-- Search form -->
           <!-- Search form -->
@@ -53,9 +55,9 @@
               class="btn btn-outline-danger me-lg-2">SignOut</nuxt-link>
             <div v-if="!userSignedIn">
               <nuxt-link to="/accounts/signin/"
-                :class="this.$route.path == '/accounts/signin/' ? 'btn btn-outline-secondary active me-1' : 'btn btn-outline-secondary me-lg-2'">SignIn</nuxt-link>
+                :class="this.$route.path == '/accounts/signin/' ? 'btn btn-outline-secondary active me-1' : 'btn btn-outline-secondary me-1'">SignIn</nuxt-link>
               <nuxt-link to="/accounts/signup/"
-                :class="this.$route.path == '/accounts/signup/' ? 'btn btn-outline-secondary active me-1' : 'btn btn-outline-secondary me-lg-2'">SignUp</nuxt-link>
+                :class="this.$route.path == '/accounts/signup/' ? 'btn btn-outline-secondary active me-lg-2' : 'btn btn-outline-secondary me-lg-2'">SignUp</nuxt-link>
             </div>
           </div>
           <!-- colorMode switcher -->
@@ -123,8 +125,12 @@ export default {
     return {
       search: '',
       TogglerArrowSwitcher: true,
-      userSignedIn: this.$auth.user
     };
+  },
+  computed: {
+    userSignedIn() {
+      return this.$auth.user
+    }
   },
   methods: {
     submitSearch() {
