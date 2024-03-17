@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Pagination from '@/components/Pagination.vue';
+import axios from 'axios';
 export default {
     name: "Search",
     components: {

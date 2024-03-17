@@ -47,9 +47,9 @@
               Search
             </button>
           </form>
-          <!-- Sign in and sign up buttons -->
-          <!-- Sign in and sign up buttons -->
-          <!-- Sign in and sign up buttons -->
+          <!-- SignIn and signUp buttons -->
+          <!-- SignIn and signUp buttons -->
+          <!-- SignIn and signUp buttons -->
           <div class="d-flex justify-content-center">
             <nuxt-link v-if="userSignedIn" to="/accounts/signout/"
               class="btn btn-outline-danger me-lg-2">SignOut</nuxt-link>

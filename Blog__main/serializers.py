@@ -57,7 +57,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class FeedbackSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=100, min_length=1, required=True)
+    name = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
     theme = serializers.CharField(max_length=150, min_length=1, required=True)
     message = serializers.CharField(max_length=1000, min_length=1, required=True)

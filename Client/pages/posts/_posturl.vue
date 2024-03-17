@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Sidebar from "@/components/Sidebar.vue";
 import Comments from "@/components/Comments.vue";
+import axios from "axios";
 export default {
     name: "PostDetail",
     components: {

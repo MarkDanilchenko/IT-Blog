@@ -31,7 +31,7 @@ if (document.getElementById("colorMode_switcher")) {
       } else if (colorMode == "light") {
         $("html").attr("data-bs-theme", "dark");
         // signout dots color
-        $(".dot").css("background", "#ffffff");
+        $(".dot").css("background", "rgb(7, 151, 98)");
         localStorage.setItem("colorMode", "dark");
       }
     });

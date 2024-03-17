@@ -120,9 +120,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- SignIn -->
-                <!-- SignIn -->
-                <!-- SignIn -->
+                <!-- SignIn again block -->
+                <!-- SignIn again block -->
+                <!-- SignIn again block -->
                 <div class="col-lg-3 col-md-4 col-6 p-3 shadow-sm rounded-2">
                     <div class="d-flex flex-column justify-content-center align-items-center">
                         <p class="text-center text-muted text-small"> Hope to see you again &#128521;&#128513;&#128515;
@@ -136,12 +136,11 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
     name: "Signout",
     mounted() {
         // signOut
-        axios.post(`${process.env.API_URL}/api/token/blacklist/`,
+        this.$axios.post(`${process.env.API_URL}/api/token/blacklist/`,
             {
                 refresh: String(`${this.$auth.strategy.refreshToken.get()}`)
             },
@@ -163,7 +162,7 @@ export default {
                 throw new Error("The color theme switched to light-mode as default");
             } else {
                 if (colorMode == "dark") {
-                    $(".dot").css("background", "#ffffff");
+                    $(".dot").css("background", "rgb(7, 151, 98)");
                 } else {
                     $(".dot").css("background", "#000000");
                 }

@@ -161,6 +161,7 @@
                         </div>
                         <div class="project-name">
                             <div class="l1">FEEDBACK SENT</div>
+                            <br>
                             <div class="l2">THANK YOU!</div>
                         </div>
                     </div>
@@ -180,7 +181,7 @@ export default {
                 throw new Error("The color theme switched to light-mode as default");
             } else {
                 if (colorMode == "dark") {
-                    $(".dot").css("background", "#ffffff");
+                    $(".dot").css("background", "rgb(7, 151, 98)");
                 } else {
                     $(".dot").css("background", "#000000");
                 }

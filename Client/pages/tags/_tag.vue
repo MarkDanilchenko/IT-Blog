@@ -15,8 +15,8 @@
                 <p class="lead"><b>Other #tags:</b></p>
                 <div class="d-flex justify-content-center flex-wrap">
                     <div v-for="i in tags" :key="i.slug">
-                        <nuxt-link v-if="i.slug != $route.params.tag" :to="`/tags/${i.slug}/`"
-                            class="nav-link me-3">#{{ i.slug }}</nuxt-link>
+                        <nuxt-link v-if="i.slug != $route.params.tag" :to="`/tags/${i.slug}/`" class="nav-link me-3">#{{
+                        i.slug }}</nuxt-link>
                         <nuxt-link v-if="i.slug == $route.params.tag" :to="`/tags/${i.slug}/`" class="nav-link me-3"
                             style="color: rgb(7, 151, 98) !important; font-weight: 700 !important;">#{{ i.slug
                             }}</nuxt-link>
@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import Carousel from "@/components/Carousel.vue";
 import Pagination from "@/components/Pagination.vue";
+import axios from "axios";
 export default {
     name: "PostByTag",
     components: {

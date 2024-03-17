@@ -32,7 +32,7 @@ class SignUpViewSet(viewsets.ModelViewSet):
         result.save()
         return Response(
             {
-                "created": f'User "{result.data.get("username")}" was successfully created.'
+                "message": f'User "{result.data.get("username")}" was successfully created.'
             },
             status=status.HTTP_201_CREATED,
         )

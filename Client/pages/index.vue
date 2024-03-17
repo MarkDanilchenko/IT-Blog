@@ -68,6 +68,9 @@ export default {
     Pagination,
   },
   async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
+    // if asyncData is used, then we can not use this.$axios!
+    // if asyncData is used, then we can not use this.$axios!
+    // if asyncData is used, then we can not use this.$axios!
     const { data } = await axios.get(`${process.env.API_URL}/api/posts/`, {
       headers: {
         'Accept': 'application/json',

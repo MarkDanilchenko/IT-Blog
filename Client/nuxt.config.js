@@ -64,34 +64,46 @@ export default {
   buildModules: [["@nuxtjs/dotenv", { filename: ".env", path: "../" }]],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
+  modules: ["@nuxtjs/auth-next", "@nuxtjs/axios"],
 
   /* The `auth` section in the Nuxt.js configuration is used to define authentication strategies and
   settings for handling user authentication in the application. */
+  middleware: ["auth"],
   auth: {
     strategies: {
       local: {
         scheme: "refresh",
         token: {
           property: "access",
-          maxAge: 10,
+          type: "Bearer",
+          maxAge: 60,
+          global: true,
         },
         refreshToken: {
           property: "refresh",
-          data: "access",
-          maxAge: 60 * 60 * 24 * 1,
+          data: "refresh",
+          maxAge: 86400,
+          global: true,
         },
         user: {
           property: false,
           autoFetch: true,
         },
         endpoints: {
-          login: { url: "/api/token/", method: "post" },
-          refresh: { url: "/api/token/refresh/", method: "post" },
-          // do not used default logout function, because of necessity to blacklist refresh token manually
+          login: { url: `/api/token/`, method: "post" },
+          refresh: { url: `/api/token/refresh/`, method: "post" },
+          user: { url: `/api/accounts/profile/`, method: "get" },
+          // do not used default logout function, because of necessity to blacklist refresh token manually after logout
+          // (API: path("api/token/blacklist/", TokenBlacklistView.as_view(), name="blacklist"),)
           logout: false,
-          user: { url: "/api/accounts/profile/", method: "get" },
         },
+        /* The `autoLogout: true` configuration in the Nuxt.js auth strategy settings is used to
+        automatically log out the user when their access token expires. When `autoLogout` is set to
+        `true`, the user will be logged out as soon as their access token reaches its maximum age
+        and expires. This helps ensure that the user is not able to access protected resources with
+        an expired token and enforces the need for re-authentication to continue using the
+        application securely. */
+        autoLogout: false,
       },
     },
     redirect: {
@@ -111,8 +123,6 @@ export default {
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  /* This part of the configuration is setting the base URL for Axios requests in your Nuxt.js
-  application. */
   axios: {
     baseURL: `http://${process.env.server_HostPort_1}`,
   },

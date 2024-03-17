@@ -7,7 +7,7 @@
                         <li class="breadcrumb-item">
                             <nuxt-link to="/">Main</nuxt-link>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Sign in</li>
+                        <li class="breadcrumb-item active" aria-current="page">SignIn</li>
                     </ol>
                 </nav>
                 <!-- SignIn form -->

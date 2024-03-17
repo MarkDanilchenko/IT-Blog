@@ -65,7 +65,7 @@
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
                 data-bs-delay="5000">
                 <div class="toast-header">
-                    <strong class="me-auto">{{ this.$auth.user.username }}</strong>
+                    <strong class="me-auto">{{ this.$auth.user.profile.username }}</strong>
                     <small class="text-body-secondary">&#60; 1 min ago</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -77,7 +77,6 @@
 
 <script>
 import { maxLength, minLength, required, helpers } from 'vuelidate/lib/validators';
-import axios from "axios";
 export default {
     name: "Comments",
     props: {
@@ -104,7 +103,7 @@ export default {
         }
     },
     mounted() {
-        axios.get(`${process.env.API_URL}/api/comments/`, {
+        this.$axios.get(`${process.env.API_URL}/api/comments/`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -121,7 +120,7 @@ export default {
     },
     methods: {
         async submitCommentForm() {
-            await axios.post(`${process.env.API_URL}/api/comments/`,
+            await this.$axios.post(`${process.env.API_URL}/api/comments/`,
                 {
                     post: this.post,
                     text: this.comment
@@ -130,31 +129,23 @@ export default {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$auth.strategy.token.get().split(' ')[1]}`
+                        'Authorization': `${this.$auth.strategy.token.get()}`
                     },
-
                 }).then((response) => {
                     this.postComments.unshift(response.data.comment_details);
-                    // const Toast = bootstrap.Toast;
+                    // Toast call
+                    const { Toast } = require('bootstrap');
                     const toastLiveExample = document.getElementById('liveToast');
                     let commentForToast = response.data.comment_details.text;
-                    toastLiveExample.getElementsByClassName('toast-body').innerHTML = commentForToast;
+                    toastLiveExample.querySelector('.toast-body').innerText = commentForToast;
                     const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
                     toastBootstrap.show();
                 }).catch((error) => {
-                    console.log(error.message)
+                    console.log(error.message);
                 }).finally(() => {
                     this.comment = '';
-                });
+                })
         }
     },
 }
-
-
-// import Toast from bootstrap:
-// const toastLiveExample = document.getElementById('liveToast');
-// let commentForToast = response.data.comment_details.text;
-// toastLiveExample.getElementsByClassName('toast-body').innerHTML = commentForToast;
-// const toastBootstrap = Toast.getOrCreateInstance(toastLiveExample);
-// toastBootstrap.show();
 </script>

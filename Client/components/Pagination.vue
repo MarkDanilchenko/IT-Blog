@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     name: "Pagination",
     props: {
@@ -60,7 +59,7 @@ export default {
         async changePage(page) {
             // if the url contains a ?query=...
             if (this.CLIENT_API_URL.includes('?')) {
-                const { data } = await axios.get(`${this.CLIENT_API_URL}&page=${page}`, {
+                const { data } = await this.$axios.get(`${this.CLIENT_API_URL}&page=${page}`, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
@@ -75,7 +74,7 @@ export default {
                 }
                 // if the url does not contain a ?query=...
             } else {
-                const { data } = await axios.get(`${this.CLIENT_API_URL}?page=${page}`, {
+                const { data } = await this.$axios.get(`${this.CLIENT_API_URL}?page=${page}`, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'

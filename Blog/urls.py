@@ -29,8 +29,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("Blog__main.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/token/blacklist/", TokenBlacklistView.as_view(), name="token_blacklist"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="refresh"),
+    path("api/token/blacklist/", TokenBlacklistView.as_view(), name="blacklist"),
     path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 
