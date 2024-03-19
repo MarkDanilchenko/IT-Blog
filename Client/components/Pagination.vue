@@ -55,6 +55,22 @@ export default {
             type: String,
         }
     },
+    computed: {
+        prevPage() {
+            return Number(this.$route.query.page) - 1;
+        },
+        nextPage() {
+            return this.$route.query.page ? Number(this.$route.query.page) + 1 : 2;
+        },
+        currentPage() {
+            return this.$route.query.page ? Number(this.$route.query.page) : 1;
+        }
+    },
+    mounted() {
+        if (this.$route.query.page > 1) {
+            this.changePage(this.currentPage);
+        }
+    },
     methods: {
         async changePage(page) {
             // if the url contains a ?query=...
@@ -85,16 +101,6 @@ export default {
             }
         },
     },
-    computed: {
-        prevPage() {
-            return Number(this.$route.query.page) - 1;
-        },
-        nextPage() {
-            return this.$route.query.page ? Number(this.$route.query.page) + 1 : 2;
-        },
-        currentPage() {
-            return this.$route.query.page ? Number(this.$route.query.page) : 1;
-        }
-    }
+
 }
 </script>

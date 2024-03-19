@@ -70,8 +70,8 @@ export default {
   data() {
     return {
       form: {
-        username: this.$auth.user.profile.username,
-        email: this.$auth.user.profile.email,
+        username: this.$auth.user ? this.$auth.user.profile.username : '',
+        email: this.$auth.user ? this.$auth.user.profile.email : '',
         theme: '',
         message: '',
         submitFeedbackFormStatus: null

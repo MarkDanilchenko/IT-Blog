@@ -1,0 +1,7 @@
+# ------------------------------------------------------NGINX
+
+FROM nginx:stable-alpine3.17
+
+WORKDIR /app
+
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf

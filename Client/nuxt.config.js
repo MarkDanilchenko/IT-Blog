@@ -2,10 +2,11 @@ require("dotenv").config({ path: "../.env", override: true });
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  // target: "static",
+  target: "static",
   server: {
-    host: "127.0.0.1",
-    port: 3000,
+    // host: "127.0.0.1",
+    // host: "0.0.0.0",
+    // port: 3000,
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -49,7 +50,8 @@ export default {
     },
     {
       src: "@/plugins/vuelidate.js",
-      mode: "client",
+      // when page with vuelidate functions is loaded or refreshed cuelidate plugin should be loaded in both client and server!
+      // mode: "client",
     },
     {
       src: "@/plugins/js/index.js",
@@ -119,12 +121,18 @@ export default {
   /* The `env` property in the Nuxt.js configuration is used to define environment variables that can
   be accessed within your application. */
   env: {
+    // DEV
     API_URL: `http://${process.env.server_HostPort_1}`,
+    // PROD
+    // API_URL: ``,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    // DEV
     baseURL: `http://${process.env.server_HostPort_1}`,
+    // PROD
+    // baseURL: ``,
   },
 
   /* The `loading` property in the Nuxt.js configuration is used to customize the loading indicator

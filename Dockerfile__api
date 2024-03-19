@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED=1
 
 ENV PYTHONDONTWRITEBYTECODE=1
 
-WORKDIR /app
+WORKDIR /app/API
 
 RUN python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip
 
@@ -22,7 +22,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # remove all unnecessary files and folders
-RUN rm -rf Client/ && rm -rf db_data/ && rm -r django_logs/ && rm -r gunicorn_logs/ && rm -rf nginx/ && rm -rf screenshots/ && rm -rf staticfiles/ && rm -rf taggitBugFix/
+RUN rm -rf Client/ && rm -rf nginx/ && rm -rf screenshots/ && rm -rf taggitBugFix/ && rm -rf django_logs/ && mkdir django_logs
 
 # bug fix (with help of ./serializers.py) in taggit_serializer library
 # ----->
@@ -31,4 +31,4 @@ WORKDIR /usr/local/lib/python3.10/site-packages/taggit_serializer/
 COPY ./taggitBugFix/serializers.py .
 # <-----
 
-WORKDIR /app
+WORKDIR /app/API

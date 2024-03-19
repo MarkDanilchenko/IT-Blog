@@ -43,6 +43,7 @@ package-lock.json
 aboutProject.txt
 README.md
 LICENSE
+*.sql
 
 <!-- allowed -->
 !**/.env

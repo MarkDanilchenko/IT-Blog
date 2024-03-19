@@ -2,6 +2,48 @@ version: '3.8'
 
 services:
     # ------------------------------------------------------webserver(nginx)
+    webserver:
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile__webserver
+        container_name: webserver
+        volumes:
+            - ./staticfiles:/app/staticfiles
+            - ./mediafiles:/app/mediafiles
+        ports:
+            - 8080:80
+        networks:
+            - frontend
+        links:
+            - client
+        # depends_on:
+        #     - client
+    # ------------------------------------------------------client(nuxtjs)
+    client:
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile__client
+        container_name: client
+        command: >
+            sh -c "npm run start"
+        ports:
+            - 3000:3000
+        expose:
+            - 3000
+        networks:
+            - frontend
+        environment:
+            - HOST=0.0.0.0
+            - PORT=3000
+            # - NODE_ENV=production
+        links:
+            - api
+        # depends_on:
+        #     api:
+        # condition: service_healthy
+
     # ------------------------------------------------------api(django rest framework)
     api:
         restart: always
@@ -15,10 +57,10 @@ services:
             && python3 manage.py collectstatic --noinput 
             && gunicorn --log-file gunicorn_logs/error.log --access-logfile gunicorn_logs/access.log Blog.wsgi:application -b ${server_HostPort_1}"
         volumes:
-            - ./staticfiles:/app/staticfiles
-            - ./mediafiles:/app/mediafiles
-            - ./gunicorn_logs:/app/gunicorn_logs
-            - ./django_logs:/app/django_logs
+            - ./staticfiles:/app/API/staticfiles
+            - ./mediafiles:/app/API/mediafiles
+            - ./gunicorn_logs:/app/API/gunicorn_logs
+            - ./django_logs:/app/API/django_logs
         ports:
             - 8000:8000
         expose:
@@ -34,11 +76,11 @@ services:
         depends_on:
             db:
                 condition: service_healthy
-        healthcheck:
-            test: ['CMD', 'curl', '-f', 'http://${server_HostPort_1}/api/test/']
-            timeout: 15s
-            interval: 5s
-            retries: 3
+        # healthcheck:
+        #     test: ['CMD', 'curl', '-f', 'http://${server_HostPort_1}/api/test/']
+        #     timeout: 15s
+        #     interval: 5s
+        #     retries: 3
     # ------------------------------------------------------db(mysql)
     db:
         restart: always
@@ -51,7 +93,7 @@ services:
         networks:
             - backend
         volumes:
-            # - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
+            - ./IT_Blog.sql:/docker-entrypoint-initdb.d/IT_Blog.sql
             - ./db_data:/var/lib/mysql
         healthcheck:
             test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1']

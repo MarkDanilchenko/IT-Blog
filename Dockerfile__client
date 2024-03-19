@@ -1,0 +1,22 @@
+# Node version
+ARG NODE_VERSION=20.9.0
+
+# ------------------------------------------------------FRONTEND
+
+FROM node:${NODE_VERSION} as FRONTEND
+
+LABEL maintainer="2023 MyHomeworks, { }"
+
+WORKDIR /app
+
+COPY ./.env .
+
+WORKDIR /app/Client
+
+COPY ./Client/package.json .
+
+RUN npm install
+
+COPY ./Client .
+
+RUN npm run build

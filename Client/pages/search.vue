@@ -60,21 +60,30 @@ export default {
     // to dynamically fetch data based on the search query parameter in the URL.
     watchQuery: ["search"],
     async asyncData({ isDev, route, store, env, params, query, req, res, redirect, error }) {
-        const { data } = await axios.get(`${process.env.API_URL}/api/search/`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            params: {
-                search: query.search,
+        if (!query.search) {
+            return {
+                posts: [],
+                postsCount: 0,
+                pageRange: 1,
+                CLIENT_API_URL: `${process.env.API_URL}/api/search/`,
             }
-        });
-        const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
-        return {
-            posts: data.results,
-            postsCount: data.count,
-            pageRange: pageRange,
-            CLIENT_API_URL: `${process.env.API_URL}/api/search/?search=${query.search}`,
+        } else if (query.search) {
+            const { data } = await axios.get(`${process.env.API_URL}/api/search/`, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                params: {
+                    search: query.search,
+                }
+            });
+            const pageRange = (data.results && data.results.length > 0) ? Math.ceil(data.count / data.results.length) : 1;
+            return {
+                posts: data.results,
+                postsCount: data.count,
+                pageRange: pageRange,
+                CLIENT_API_URL: `${process.env.API_URL}/api/search/?search=${query.search}`,
+            }
         }
     },
 }
