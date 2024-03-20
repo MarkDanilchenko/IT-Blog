@@ -5,7 +5,7 @@
 /dist
 draft.*
 staticfiles/
-mediafiles/
+# mediafiles/
 *.pdf
 *.sql
 !IT_Blog.sql

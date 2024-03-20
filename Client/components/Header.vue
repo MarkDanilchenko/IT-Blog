@@ -129,7 +129,7 @@ export default {
   },
   computed: {
     userSignedIn() {
-      return this.$auth.user
+      return this.$auth.user ? true : false;
     }
   },
   methods: {

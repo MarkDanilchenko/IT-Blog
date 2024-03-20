@@ -16,9 +16,9 @@ from taggit.models import Tag
 
 # pagination class by 3 items per page
 class PostPagination(pagination.PageNumberPagination):
-    page_size = 2
+    page_size = 3
     page_size_query_param = "page_size"
-    max_page_size = 2
+    max_page_size = 3
 
 
 # Sign up viewSet

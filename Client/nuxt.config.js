@@ -2,10 +2,9 @@ require("dotenv").config({ path: "../.env", override: true });
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
+  // target: "static",
   server: {
     // host: "127.0.0.1",
-    // host: "0.0.0.0",
     // port: 3000,
   },
 
@@ -122,17 +121,17 @@ export default {
   be accessed within your application. */
   env: {
     // DEV
-    API_URL: `http://${process.env.server_HostPort_1}`,
+    // API_URL: `http://${process.env.server_HostPort_1}`,
     // PROD
-    // API_URL: ``,
+    API_URL: ``,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // DEV
-    baseURL: `http://${process.env.server_HostPort_1}`,
+    // baseURL: `http://${process.env.server_HostPort_1}`,
     // PROD
-    // baseURL: ``,
+    baseURL: ``,
   },
 
   /* The `loading` property in the Nuxt.js configuration is used to customize the loading indicator

@@ -184,13 +184,11 @@ TOKEN_BLACKLIST_SERIALIZER = (
     "rest_framework_simplejwt.serializers.TokenBlacklistSerializer"
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-# CORS_ORIGIN_WHITELIST = [
-#     f"http://{os.getenv('client_HostPort_1')}",
-#     f"http://{os.getenv('client_HostPort_2')}",
-#     f"http://{os.getenv('client_HostPort_3')}",
-# ]
+CORS_ORIGIN_WHITELIST = [
+    f"http://{os.getenv('client_HostPort_1')}",
+    f"http://{os.getenv('client_HostPort_2')}",
+    f"http://{os.getenv('client_HostPort_3')}",
+]
 
 ####################################
 ##  LOGGER CONFIGURATION ##

@@ -1,115 +1,149 @@
 ## Description
 
-This is a project 'IT_Blog' using:
+This is a test project 'IT_Blog' using:
 
 - MySQL;
 - Django Rest Framework;
+- Gunicorn;
 - NuxtJS (Nuxt2);
-- Bootstrap;
+- Bootstrap5;
 - Webpack;
-- Docker;
+- Docker + Compose;
+- NGINX;
+- JWT (libraries for the API);
 - CSS/SCSS/HTML.
+
+```
+!!! Production SSR setup with NGINX and Docker is not working properly !!!
+```
 
 ## Launch instructions
 
-1. Clone repository to your local folder;
-2. Copy dev.env to .env file in the same root directory:
+1. Clone repository/archive to your **local folder**;
+2. Open Terminal and make sure You are in **local folder**:
 
-    `cp dev.env .env`
+    ```
+    cd '.../local_folder'
+    ```
 
-3. Open and follow the instructions properly in the new created .env file. *EMAIL_HOST_USER* and *EMAIL_HOST_PASSWORD* for Email sending *are expiremental*;
-4. For this step you should already have installed Docker and docker-compose on your PC:
+3. Copy file dev.env and rename to .env in the same root directory:
 
-- make sure You are in project folder:
+    ```
+    cp dev.env .env
+    ```
 
-  `cd '.../project_folder'`
+4. Open and follow the instructions properly in the new created .env file;
 
-- Run docker-compose:
+5. For this step you should already have installed Docker and Compose on your PC. Start installation:
 
-  `docker-compose up --build`
+    ```
+    docker-compose up --build
+    ```
 
 - Installation can take some time, it depends on your PC resources;
-- After the installation is completed, the client-server will start automatically on 0.0.0.0:3000;
-- Open app using <http://0.0.0.0:3000/> in your browser;
+- After the installation is completed, the client-server will start automatically on localhost:8080;
+- Open app using <http://localhost:8080/> in your browser;
 
-5. The superuser (admin) has been already created;
+6. The superuser (admin) has been already created;
 
-- You can login under current superuser using standart credentials:
+- You can login under current superuser (admin) using <http://localhost:8080/admin> with standart credentials:
 
-  `login: admin; pass: admin`
+    ```
+    login: admin
 
-- For password change use:
+    pass: admin
+    ```
 
-   `cd '.../project_folder' && python3 manage.py changepassword admin`
+- For password change open **another Terminal** and enter:
 
-- Or You can manually create superuser for Your own purpose:
+   ```
+    docker exec -it api sh
 
-   `cd '.../project_folder' && python3 manage.py createsuperuser`
+    python3 manage.py changepassword admin
+   ```
+
+- Create new password, confirm and then exit:
+
+    ```
+    exit
+    ```
+
+  *(close Terminal after successful password replacement)*
+
+7. To **stop** the app (**server**):
+
+    ```
+    Ctrl + C
+    ```
+
+8. To **stop** the app (**stop** all docker **containers**):
+
+   ```
+   docker compose stop
+   ```
+
+9. To **start** the app (**start** all docker **containers**):
+
+   ```
+   docker compose start
+   ```
+
+10. To completely **remove** all created docker **containers, images and volumes**:
+
+   ```
+   docker compose down --volumes --rmi all
+   ```
 
 - Note, that:
-  - Add/edit/delete posts only via admin-panel (Users can not to do that);
-  - Add comments only for registered and authenticated Users.
-
-6. Note that DataBase in project - MySQL;
-7. To stop the server: `Ctrl+C`;
-8. To completely remove all created docker containers, images and volumes:
-
-   `docker-compose down --volumes`.
-
+  - Add/edit/delete posts: only via admin-panel (Users can not to do that);
+  - Add comments: only for registered and authenticated Users.
+  
 **p.s.:**
 
---> **error.log**: contains **backend-server error messages** that may cause the application to be interrupted or lead to undesirable results.
+---> ./django_logs/ : contains **django rest framework** error logs.
 
---> **error.log** is available in root folder after successfull app launch.
+---> ./gunicorn_logs/ : contains **gunicorn** access and error logs.
 
-### Screenshots
+## Screenshots
 
-1. *Main page (white & dark themes)*
+1. *Main page*
 
-![Main page(white theme)](screenshots/ScrShot_1.png)
-![Main page(dark theme)](screenshots/ScrShot_2.png)
+![Main page(dark theme)](screenshots/ScrShot_1.png)
   
-2. *Sign Up form*
+2. *SignIn form*
+
+![SignIn form](screenshots/ScrShot_2.png)
+
+3. *SignUp form*
+
+![SignUp form](screenshots/ScrShot_3.png)
+
+4. *Detailed info about post*
+
+![Post's details](screenshots/ScrShot_4.png)
+
+5. *Search block*
+
+![Search](screenshots/ScrShot_5.png)
+
+6. *Feedback block*
+![Feedback](screenshots/ScrShot_6.png)
+
+7. *Navigation by tags*
+![Tags' navigation](screenshots/ScrShot_7.png)
+
+7. *Comments' block (auth and not auth)*
+![Comments (auth)](screenshots/ScrShot_8.png)
+![Comments (not auth)](screenshots/ScrShot_9.png)
+
+8. *SignOut page*
+![SignOut page](screenshots/ScrShot_10.png)
+
+10. *Mobile look like*
 
 <div align="center">
-  <img src="screenshots/ScrShot_3.png" width="100%" height="100%" alt='Sign up form'>
-</div>
-
-3. *Forms validation in real time input*
-
-![Sign In form](screenshots/ScrShot_4.png)
-
-4. *Sign In form*
-
-![Post details](screenshots/ScrShot_5.png)
-
-5. *Main page (authenticated User)*
-![Main page (authenticated User)](screenshots/ScrShot_6.png)
-
-6. *Feedback page*
-![Feedback page](screenshots/ScrShot_7.png)
-
-7. *Search result page*
-![Search result page](screenshots/ScrShot_8.png)
-
-8. *Tags navigation page*
-![Tags navigation page](screenshots/ScrShot_9.png)
-
-9. *Comments block for authenticated and not authenticated Users*
-
-![Comments block - Auth. Users](screenshots/ScrShot_10.png)
-![Comments block - Not Auth. Users](screenshots/ScrShot_11.png)
-
-10. *Sign Out page*
-
-![Sign Out page](screenshots/ScrShot_12.png)
-
-11. *Mobile look like*
-
-<div align="center">
-  <img src="screenshots/ScrShot_13.png" width="50%" height="50%" alt='Mobile look 1'>
-  <img src="screenshots/ScrShot_14.png" width="50%" height="50%" alt='Mobile look 2'>
-  <img src="screenshots/ScrShot_15.png" width="50%" height="50%" alt='Mobile look 3'>
-  <img src="screenshots/ScrShot_16.png" width="50%" height="50%" alt='Mobile look 4'>
-  <img src="screenshots/ScrShot_17.png" width="50%" height="50%" alt='Mobile look 5'>
+  <img src="screenshots/ScrShot_11.png" width="35%" height="35%" alt='Mobile look 1'>
+  <img src="screenshots/ScrShot_12.png" width="35%" height="35%" alt='Mobile look 2'>
+  <img src="screenshots/ScrShot_13.png" width="35%" height="35%" alt='Mobile look 3'>
+  <img src="screenshots/ScrShot_14.png" width="35%" height="35%" alt='Mobile look 4'>
 </div>
